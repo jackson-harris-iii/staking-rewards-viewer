@@ -5,10 +5,11 @@ import dummyData from '../dummyData.json'
 
 async function Collector (submission) {
   // submission = submission || 'config/userInput.json'
-  submission = JSON.stringify(dummyData);
+  // submission = JSON.stringify(dummyData);
   console.log('this is the submission', submission)
   let obj = {};
-  let userInput = readJSON(submission);
+  // let userInput = readJSON(submission);
+  let userInput = submission;
 
   let numberPayouts = {
     "DOT": 0,
@@ -60,6 +61,6 @@ async function Collector (submission) {
     console.log('The sum of staking rewards are ' + totalStaked.DOT +  ' DOT and ' + totalStaked.KSM + ' KSM' + ', which sums up to a total of ' + totalFiat + ' ' + obj.currency + ' (based on daily prices)');
     console.log('For more information, open the CSV file(s) or copy the content of the JSON file(s) into http://jsonviewer.stack.hu/ (click format).');
 }
-Collector().catch(console.error).finally(() => process.exit());
+// Collector().catch(console.error).finally(() => process.exit());
 
 export default Collector;
