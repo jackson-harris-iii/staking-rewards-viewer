@@ -8,6 +8,7 @@ async function Collector (submission) {
   // submission = JSON.stringify(dummyData);
   console.log('this is the submission', submission)
   let obj = {};
+  let results = []
   // let userInput = readJSON(submission);
   let userInput = submission;
 
@@ -56,10 +57,17 @@ async function Collector (submission) {
       numberPayouts.KSM = numberPayouts.KSM + obj.data.numberRewardsParsed;
       totalStaked.KSM = totalStaked.KSM + obj.totalAmountHumanReadable;
     }
+    //add details to result object to send to frontend
+    results.push(obj)
   }
     console.log('In total, ' + numberPayouts.DOT + ' DOT and ' + numberPayouts.KSM + ' KSM payouts were found.');
     console.log('The sum of staking rewards are ' + totalStaked.DOT +  ' DOT and ' + totalStaked.KSM + ' KSM' + ', which sums up to a total of ' + totalFiat + ' ' + obj.currency + ' (based on daily prices)');
     console.log('For more information, open the CSV file(s) or copy the content of the JSON file(s) into http://jsonviewer.stack.hu/ (click format).');
+
+    //append cumulative lookup details to results array.
+    results.push({details: { numberPayouts, totalStaked, totalFiat }});
+    //send results array to frontend
+    return results;
 }
 // Collector().catch(console.error).finally(() => process.exit());
 
