@@ -21,8 +21,10 @@ const HomePage = ({props}) => {
 
   const theme = useTheme();
   // const [data, setData] = useState();
+  const [address, setAddress ] = useState();
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
+  const [balance, setBalance ] = useState();
   const [submission, setSubmission] = useState();
   const [rewards, setRewards] = useState();
 
@@ -31,12 +33,14 @@ const HomePage = ({props}) => {
   if (error) return "AN error has occurred"
 
 
-  const handleAddressChange = () => {
-
+  const handleAddressChange = (e) => {
+    e.preventDefault();
+    setAddress(e.target.value);
   }
 
-  const handleStartBalance = () => {
-
+  const handleStartBalance = (e) => {
+    e.preventDefault();
+    setBalance(e.target.value);
   }
 
   const handleSubmission = async (e) => {
@@ -60,15 +64,24 @@ const HomePage = ({props}) => {
     <div>
 
         <h1 style={{color:`${theme.pink}`}}>Hola Mundo</h1>
-        <DatePicker value={startDate} onChange={date => setStartDate(date)} />
-        <DatePicker value={endDate} onChange={date => setStartDate(date)} />
-        <br/>
-        <Button
-          style={{backgroundColor:`${theme.pink}`}}
-          onClick={handleSubmission}
-        >
-          Search
-        </Button>
+        <form>
+          <input onChange={(e) => handleAddressChange(e)} placeholder="search by wallet address(s)"></input>
+          <br/>
+          <br/>
+          <DatePicker value={startDate} onChange={date => setStartDate(date)} />
+          <DatePicker value={endDate} onChange={date => setStartDate(date)} />
+          <br/>
+          <br/>
+          <input onChange={(e) => handleStartBalance(e)} placeholder="start balance(s)"></input>
+          <br/>
+          <br/>
+          <Button
+            style={{backgroundColor:`${theme.pink}`}}
+            onClick={handleSubmission}
+          >
+            Search
+          </Button>
+        </form>
         <div>
         {
           data ? <div> `${JSON.stringify(data)}` </div> : null
