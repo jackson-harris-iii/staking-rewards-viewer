@@ -6,26 +6,30 @@ import DatePicker from "react-datepicker";
 import Button from '@material-ui/core/Button';
 import dummyData from '../dummyData.json'
 
-const fetcher = url => fetch(url).then(res => res.json());
+const fetcher = (url, info) => fetch(url,
+  {
+    method: 'POST',
+    mode: 'cors',
+    credentials: 'same-origin',
+    headers: { 'Content-Type': 'application/json'},
+    body: JSON.stringify(info)
+  })
+  .then(res => res.json());
 
 const HomePage = ({props}) => {
 
-  const { data, error } = useSWR('/api/collector', fetcher);
-
-  if (error) return "AN error has occurred"
-
-
 
   const theme = useTheme();
-  const [data, setData] = useState();
+  // const [data, setData] = useState();
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [submission, setSubmission] = useState();
   const [rewards, setRewards] = useState();
 
-  useEffect( async () => {
-    fetch9
-  }, [submission])
+  const { data, error } = useSWR(submission ? ['/api/collector', submission] : null, fetcher);
+
+  if (error) return "AN error has occurred"
+
 
   const handleAddressChange = () => {
 
@@ -37,9 +41,17 @@ const HomePage = ({props}) => {
 
   const handleSubmission = async (e) => {
     e.preventDefault();
-    setSubmission(dummyData);
+    console.log('hello')
 
-    mutate*
+    await setSubmission(dummyData);
+
+    try {
+      console.log(submission)
+      const stakeData = await mutate('/api/collector', submission);
+      setRewards(stakeData);
+    } catch (error) {
+      console.log(error)
+    }
   }
 
 
@@ -57,13 +69,14 @@ const HomePage = ({props}) => {
         >
           Search
         </Button>
+        <div>
+        {
+          data ? <div> `${JSON.stringify(data)}` </div> : null
+        }
+        </div>
 
     </div>
   )
 };
-
-export async function getServerSideProps() {
-  const res = await
-}
 
 export default HomePage;
