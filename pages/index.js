@@ -30,7 +30,7 @@ const HomePage = ({props}) => {
   const [exportOutput, setExportOutput ] = useState(true);
   const [submission, setSubmission] = useState();
   const [rewards, setRewards] = useState();
-  const [currency, setCurrency] = useState(['$', 'USD']);
+  const [currency, setCurrency] = useState(['$', 'CHF']);
 
   const { data, error } = useSWR(submission ? ['/api/collector', submission] : null, fetcher);
 
@@ -58,15 +58,24 @@ const HomePage = ({props}) => {
   const handleSubmission = async (e) => {
     e.preventDefault();
     console.log('hello')
-    let addressesData = address.trim().split(",");
-    let balances = balance.trim().split(",");
-    let start = moment(startDate).format("YY-MM-DD");
-    let end = moment(endDate).format("YY-MM-DD");
+    let addressesData, balances
+    if (address) {
+      addressesData = address.split(",");
+    } else {
+      alert("please enter valid address")
+    }
+    if (balance) {
+      balances = balance.trim().split(",");
+    } else {
+      alert("please enter valid balances")
+    }
+    let start = moment(startDate).format("YYYY-MM-DD");
+    let end = moment(endDate).format("YYYY-MM-DD");
 
     const addresses = addressesData.map((address, index) => {
       return {
         name: `Account ${index + 1}`,
-        address,
+        address: address.trim(),
         startBalance: parseInt(`${balances[index]}`)
       }
     })
@@ -76,13 +85,14 @@ const HomePage = ({props}) => {
     };
 
     console.log(payload);
+    console.log(dummyData);
 
 
-    // await setSubmission(dummyData);
+    await setSubmission(payload);
 
     // try {
     //   console.log(submission)
-    //   const stakeData = await mutate('/api/collector', submission);
+    //   const stakeData = await mutate('/api/collector', payload);
     //   setRewards(stakeData);
     // } catch (error) {
     //   console.log(error)

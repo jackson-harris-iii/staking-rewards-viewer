@@ -26,6 +26,7 @@ export async function addStakingData(obj){
         page += 1;
         round += 1;
         stakingObject = await getStakingObject(address, page, network);
+        console.log('staking object', stakingObject);
 
         // Break loop if none rewards have been found for the address.
         if(stakingObject.data.count == 0 || stakingObject.data.list === null){
@@ -70,8 +71,8 @@ export async function addStakingData(obj){
         console.log('No rewards found to parse for address ' + obj.address);
         obj.message = 'No rewards found for this address';
     }
-   
-    return obj;  
+
+    return obj;
 }
 /*
 This function checks if the loop should continue. It should continue whenever the last day retrieved by the staking object retrieved has a larger
@@ -112,7 +113,7 @@ async function getStakingObject(address, page, network){
         'address': address
         }),
     };
-    
+
     // Sometimes the staking object is not properly transmitted. We try it again 10 times.
     while( continueLoop & breakPoint < 10 ) {
         stakingObject = await curlRequest(options);
