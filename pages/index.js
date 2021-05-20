@@ -7,6 +7,7 @@ import moment from 'moment'
 import Button from '@material-ui/core/Button';
 import dummyData from '../dummyData.json'
 import Summary from '../Components/Summary.js'
+import DetailsTable from '../Components/DetailsTable.js'
 
 const fetcher = (url, info) => fetch(url,
   {
@@ -127,7 +128,12 @@ const HomePage = ({props}) => {
         <div>
         {
           // data ? <div> `${JSON.stringify(data)}` </div> : null
-          data ? <div> <Summary currency={currency[0]} details={data[data.length - 1].details}/></div> : null
+          data ?
+            <div>
+              <Summary currency={currency[0]} details={data[data.length - 1].details}/>
+              <DetailsTable details={data} currency={currency}/>
+            </div>
+            : null
         }
         </div>
 
