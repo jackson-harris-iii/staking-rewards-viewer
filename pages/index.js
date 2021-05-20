@@ -132,12 +132,12 @@ const HomePage = ({props}) => {
 
       <Header theme={theme} />
 
-    <Grid container justify="center" style={{marginTop: "5em"}}>
+    <Grid container justify="center" style={{marginTop: "5em"}} spacing={4}>
         <Grid
           item
           sm={5}
         >
-          <form>
+          <form style={{marginTop: "5em"}}>
             <Grid container>
               <Grid item xs={12}>
                 <Input fullWidth={true} onChange={(e) => handleAddressChange(e)} placeholder="search by wallet address(s)"></Input>
@@ -172,8 +172,14 @@ const HomePage = ({props}) => {
         <Grid
           item
           sm={5}
+          justify="center"
         >
-
+          <h3 style={{fontFamily: "Work Sans light"}}>Dot Daily Price Data</h3>
+          <Image
+            src="/price-chart.png"
+            width={839}
+            height={500}
+          />
         </Grid>
 
       </Grid>
