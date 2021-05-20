@@ -13,7 +13,6 @@ import DetailsTable from '../Components/DetailsTable.js'
 const fetcher = (url, info) => fetch(url,
   {
     method: 'POST',
-    mode: 'cors',
     headers: { 'Content-Type': 'application/json'},
     body: JSON.stringify(info)
   })
