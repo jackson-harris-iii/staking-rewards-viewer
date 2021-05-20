@@ -26,7 +26,6 @@ export async function addStakingData(obj){
         page += 1;
         round += 1;
         stakingObject = await getStakingObject(address, page, network);
-        console.log('staking object', stakingObject);
 
         // Break loop if none rewards have been found for the address.
         if(stakingObject.data.count == 0 || stakingObject.data.list === null){

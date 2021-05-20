@@ -6,6 +6,7 @@ import DatePicker from 'react-datepicker';
 import moment from 'moment'
 import Button from '@material-ui/core/Button';
 import dummyData from '../dummyData.json'
+import Summary from '../Components/Summary.js'
 
 const fetcher = (url, info) => fetch(url,
   {
@@ -26,15 +27,15 @@ const HomePage = ({props}) => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [balance, setBalance ] = useState();
-  const [priceData, setPriceData ] = useState(true);
-  const [exportOutput, setExportOutput ] = useState(true);
+  const [priceData, setPriceData ] = useState("true");
+  const [exportOutput, setExportOutput ] = useState("true");
   const [submission, setSubmission] = useState();
   const [rewards, setRewards] = useState();
-  const [currency, setCurrency] = useState(['$', 'CHF']);
+  const [currency, setCurrency] = useState(['$', 'USD']);
 
   const { data, error } = useSWR(submission ? ['/api/collector', submission] : null, fetcher);
 
-  if (error) return "AN error has occurred"
+  if (error) return "An error has occurred"
 
   const handleCurrencyChange = (e) => {
 
@@ -88,7 +89,7 @@ const HomePage = ({props}) => {
     console.log(dummyData);
 
 
-    await setSubmission(payload);
+    setSubmission(payload);
 
     // try {
     //   console.log(submission)
@@ -110,7 +111,7 @@ const HomePage = ({props}) => {
           <br/>
           <br/>
           <DatePicker value={startDate} onChange={date => setStartDate(date)} />
-          <DatePicker value={endDate} onChange={date => setStartDate(date)} />
+          <DatePicker value={endDate} onChange={date => setEndDate(date)} />
           <br/>
           <br/>
           <input onChange={(e) => handleStartBalance(e)} placeholder="start balance(s)"></input>
@@ -125,7 +126,8 @@ const HomePage = ({props}) => {
         </form>
         <div>
         {
-          data ? <div> `${JSON.stringify(data)}` </div> : null
+          // data ? <div> `${JSON.stringify(data)}` </div> : null
+          data ? <div> <Summary currency={currency[0]} details={data[data.length - 1].details}/></div> : null
         }
         </div>
 
