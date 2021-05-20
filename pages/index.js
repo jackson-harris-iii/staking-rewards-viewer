@@ -174,12 +174,16 @@ const HomePage = ({props}) => {
           sm={5}
           justify="center"
         >
-          <h3 style={{fontFamily: "Work Sans light"}}>Dot Daily Price Data</h3>
-          <Image
-            src="/price-chart.png"
-            width={839}
-            height={500}
-          />
+          <Paper elevation={3}>
+            <Container style={{paddingTop: ".15em", paddingBottom: ".5em"}}>
+              <h3 style={{fontFamily: "Work Sans light"}}>Dot Daily Price Data</h3>
+              <Image
+                src="/price-chart.png"
+                width={839}
+                height={500}
+              />
+            </Container>
+          </Paper>
         </Grid>
 
       </Grid>
@@ -192,11 +196,13 @@ const HomePage = ({props}) => {
         {
           // data ? <div> `${JSON.stringify(data)}` </div> : null
           data ?
-            <div>
+            <div style={{marginTop: "3em"}}>
               <Summary currency={currency[0]} details={data[data.length - 1].details}/>
               <DetailsTable details={data} currency={currency}/>
             </div>
-            : null
+            : <div style={{marginTop: "3em"}}>
+                <DetailsTable details={data} currency={currency}/>
+              </div>
         }
         </div>
 

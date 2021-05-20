@@ -59,7 +59,7 @@ const DetailsTable = ({details, currency}) => {
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, details.length - page * rowsPerPage);
+  // const emptyRows = rowsPerPage - Math.min(rowsPerPage, details.length - page * rowsPerPage);
 
   return (
     <Paper
@@ -94,7 +94,7 @@ const DetailsTable = ({details, currency}) => {
       </TableHead>
 
       <TableBody>
-        {stableSort(details, getComparator(order, orderBy))
+        {details ? stableSort(details, getComparator(order, orderBy))
           .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
           .map((detail, index) => {
             const isItemSelected = isSelected(detail.name);
@@ -116,7 +116,7 @@ const DetailsTable = ({details, currency}) => {
                 <TableCell align="left">{detail.network}</TableCell>
               </TableRow>
             );
-          })}
+          }): <TableRow> <TableCell /><TableCell /><TableCell /></TableRow>}
       </TableBody>
       </TableContainer>
       </Grid>
