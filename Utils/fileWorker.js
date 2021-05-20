@@ -2,12 +2,12 @@ import fs from 'fs';
 import path from 'path'
 
 export function exportVariable(data, name){
-    try {
-        const location = path.join('./public', name);
-        fs.writeFileSync(location, data);
-        } catch (err) {
-        console.error(err);
-        }
+    // try {
+    //     const location = path.join('./public', name);
+    //     fs.writeFileSync(location, data);
+    //     } catch (err) {
+    //     console.error(err);
+    //     }
 }
 
 export function readJSON(filePath) {
@@ -20,11 +20,11 @@ export function readJSON(filePath) {
     const filename = name;
     const location = path.join('./public', name);
 
-     try {
-         fs.writeFileSync(location, extractAsCSV(obj));
-        } catch (err){
-        console.error(err);
-        }
+    //  try {
+    //      fs.writeFileSync(location, extractAsCSV(obj));
+    //     } catch (err){
+    //     console.error(err);
+    //     }
     }
 
   function extractAsCSV(obj){
