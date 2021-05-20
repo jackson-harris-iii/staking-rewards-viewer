@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import useSWR, { mutate } from 'swr'
+import Image from 'next/image'
 import { useTheme } from '@material-ui/core/styles';
 import { Container, Input, Grid, Paper } from '@material-ui/core';
 import DatePicker from 'react-datepicker';
@@ -8,6 +9,7 @@ import Button from '@material-ui/core/Button';
 import dummyData from '../dummyData.json'
 import Summary from '../Components/Summary.js'
 import DetailsTable from '../Components/DetailsTable.js'
+import Header from '../Components/Header.js'
 // import Chart from 'chart.js/auto';
 
 const fetcher = (url, info) => fetch(url,
@@ -125,46 +127,55 @@ const HomePage = ({props}) => {
 
 
   return(
-    <Grid container>
-      <Grid item xs={12} alignItems="center" justify="center">
 
-        <h1 style={{fontFamily:'work sans black', color: "black"}}>Staking Rewards Viewer</h1>
-      </Grid>
+    <Container fluid>
 
-      <Grid
-        item
-        xs={6}
-      >
-        <form>
-          <Grid container>
-            <Grid item xs={12}>
-              <Input fullWidth={true} onChange={(e) => handleAddressChange(e)} placeholder="search by wallet address(s)"></Input>
+      <Header theme={theme} />
+
+    <Grid container justify="center" style={{marginTop: "5em"}}>
+        <Grid
+          item
+          sm={5}
+        >
+          <form>
+            <Grid container>
+              <Grid item xs={12}>
+                <Input fullWidth={true} onChange={(e) => handleAddressChange(e)} placeholder="search by wallet address(s)"></Input>
+              </Grid>
             </Grid>
-          </Grid>
-          <br/>
-          <br/>
-          <Grid container>
-          <Grid item xs={6}>
-            <label style={{marginRight: ".5em"}}>StartDate: </label>
-            <DatePicker value={moment(startDate).format("YYYY-MM-DD")} onChange={date => setStartDate(date)} />
-          </Grid>
-          <Grid item xs={6}>
-            <label style={{marginRight: ".5em"}}>EndDate: </label>
-            <DatePicker value={moment(endDate).format("YYYY-MM-DD")} onChange={date => setEndDate(date)} />
-          </Grid>
-          </Grid>
-          <br/>
-          <br/>
-          <Input fullWidth={true} onChange={(e) => handleStartBalance(e)} placeholder="start balance(s)"></Input>
-          <br/>
-          <br/>
-          <Button
-            style={{backgroundColor:`${theme.pink}`, color: "white"}}
-            onClick={handleSubmission}
-          >
-            Search
-          </Button>
-        </form>
+            <br/>
+            <br/>
+            <Grid container>
+            <Grid item xs={6}>
+              <label style={{marginRight: ".5em"}}>StartDate: </label>
+              <DatePicker value={moment(startDate).format("YYYY-MM-DD")} onChange={date => setStartDate(date)} />
+            </Grid>
+            <Grid item xs={6}>
+              <label style={{marginRight: ".5em"}}>EndDate: </label>
+              <DatePicker value={moment(endDate).format("YYYY-MM-DD")} onChange={date => setEndDate(date)} />
+            </Grid>
+            </Grid>
+            <br/>
+            <br/>
+            <Input fullWidth={true} onChange={(e) => handleStartBalance(e)} placeholder="start balance(s)"></Input>
+            <br/>
+            <br/>
+            <Button
+              style={{backgroundColor:`${theme.pink}`, color: "white"}}
+              onClick={handleSubmission}
+            >
+              Search
+            </Button>
+          </form>
+        </Grid>
+
+        <Grid
+          item
+          sm={5}
+        >
+
+        </Grid>
+
       </Grid>
 
       <Grid>
@@ -183,7 +194,7 @@ const HomePage = ({props}) => {
         }
         </div>
 
-    </Grid>
+    </Container>
   )
 };
 
