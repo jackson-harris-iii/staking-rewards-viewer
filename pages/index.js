@@ -1,13 +1,14 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import useSWR, { mutate } from 'swr'
 import { useTheme } from '@material-ui/core/styles';
-import {Container} from '@material-ui/core';
+import { Container, Input, Grid, Paper } from '@material-ui/core';
 import DatePicker from 'react-datepicker';
 import moment from 'moment'
 import Button from '@material-ui/core/Button';
 import dummyData from '../dummyData.json'
 import Summary from '../Components/Summary.js'
 import DetailsTable from '../Components/DetailsTable.js'
+import Chart from 'chart.js/auto';
 
 const fetcher = (url, info) => fetch(url,
   {
@@ -23,7 +24,6 @@ const HomePage = ({props}) => {
 
 
   const theme = useTheme();
-  // const [data, setData] = useState();
   const [address, setAddress ] = useState();
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
@@ -101,30 +101,78 @@ const HomePage = ({props}) => {
     // }
   }
 
+  const config = {
+    type: 'line',
+    data,
+    options: {}
+  };
+
+  const labels = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+  ];
+  const chartData = {
+    labels: labels,
+    datasets: [{
+      label: 'My First dataset',
+      backgroundColor: 'rgb(255, 99, 132)',
+      borderColor: 'rgb(255, 99, 132)',
+      chartData: [0, 10, 5, 2, 20, 30, 45],
+    }]
+  };
 
 
   return(
-    <Container>
+    <Grid container>
+      <Grid item xs={12} alignItems="center" justify="center">
 
-        <h1 style={{color:`${theme.pink}`}}>Hola Mundo</h1>
+        <h1 style={{fontFamily:'work sans black', color: "black"}}>Staking Rewards Viewer</h1>
+      </Grid>
+
+      <Grid
+        item
+        xs={6}
+      >
         <form>
-          <input onChange={(e) => handleAddressChange(e)} placeholder="search by wallet address(s)"></input>
+          <Grid container>
+            <Grid item xs={12}>
+              <Input fullWidth={true} onChange={(e) => handleAddressChange(e)} placeholder="search by wallet address(s)"></Input>
+            </Grid>
+          </Grid>
           <br/>
           <br/>
-          <DatePicker value={startDate} onChange={date => setStartDate(date)} />
-          <DatePicker value={endDate} onChange={date => setEndDate(date)} />
+          <Grid container>
+          <Grid item xs={6}>
+            <label style={{marginRight: ".5em"}}>StartDate: </label>
+            <DatePicker value={moment(startDate).format("YYYY-MM-DD")} onChange={date => setStartDate(date)} />
+          </Grid>
+          <Grid item xs={6}>
+            <label style={{marginRight: ".5em"}}>EndDate: </label>
+            <DatePicker value={moment(endDate).format("YYYY-MM-DD")} onChange={date => setEndDate(date)} />
+          </Grid>
+          </Grid>
           <br/>
           <br/>
-          <input onChange={(e) => handleStartBalance(e)} placeholder="start balance(s)"></input>
+          <Input fullWidth={true} onChange={(e) => handleStartBalance(e)} placeholder="start balance(s)"></Input>
           <br/>
           <br/>
           <Button
-            style={{backgroundColor:`${theme.pink}`}}
+            style={{backgroundColor:`${theme.pink}`, color: "white"}}
             onClick={handleSubmission}
           >
             Search
           </Button>
         </form>
+      </Grid>
+
+      <Grid>
+
+      </Grid>
+
         <div>
         {
           // data ? <div> `${JSON.stringify(data)}` </div> : null
@@ -137,7 +185,7 @@ const HomePage = ({props}) => {
         }
         </div>
 
-    </Container>
+    </Grid>
   )
 };
 

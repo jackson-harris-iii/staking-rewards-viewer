@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TableSortLabel, Paper } from '@material-ui/core'
+import { Grid, Container, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TableSortLabel, Paper } from '@material-ui/core'
 
 
 const DetailsTable = ({details, currency}) => {
@@ -12,7 +12,7 @@ const DetailsTable = ({details, currency}) => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const headCells = [
-    { id: 'Address', numeric: false, disablePadding: true, label: 'Address' },
+    { id: 'Address', numeric: false, disablePadding: false, label: 'Address' },
     { id: 'StartBalance', numeric: true, disablePadding: false, label: 'StartBalance' },
     { id: 'EndBalance', numeric: true, disablePadding: false, label: 'EndBalance' },
     { id: 'Annualized Return', numeric: true, disablePadding: false, label: 'Annualized Return'},
@@ -62,7 +62,17 @@ const DetailsTable = ({details, currency}) => {
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, details.length - page * rowsPerPage);
 
   return (
-    <Fragment>
+    <Paper
+      elevation={3}
+    >
+      <Grid
+        container
+        direction="row"
+        justify="center"
+
+      >
+      <TableContainer
+      >
       <TableHead>
         <TableRow>
           {headCells.map((headCell) => (
@@ -98,7 +108,7 @@ const DetailsTable = ({details, currency}) => {
                 key={detail.name}
                 selected={isItemSelected}
               >
-                <TableCell align="left">{detail.address}</TableCell>
+                <TableCell align="right">{detail.address}</TableCell>
                 <TableCell align="right">{detail.startBalance}</TableCell>
                 <TableCell align="right">{detail.endBalance}</TableCell>
                 <TableCell align="right">{detail.annualizedReturn}</TableCell>
@@ -107,13 +117,10 @@ const DetailsTable = ({details, currency}) => {
               </TableRow>
             );
           })}
-        {emptyRows > 0 && (
-          <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
-            <TableCell colSpan={6} />
-          </TableRow>
-        )}
       </TableBody>
-    </Fragment>
+      </TableContainer>
+      </Grid>
+    </Paper>
   )
 }
 
