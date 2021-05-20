@@ -14,7 +14,6 @@ const fetcher = (url, info) => fetch(url,
   {
     method: 'POST',
     mode: 'cors',
-    credentials: 'same-origin',
     headers: { 'Content-Type': 'application/json'},
     body: JSON.stringify(info)
   })
