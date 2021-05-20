@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button';
 import dummyData from '../dummyData.json'
 import Summary from '../Components/Summary.js'
 import DetailsTable from '../Components/DetailsTable.js'
-import Chart from 'chart.js/auto';
+// import Chart from 'chart.js/auto';
 
 const fetcher = (url, info) => fetch(url,
   {
@@ -101,29 +101,29 @@ const HomePage = ({props}) => {
     // }
   }
 
-  const config = {
-    type: 'line',
-    data,
-    options: {}
-  };
+  // const config = {
+  //   type: 'line',
+  //   data,
+  //   options: {}
+  // };
 
-  const labels = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-  ];
-  const chartData = {
-    labels: labels,
-    datasets: [{
-      label: 'My First dataset',
-      backgroundColor: 'rgb(255, 99, 132)',
-      borderColor: 'rgb(255, 99, 132)',
-      chartData: [0, 10, 5, 2, 20, 30, 45],
-    }]
-  };
+  // const labels = [
+  //   'January',
+  //   'February',
+  //   'March',
+  //   'April',
+  //   'May',
+  //   'June',
+  // ];
+  // const chartData = {
+  //   labels: labels,
+  //   datasets: [{
+  //     label: 'My First dataset',
+  //     backgroundColor: 'rgb(255, 99, 132)',
+  //     borderColor: 'rgb(255, 99, 132)',
+  //     chartData: [0, 10, 5, 2, 20, 30, 45],
+  //   }]
+  // };
 
 
   return(
