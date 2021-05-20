@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import useSWR, { mutate } from 'swr'
 import { useTheme } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
+import {Container} from '@material-ui/core';
 import DatePicker from 'react-datepicker';
 import moment from 'moment'
 import Button from '@material-ui/core/Button';
@@ -103,7 +103,7 @@ const HomePage = ({props}) => {
 
 
   return(
-    <div>
+    <Container>
 
         <h1 style={{color:`${theme.pink}`}}>Hola Mundo</h1>
         <form>
@@ -131,7 +131,7 @@ const HomePage = ({props}) => {
         }
         </div>
 
-    </div>
+    </Container>
   )
 };
 
