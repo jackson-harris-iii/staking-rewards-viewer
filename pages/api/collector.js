@@ -7,7 +7,11 @@ export default async (req, res) => {
   if (req.body) {
     // console.log('req.body', req.body)
     const data = await Collector(userData);
-    res.send(data)
+    try {
+      res.send(data)
+    } catch(err) {
+      res.send(err)
+    }
   } else {
     res.send(200)
   }
