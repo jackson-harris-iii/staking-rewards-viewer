@@ -64,12 +64,12 @@ const DetailsTable = ({details, currency}) => {
   return (
     <Paper
       elevation={3}
+      style={{maxWidth: "900px", marginRight: "auto", marginLeft: "auto"}}
     >
       <Grid
         container
         direction="row"
         justify="center"
-
       >
       <TableContainer
       >
