@@ -25,6 +25,13 @@ This project is a front-end viewer for The [staking-rewards-collector](https://g
   - **Help page / buttons:**
     - Both the input query and output viewer should have several help buttons to give explanations for all users.
 
+- **Compatibility**:
+  - It should be easy to extend the underlying script and the UI should be flexible enough to incorporate that (e.g., adding another column in the data output).
+- **Hosting**
+    - Centralized and preferably decentralized (IPFS).
+- **Testing**
+    - Test if the code behaves as expected.
+    
 ## Development Roadmap:
 | Number | Deliverable | Specification |
 | -----: | ----------- | ------------- |
@@ -38,10 +45,3 @@ This project is a front-end viewer for The [staking-rewards-collector](https://g
 | 3 | Tooltips/Helpers | Create tooltips to explain the different functions that each input of the app has. |
 | 4 | Testing | Write tests to confirm the application behaves as expected |
 | 5 | IPFS | Create a version of the application that will work on IPFS|
-
-- **Compatibility**:
-  - It should be easy to extend the underlying script and the UI should be flexible enough to incorporate that (e.g., adding another column in the data output).
-- **Hosting**
-    - Centralized and preferably decentralized (IPFS).
-- **Testing**
-    - Test if the code behaves as expected.
