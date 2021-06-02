@@ -2,7 +2,9 @@
 
 ## Project Description :page_facing_up:
 
-This project is a front-end viewer for The [staking-rewards-collector](https://github.com/w3f/staking-rewards-collector). It is an MVP built as a proposal for The [Front-End for Staking Rewards Collector](https://github.com/w3f/General-Grants-Program/blob/master/rfps/staking-rewards-collector-front-end.md) W3F grant propsed by JonasW3F.
+This is a Staking Rewards Viewer for Polkadot and Kusama allowing users to view their staking rewards and easily download their search results.
+This implementation will take the work started in the [staking-rewards-collector](https://github.com/w3f/staking-rewards-collector) by [jonasW3F](https://github.com/jonasW3F) and refactor it into an easy to use modern front end using Next.js and deployed on Vercel with the goal of deploying to IPFS. This work aims to fufill the needs of the Web 3 Foundation grant seen here: [Front-End for Staking Rewards Collector](https://github.com/w3f/General-Grants-Program/blob/master/rfps/staking-rewards-collector-front-end.md).
+
 
 ## Mockup :crystal_ball:
 
@@ -32,16 +34,18 @@ This project is a front-end viewer for The [staking-rewards-collector](https://g
 - **Testing**
     - Test if the code behaves as expected.
     
-## Development Roadmap:
 | Number | Deliverable | Specification |
 | -----: | ----------- | ------------- |
-| 0a. | License | Apache 2.0 / GPLv3 / MIT / Unlicense |
+| 0a. | License | Apache 2.0 |
 | 0b. | Documentation | We will provide both **inline documentation** of the code and a basic **tutorial** that explains how a user can (for example) spin up one of our Substrate nodes and send test transactions, which will show how the new functionality works. |
 | 0c. | Testing Guide | Core functions will be fully covered by unit tests to ensure functionality and robustness. In the guide, we will describe how to run these tests. |
 | 0d. | Docker | We will provide a Dockerfile(s) that can be used to test all the functionality delivered with this milestone. |
-| 1a. | Address LookUp Functionality | Allow users to enter multiple wallet addresses for either or both the Polkdaot and/or Kusama networks and deploy these features to Vercel. |
-| 1b. | CSV/JSON Download | Enable users to download a copy of their lookup results in either CSV or JSON format. |
-| 2 | Formvalidation | Add form validation to wallet address input while still allowing for multiple addresses to be entered. Validation for fiat amounts that will properly display based on the selected currency. |
-| 3 | Tooltips/Helpers | Create tooltips to explain the different functions that each input of the app has. |
-| 4 | Testing | Write tests to confirm the application behaves as expected |
-| 5 | IPFS | Create a version of the application that will work on IPFS|
+| 1. | UI for user input | Develop an UI to request necessary data from the users. |
+| 2a. | Address LookUp Functionality | Allow users to enter multiple wallet addresses for either or both the Polkdaot and/or Kusama networks and deploy these features to Vercel. |
+| 2b. | CSV/JSON Download | Enable users to download a copy of their lookup results in either CSV or JSON format. |
+| 3. | Form validation | Add form validation to wallet address input while still allowing for multiple addresses to be entered. Validation for fiat amounts that will properly display based on the selected currency. |
+| 4.  | UI for data visualizer  | Develop an environment to display the output (.csv and .json) for the end user in a pleasurable way. |
+| 5. | Tooltips/Helpers | Implement help texts and tooltips to explain the different features and inputs to users. |
+| 6. | Testing | Write tests to confirm the application behaves as expected |
+| 7. | Polishing | Reach out for feedback to the Grants Team. Integrate final feedback on functional, as well as cosmetic changes like font size, colors, typos etc. |
+| 8. | IPFS | Create a version of the application that will work on IPFS|
