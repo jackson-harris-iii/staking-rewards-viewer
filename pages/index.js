@@ -172,6 +172,7 @@ const HomePage = ({props}) => {
         <Grid
           item
           sm={5}
+          container
           justify="center"
         >
           <Paper elevation={3}>
