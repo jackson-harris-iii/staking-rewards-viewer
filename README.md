@@ -3,7 +3,10 @@
 ## Project Description :page_facing_up:
 
 This is a Staking Rewards Viewer for Polkadot and Kusama allowing users to view their staking rewards and easily download their search results.
-This implementation will take the work started in the [staking-rewards-collector](https://github.com/w3f/staking-rewards-collector) by [jonasW3F](https://github.com/jonasW3F) and refactor it into an easy to use modern front end using Next.js and deployed on Vercel with the goal of deploying to IPFS. This work aims to fufill the needs of the Web 3 Foundation grant seen here: [Front-End for Staking Rewards Collector](https://github.com/w3f/General-Grants-Program/blob/master/rfps/staking-rewards-collector-front-end.md).
+This implementation will take the work started in the [staking-rewards-collector](https://github.com/w3f/staking-rewards-collector) by [jonasW3F](https://github.com/jonasW3F) and refactor it into an easy to use modern front end using Next.js and deployed on Vercel with the goal of deploying to IPFS. This project is fufilling the needs of the Web 3 Foundation grant seen here: [Front-End for Staking Rewards Collector](https://github.com/w3f/General-Grants-
+Program/blob/master/rfps/staking-rewards-collector-front-end.md).
+
+Accepted Grant Proposal: https://github.com/w3f/Open-Grants-Program/blob/master/applications/staking-rewards-collector-front-end.md
 
 
 ## Mockup :crystal_ball:
@@ -33,6 +36,8 @@ This implementation will take the work started in the [staking-rewards-collector
     - Centralized and preferably decentralized (IPFS).
 - **Testing**
     - Test if the code behaves as expected.
+
+## Development Roadmap :nut_and_bolt:
     
 | Number | Deliverable | Specification |
 | -----: | ----------- | ------------- |
@@ -47,5 +52,10 @@ This implementation will take the work started in the [staking-rewards-collector
 | 4.  | UI for data visualizer  | Develop an environment to display the output (.csv and .json) for the end user in a pleasurable way. |
 | 5. | Tooltips/Helpers | Implement help texts and tooltips to explain the different features and inputs to users. |
 | 6. | Testing | Write tests to confirm the application behaves as expected |
-| 7. | Polishing | Reach out for feedback to the Grants Team. Integrate final feedback on functional, as well as cosmetic changes like font size, colors, typos etc. |
-| 8. | IPFS | Create a version of the application that will work on IPFS|
+| 7. | Polishing & Delivery | Reach out for feedback to the Grants Team. Integrate final feedback on functional, as well as cosmetic changes like font size, colors, typos etc. | 
+
+## Future Plans
+
+* Collaborate with the original RFP proposer to determine how to best promote the finished application throughout the community.
+* Ask the community for suggestions to improve and add new features as necesary.
+* Refactor and Deploy to IPFS
