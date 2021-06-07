@@ -1,4 +1,4 @@
-import { exportVariable } from './fileWorker.js';
+// import { exportVariable } from './fileWorker.js';
 import { dateToString, transformDDMMYYYtoUnix, min } from './utils.js';
 
 

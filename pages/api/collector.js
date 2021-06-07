@@ -6,8 +6,8 @@ export default async (req, res) => {
   let userData = req.body || dummyData;
   if (req.body) {
     // console.log('req.body', req.body)
-    const data = await Collector(userData);
     try {
+      const data = await Collector(userData);
       res.send(data)
     } catch(err) {
       res.send(err)

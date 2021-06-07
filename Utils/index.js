@@ -1,5 +1,5 @@
 import { gatherData } from './gatherData.js';
-import { exportVariable, readJSON, writeCSV } from './fileWorker.js';
+// import { exportVariable, writeCSV } from './fileWorker.js';
 import { calculateMetrics, verifyUserInput, getNetwork } from './utils.js';
 import dummyData from '../dummyData.json'
 
@@ -43,10 +43,12 @@ async function Collector (submission) {
       obj = calculateMetrics(obj);
     }
 
-    if(exportOutput == "true" & obj.message != 'No rewards found for this address'){
-      exportVariable(JSON.stringify(obj), userInput.addresses[i].name + ' ' + obj.address + '.json');
-      writeCSV(obj, userInput.addresses[i].name + ' ' + obj.address + '.csv');
-    }
+
+    // will be removed for on demand csv/json download creation
+    // if(exportOutput == "true" & obj.message != 'No rewards found for this address'){
+    //   exportVariable(JSON.stringify(obj), userInput.addresses[i].name + ' ' + obj.address + '.json');
+    //   writeCSV(obj, userInput.addresses[i].name + ' ' + obj.address + '.csv');
+    // }
 
     totalFiat = totalFiat + obj.totalValueFiat;
 

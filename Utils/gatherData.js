@@ -1,9 +1,9 @@
 import { addPriceData } from "./api.js";
 import { makeDaysArray, initializeObject } from "./utils.js";
-import { addStakingData } from './curl.js';
+import { addStakingData } from './fetch.js';
 
 export async function gatherData(start, end, network, address, currency, priceData, startBalance){
-   
+
     let obj = {};
     let daysArray = [];
 
