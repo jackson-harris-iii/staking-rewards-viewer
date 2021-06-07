@@ -14,16 +14,6 @@ import Collector from '../Utils'
 // import Chart from 'chart.js/auto';
 
 const fetcher = (url, info) => Collector(info).then(data => data)
-// => {
-//   console.log('this is the info', info)
-//   if (info) {
-//     try {
-//       return await Collector(userData);
-//     } catch(err) {
-//       return err
-//     }
-//   }
-// }
 
 const HomePage = ({props}) => {
 
