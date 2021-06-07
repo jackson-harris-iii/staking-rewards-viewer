@@ -10,15 +10,20 @@ import dummyData from '../dummyData.json'
 import Summary from '../Components/Summary.js'
 import DetailsTable from '../Components/DetailsTable.js'
 import Header from '../Components/Header.js'
+import Collector from '../Utils'
 // import Chart from 'chart.js/auto';
 
-const fetcher = (url, info) => fetch(url,
-  {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json'},
-    body: JSON.stringify(info)
-  })
-  .then(res => res.json());
+const fetcher = (url, info) => Collector(info).then(data => data)
+// => {
+//   console.log('this is the info', info)
+//   if (info) {
+//     try {
+//       return await Collector(userData);
+//     } catch(err) {
+//       return err
+//     }
+//   }
+// }
 
 const HomePage = ({props}) => {
 
@@ -34,7 +39,7 @@ const HomePage = ({props}) => {
   const [rewards, setRewards] = useState();
   const [currency, setCurrency] = useState(['$', 'USD']);
 
-  const { data, error } = useSWR(submission ? ['/api/collector', submission] : null, fetcher);
+  const { data, error } = useSWR(submission ? ['submisionKey', submission] : null, fetcher);
 
   if (error) return "An error has occurred"
 
@@ -59,7 +64,6 @@ const HomePage = ({props}) => {
 
   const handleSubmission = async (e) => {
     e.preventDefault();
-    console.log('hello')
     let addressesData, balances
     if (address) {
       addressesData = address.split(",");
@@ -87,9 +91,6 @@ const HomePage = ({props}) => {
     };
 
     console.log(payload);
-    console.log(dummyData);
-
-
     setSubmission(payload);
 
     // try {
@@ -172,6 +173,7 @@ const HomePage = ({props}) => {
         <Grid
           item
           sm={5}
+          container
           justify="center"
         >
           <Paper elevation={3}>

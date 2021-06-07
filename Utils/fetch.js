@@ -1,5 +1,4 @@
-import curl from 'curlrequest';
-import { exportVariable } from './fileWorker.js';
+// import { exportVariable } from './fileWorker.js';
 import { dateToString, transformDDMMYYYtoUnix, min } from './utils.js';
 
 
@@ -103,10 +102,9 @@ async function getStakingObject(address, page, network){
     }
 
     var options = {
-        url: url,
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        data: JSON.stringify({
+        body: JSON.stringify({
         'row':100,
         'page': page,
         'address': address
@@ -115,7 +113,7 @@ async function getStakingObject(address, page, network){
 
     // Sometimes the staking object is not properly transmitted. We try it again 10 times.
     while( continueLoop & breakPoint < 10 ) {
-        stakingObject = await curlRequest(options);
+        stakingObject = await fetchRequest(url, options);
             try {
                 stakingObject = JSON.parse(stakingObject);
                 continueLoop = false;
@@ -126,14 +124,11 @@ async function getStakingObject(address, page, network){
     return stakingObject;
 }
 
-async function curlRequest(options){
-    return new Promise(function (resolve, reject){
-      curl.request(options, (err,data) => {
-        if (!err){
-          resolve(data);
-        } else {
-          reject(err);
-        }
-      });
-    });
+async function fetchRequest(url, options){
+    try {
+        let response = await fetch(url, options);
+        return response.json();
+    } catch (err) {
+        return err;
+    }
 }
