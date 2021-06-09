@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import useSWR, { mutate } from 'swr'
 import Image from 'next/image'
 import { useTheme } from '@material-ui/core/styles';
-import { Container, Input, Grid, Paper } from '@material-ui/core';
+import { Container, Input, Grid, Paper, Switch, CircularProgress } from '@material-ui/core';
 import DatePicker from 'react-datepicker';
 import moment from 'moment'
 import Button from '@material-ui/core/Button';
@@ -26,6 +26,7 @@ const HomePage = ({props}) => {
   const [priceData, setPriceData ] = useState("true");
   const [exportOutput, setExportOutput ] = useState("true");
   const [submission, setSubmission] = useState();
+  const [isLoading, setIsLoading] = useState(false)
   const [rewards, setRewards] = useState();
   const [currency, setCurrency] = useState(['$', 'USD']);
 
@@ -42,6 +43,10 @@ const HomePage = ({props}) => {
 
   }
 
+  const handleExport = () => {
+
+  }
+
   const handleAddressChange = (e) => {
     e.preventDefault();
     setAddress(e.target.value);
@@ -54,6 +59,7 @@ const HomePage = ({props}) => {
 
   const handleSubmission = async (e) => {
     e.preventDefault();
+    setIsLoading(true)
     let addressesData, balances
     if (address) {
       addressesData = address.split(",");
@@ -188,13 +194,30 @@ const HomePage = ({props}) => {
         {
           // data ? <div> `${JSON.stringify(data)}` </div> : null
           data ?
-            <div style={{marginTop: "3em"}}>
+            <Paper elevation={3} style={{marginTop: "3em", paddingBottom: '1em'}}>
               <Summary currency={currency[0]} details={data[data.length - 1].details}/>
               <DetailsTable details={data} currency={currency}/>
-            </div>
-            : <div style={{marginTop: "3em"}}>
-                <DetailsTable details={data} currency={currency}/>
-              </div>
+              <Grid container alignItems="center" style={{marginLeft: '1em'}} spacing={2}>
+                <Grid item xs={1}>
+                  <Button
+                  style={{backgroundColor:`${theme.pink}`, color: "white", marginTop: '1em'}}
+                  onClick={handleSubmission}
+                >
+                  Export
+                </Button>
+              </Grid>
+              <Grid item container alignItems="center"xs={4}>
+                <p style={{display: 'inline', marginBottom: '0', fontFamily: "Work Sans light"}}>CSV</p>
+                <div style={{marginTop: '.75em'}}>
+                  <Switch inputProps={{ 'aria-label': 'primary checkbox' }} />
+                </div>
+                <p style={{display: 'inline', marginBottom: '0', fontFamily: "Work Sans light"}}>JSON</p>
+              </Grid>
+            </Grid>
+            </Paper>
+            : <> {
+              isLoading ? <Grid container style={{marginTop: '3em'}} justify="center"><CircularProgress /></Grid> : null
+            } </>
         }
         </div>
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import {Grid} from '@material-ui/core'
+import {Grid, Paper} from '@material-ui/core'
 
 const Summary = ({details, currency}) => (
   <Grid container justify="center">

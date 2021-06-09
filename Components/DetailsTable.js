@@ -63,65 +63,62 @@ const DetailsTable = ({details, currency}) => {
   // const emptyRows = rowsPerPage - Math.min(rowsPerPage, details.length - page * rowsPerPage);
 
   return (
-    <Paper
-      elevation={3}
-      style={{maxWidth: "900px", marginRight: "auto", marginLeft: "auto"}}
-    >
-      <Grid
-        container
-        direction="row"
-        justify="center"
-      >
-      <TableContainer
-      >
-      <TableHead>
-        <TableRow>
-          {headCells.map((headCell) => (
-            <TableCell
-              key={headCell.id}
-              align={headCell.numeric ? 'right' : 'left'}
-              padding={headCell.disablePadding ? 'none' : 'default'}
-            >
-             <TableSortLabel
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : 'asc'}
-              onClick={createSortHandler(headCell.id)}
-             >
-               {headCell.label}
-             </TableSortLabel>
-            </TableCell>
-          ))}
-        </TableRow>
-      </TableHead>
 
-      <TableBody>
-        {details ? stableSort(details, getComparator(order, orderBy))
-          .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-          .map((detail, index) => {
-            const isItemSelected = isSelected(detail.name);
-            const labelId = `enhanced-table-checkbox-${index}`;
-            return (
-              <TableRow
-                hover
-                onClick={(event) => handleClick(event, detail.name)}
-                aria-checked={isItemSelected}
-                tabIndex={-1}
-                key={detail.name}
-                selected={isItemSelected}
-              >
-                <TableCell align="right">{detail.address}</TableCell>
-                <TableCell align="right">{detail.startBalance}</TableCell>
-                <TableCell align="right">{detail.endBalance}</TableCell>
-                <TableCell align="right">{detail.annualizedReturn}</TableCell>
-                <TableCell align="right">{detail.currentValueRewardsFiat}</TableCell>
-                <TableCell align="left">{detail.network}</TableCell>
-              </TableRow>
-            );
-          }): <TableRow> <TableCell /><TableCell /><TableCell /></TableRow>}
-      </TableBody>
-      </TableContainer>
-      </Grid>
-    </Paper>
+    <Grid
+      container
+      direction="row"
+      justify="center"
+    >
+    <TableContainer
+    >
+    <TableHead>
+      <TableRow>
+        {headCells.map((headCell) => (
+          <TableCell
+            key={headCell.id}
+            align={headCell.numeric ? 'right' : 'left'}
+            padding={headCell.disablePadding ? 'none' : 'default'}
+          >
+            <TableSortLabel
+            active={orderBy === headCell.id}
+            direction={orderBy === headCell.id ? order : 'asc'}
+            onClick={createSortHandler(headCell.id)}
+            >
+              {headCell.label}
+            </TableSortLabel>
+          </TableCell>
+        ))}
+      </TableRow>
+    </TableHead>
+
+    <TableBody>
+      {details ? stableSort(details, getComparator(order, orderBy))
+        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+        .map((detail, index) => {
+          const isItemSelected = isSelected(detail.name);
+          const labelId = `enhanced-table-checkbox-${index}`;
+          return (
+            <TableRow
+              hover
+              onClick={(event) => handleClick(event, detail.name)}
+              aria-checked={isItemSelected}
+              tabIndex={-1}
+              key={detail.name}
+              selected={isItemSelected}
+            >
+              <TableCell align="right">{detail.address}</TableCell>
+              <TableCell align="right">{detail.startBalance}</TableCell>
+              <TableCell align="right">{detail.endBalance}</TableCell>
+              <TableCell align="right">{detail.annualizedReturn}</TableCell>
+              <TableCell align="right">{detail.currentValueRewardsFiat}</TableCell>
+              <TableCell align="left">{detail.network}</TableCell>
+            </TableRow>
+          );
+        }): <TableRow> <TableCell /><TableCell /><TableCell /></TableRow>}
+    </TableBody>
+    </TableContainer>
+    </Grid>
+
   )
 }
 
