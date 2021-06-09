@@ -97,7 +97,9 @@ const DetailsTable = ({details, currency}) => {
         .map((detail, index) => {
           const isItemSelected = isSelected(detail.name);
           const labelId = `enhanced-table-checkbox-${index}`;
-          return (
+          console.log('detail', detail)
+          return detail.address ?
+          (
             <TableRow
               hover
               onClick={(event) => handleClick(event, detail.name)}
@@ -106,14 +108,14 @@ const DetailsTable = ({details, currency}) => {
               key={detail.name}
               selected={isItemSelected}
             >
-              <TableCell align="right">{detail.address}</TableCell>
+              <TableCell align="right">{detail.address.slice(0,5) + '...' + detail.address.slice(-6,-1)}</TableCell>
               <TableCell align="right">{detail.startBalance}</TableCell>
               <TableCell align="right">{detail.endBalance}</TableCell>
               <TableCell align="right">{detail.annualizedReturn}</TableCell>
               <TableCell align="right">{detail.currentValueRewardsFiat}</TableCell>
               <TableCell align="left">{detail.network}</TableCell>
             </TableRow>
-          );
+          ) : null;
         }): <TableRow> <TableCell /><TableCell /><TableCell /></TableRow>}
     </TableBody>
     </TableContainer>
