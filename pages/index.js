@@ -25,6 +25,7 @@ const HomePage = ({props}) => {
   const [balance, setBalance ] = useState();
   const [priceData, setPriceData ] = useState("true");
   const [exportOutput, setExportOutput ] = useState("true");
+  const [toggleExport, setToggleExport] = useState(true)
   const [submission, setSubmission] = useState();
   const [isLoading, setIsLoading] = useState(false)
   const [rewards, setRewards] = useState();
@@ -44,7 +45,14 @@ const HomePage = ({props}) => {
   }
 
   const handleExport = () => {
-
+  // this checks to see if our toggle is set to true for csv or false for json if json open new tab with json data
+    if (!toggleExport) {
+      let jsonView = window.open()
+      jsonView.document.open()
+      jsonView.document.write(JSON.stringify(data))
+      jsonView.document.close()
+      jsonView.focus();
+    }
   }
 
   const handleAddressChange = (e) => {
@@ -194,14 +202,14 @@ const HomePage = ({props}) => {
         {
           // data ? <div> `${JSON.stringify(data)}` </div> : null
           data ?
-            <Paper elevation={3} style={{marginTop: "3em", paddingBottom: '1em'}}>
+            <Paper elevation={3} style={{marginTop: "3em", paddingBottom: '1em', padding: '1em'}}>
               <Summary currency={currency[0]} details={data[data.length - 1].details}/>
               <DetailsTable details={data} currency={currency}/>
               <Grid container alignItems="center" style={{marginLeft: '1em'}} spacing={4}>
                 <Grid item container xs={1} justify="center">
                   <Button
                   style={{backgroundColor:`${theme.pink}`, color: "white", marginTop: '1em'}}
-                  onClick={handleSubmission}
+                  onClick={handleExport}
                 >
                     Export
                   </Button>
@@ -209,14 +217,14 @@ const HomePage = ({props}) => {
                 <Grid item container alignItems="center"xs={6}>
                   <p style={{display: 'inline', marginBottom: '0', fontFamily: "Work Sans light"}}>CSV</p>
                   <div style={{marginTop: '.75em'}}>
-                    <Switch inputProps={{ 'aria-label': 'primary checkbox' }} />
+                    <Switch inputProps={{ 'aria-label': 'primary checkbox' }} onChange={() => setToggleExport(!toggleExport)}/>
                   </div>
                   <p style={{display: 'inline', marginBottom: '0', fontFamily: "Work Sans light"}}>JSON</p>
                 </Grid>
             </Grid>
             </Paper>
             : <> {
-              isLoading ? <Grid container style={{marginTop: '3em'}} justify="center"><CircularProgress /></Grid> : null
+              isLoading ? <Grid container style={{marginTop: '3em'}} justify="center"><CircularProgress color="pink"/></Grid> : null
             } </>
         }
         </div>
