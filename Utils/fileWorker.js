@@ -1,22 +1,22 @@
 export function readJSON(filePath) {
-    const rawContent = fs.readFileSync(filePath);
 
-    return JSON.parse(rawContent);
-  }
+  const rawContent = fs.readFileSync(filePath);
+  return JSON.parse(rawContent);
 
+}
+
+// genertate urls that contain downloadable csv blobs
 export async function downloadCSV(obj) {
 
-  const urls = obj.map(async (item) => {
+  return obj.map(async (item) => {
     const data = await extractAsCSV(item);
     const blob = new Blob([data], {type: 'text/csv'});
     return window.URL.createObjectURL(blob);
   })
-  console.log('this is the csv', urls)
-
-  // window.open(blob, "_blank")
 
 }
 
+// helper function that converts json obj to csv
 function extractAsCSV(obj){
   const header = [
       "Day, Price in " + obj.currency +

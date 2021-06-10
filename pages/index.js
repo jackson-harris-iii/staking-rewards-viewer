@@ -1,8 +1,9 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import useSWR, { mutate } from 'swr'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useTheme } from '@material-ui/core/styles';
-import { Container, Input, Grid, Paper, Switch, CircularProgress } from '@material-ui/core';
+import { Container, Input, Grid, Paper, Switch, CircularProgress, Modal } from '@material-ui/core';
 import DatePicker from 'react-datepicker';
 import moment from 'moment'
 import Button from '@material-ui/core/Button';
@@ -31,6 +32,8 @@ const HomePage = ({props}) => {
   const [isLoading, setIsLoading] = useState(false)
   const [rewards, setRewards] = useState();
   const [currency, setCurrency] = useState(['$', 'USD']);
+  const [urls, setUrls] = useState();
+  const [isOpen, setIsOpen] = useState(false);
 
   const { data, error } = useSWR(submission ? ['submisionKey', submission] : null, fetcher);
 
@@ -45,7 +48,7 @@ const HomePage = ({props}) => {
 
   }
 
-  const handleExport = () => {
+  const handleExport = async () => {
   // this checks to see if our toggle is set to true for csv or false for json if json open new tab with json data
     if (!toggleExport) {
       let jsonView = window.open()
@@ -56,8 +59,18 @@ const HomePage = ({props}) => {
     } else {
       let copy = [...data]
       copy.pop()
-      downloadCSV(copy)
+      const urlsPromise = await downloadCSV(copy);
+      const urls = await Promise.all(urlsPromise);
+      console.log('these are the urls', urls)
+      await setUrls(urls)
+      setIsOpen(true)
+
+
     }
+  }
+
+  const handleClose = () => {
+    setIsOpen(false)
   }
 
   const handleAddressChange = (e) => {
@@ -111,6 +124,18 @@ const HomePage = ({props}) => {
     // }
   }
 
+  const body = (
+    <Paper
+      elevation={3}
+    >
+      {urls ? urls.map((url, index) => {
+       return<Link target="_blank" href={`${url}`} passHref>
+       <Button style={{backgroundColor:`${theme.pink}`, color: "white", marginTop: '1em'}}>Address{index + 1}.csv</Button>
+       </Link>
+      }): null}
+    </Paper>
+  )
+
   // const config = {
   //   type: 'line',
   //   data,
@@ -137,7 +162,7 @@ const HomePage = ({props}) => {
 
 
   return(
-
+    <>
     <Container fluid>
 
       <Header theme={theme} />
@@ -235,6 +260,15 @@ const HomePage = ({props}) => {
         </div>
 
     </Container>
+    <Modal
+    open={isOpen}
+    onClose={handleClose}
+    aria-labelledby="simple-modal-title"
+    aria-describedby="simple-modal-description"
+  >
+    {body}
+  </Modal>
+  </>
   )
 };
 
