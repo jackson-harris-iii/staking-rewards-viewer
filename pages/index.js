@@ -127,12 +127,35 @@ const HomePage = ({props}) => {
   const body = (
     <Paper
       elevation={3}
+      style={{position: 'absolute',
+      width: 400,
+      border: '2px solid #000',
+      boxShadow: theme.shadows[5],
+      paddingTop: "4em",
+      paddingBottom: "5em",
+      paddingRight: "1em",
+      paddingLeft: "1em",
+      top: '50%',
+      left: '50%',
+      transform: `translate(-50%, -50%)`
+      }}
     >
-      {urls ? urls.map((url, index) => {
-       return<Link target="_blank" href={`${url}`} passHref>
-       <Button style={{backgroundColor:`${theme.pink}`, color: "white", marginTop: '1em'}}>Address{index + 1}.csv</Button>
-       </Link>
-      }): null}
+      <Grid container justify="center">
+        <Grid item container justify="center" xs={12}>
+          <h3 style={{fontFamily: "Work Sans light", marginTop: 0}}>Your Downloads</h3>
+        </Grid>
+
+        {urls ? urls.map((url, index) => {
+        return(
+          <Grid item container justify="center" xs={6}>
+            <Link target="_blank" href={`${url}`} passHref>
+            <Button style={{backgroundColor:`${theme.pink}`, color: "white", marginTop: '1em'}}>Address{index + 1}.csv</Button>
+            </Link>
+          </Grid>
+        )
+        }): null}
+
+      </Grid>
     </Paper>
   )
 
