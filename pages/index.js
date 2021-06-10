@@ -11,6 +11,7 @@ import Summary from '../Components/Summary.js'
 import DetailsTable from '../Components/DetailsTable.js'
 import Header from '../Components/Header.js'
 import Collector from '../Utils'
+import { downloadCSV } from '../Utils/fileWorker'
 // import Chart from 'chart.js/auto';
 
 const fetcher = (url, info) => Collector(info).then(data => data)
@@ -52,6 +53,10 @@ const HomePage = ({props}) => {
       jsonView.document.write(JSON.stringify(data))
       jsonView.document.close()
       jsonView.focus();
+    } else {
+      let copy = [...data]
+      copy.pop()
+      downloadCSV(copy)
     }
   }
 
@@ -94,7 +99,7 @@ const HomePage = ({props}) => {
       start, end, currency: currency[1], priceData, exportOutput, addresses
     };
 
-    console.log(payload);
+    // console.log(payload);
     setSubmission(payload);
 
     // try {
