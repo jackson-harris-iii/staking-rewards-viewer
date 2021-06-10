@@ -1,8 +1,9 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import useSWR, { mutate } from 'swr'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useTheme } from '@material-ui/core/styles';
-import { Container, Input, Grid, Paper } from '@material-ui/core';
+import { Container, Input, Grid, Paper, Switch, CircularProgress, Modal } from '@material-ui/core';
 import DatePicker from 'react-datepicker';
 import moment from 'moment'
 import Button from '@material-ui/core/Button';
@@ -11,19 +12,10 @@ import Summary from '../Components/Summary.js'
 import DetailsTable from '../Components/DetailsTable.js'
 import Header from '../Components/Header.js'
 import Collector from '../Utils'
+import { downloadCSV } from '../Utils/fileWorker'
 // import Chart from 'chart.js/auto';
 
 const fetcher = (url, info) => Collector(info).then(data => data)
-// => {
-//   console.log('this is the info', info)
-//   if (info) {
-//     try {
-//       return await Collector(userData);
-//     } catch(err) {
-//       return err
-//     }
-//   }
-// }
 
 const HomePage = ({props}) => {
 
@@ -35,9 +27,13 @@ const HomePage = ({props}) => {
   const [balance, setBalance ] = useState();
   const [priceData, setPriceData ] = useState("true");
   const [exportOutput, setExportOutput ] = useState("true");
+  const [toggleExport, setToggleExport] = useState(true)
   const [submission, setSubmission] = useState();
+  const [isLoading, setIsLoading] = useState(false)
   const [rewards, setRewards] = useState();
   const [currency, setCurrency] = useState(['$', 'USD']);
+  const [urls, setUrls] = useState();
+  const [isOpen, setIsOpen] = useState(false);
 
   const { data, error } = useSWR(submission ? ['submisionKey', submission] : null, fetcher);
 
@@ -52,6 +48,31 @@ const HomePage = ({props}) => {
 
   }
 
+  const handleExport = async () => {
+  // this checks to see if our toggle is set to true for csv or false for json if json open new tab with json data
+    if (!toggleExport) {
+      let jsonView = window.open()
+      jsonView.document.open()
+      jsonView.document.write(JSON.stringify(data))
+      jsonView.document.close()
+      jsonView.focus();
+    } else {
+      let copy = [...data]
+      copy.pop()
+      const urlsPromise = await downloadCSV(copy);
+      const urls = await Promise.all(urlsPromise);
+      console.log('these are the urls', urls)
+      await setUrls(urls)
+      setIsOpen(true)
+
+
+    }
+  }
+
+  const handleClose = () => {
+    setIsOpen(false)
+  }
+
   const handleAddressChange = (e) => {
     e.preventDefault();
     setAddress(e.target.value);
@@ -64,6 +85,7 @@ const HomePage = ({props}) => {
 
   const handleSubmission = async (e) => {
     e.preventDefault();
+    setIsLoading(true)
     let addressesData, balances
     if (address) {
       addressesData = address.split(",");
@@ -90,7 +112,7 @@ const HomePage = ({props}) => {
       start, end, currency: currency[1], priceData, exportOutput, addresses
     };
 
-    console.log(payload);
+    // console.log(payload);
     setSubmission(payload);
 
     // try {
@@ -101,6 +123,41 @@ const HomePage = ({props}) => {
     //   console.log(error)
     // }
   }
+
+  const body = (
+    <Paper
+      elevation={3}
+      style={{position: 'absolute',
+      width: 400,
+      border: '2px solid #000',
+      boxShadow: theme.shadows[5],
+      paddingTop: "4em",
+      paddingBottom: "5em",
+      paddingRight: "1em",
+      paddingLeft: "1em",
+      top: '50%',
+      left: '50%',
+      transform: `translate(-50%, -50%)`
+      }}
+    >
+      <Grid container justify="center">
+        <Grid item container justify="center" xs={12}>
+          <h3 style={{fontFamily: "Work Sans light", marginTop: 0}}>Your Downloads</h3>
+        </Grid>
+
+        {urls ? urls.map((url, index) => {
+        return(
+          <Grid item container justify="center" xs={6}>
+            <Link target="_blank" href={`${url}`} passHref>
+            <Button style={{backgroundColor:`${theme.pink}`, color: "white", marginTop: '1em'}}>Address{index + 1}.csv</Button>
+            </Link>
+          </Grid>
+        )
+        }): null}
+
+      </Grid>
+    </Paper>
+  )
 
   // const config = {
   //   type: 'line',
@@ -128,7 +185,7 @@ const HomePage = ({props}) => {
 
 
   return(
-
+    <>
     <Container fluid>
 
       <Header theme={theme} />
@@ -198,17 +255,43 @@ const HomePage = ({props}) => {
         {
           // data ? <div> `${JSON.stringify(data)}` </div> : null
           data ?
-            <div style={{marginTop: "3em"}}>
+            <Paper elevation={3} style={{marginTop: "3em", paddingBottom: '1em', padding: '1em'}}>
               <Summary currency={currency[0]} details={data[data.length - 1].details}/>
               <DetailsTable details={data} currency={currency}/>
-            </div>
-            : <div style={{marginTop: "3em"}}>
-                <DetailsTable details={data} currency={currency}/>
-              </div>
+              <Grid container alignItems="center" style={{marginLeft: '1em'}} spacing={4}>
+                <Grid item container xs={1} justify="center">
+                  <Button
+                  style={{backgroundColor:`${theme.pink}`, color: "white", marginTop: '1em'}}
+                  onClick={handleExport}
+                >
+                    Export
+                  </Button>
+                </Grid>
+                <Grid item container alignItems="center"xs={6}>
+                  <p style={{display: 'inline', marginBottom: '0', fontFamily: "Work Sans light"}}>CSV</p>
+                  <div style={{marginTop: '.75em'}}>
+                    <Switch inputProps={{ 'aria-label': 'primary checkbox' }} onChange={() => setToggleExport(!toggleExport)}/>
+                  </div>
+                  <p style={{display: 'inline', marginBottom: '0', fontFamily: "Work Sans light"}}>JSON</p>
+                </Grid>
+            </Grid>
+            </Paper>
+            : <> {
+              isLoading ? <Grid container style={{marginTop: '3em'}} justify="center"><CircularProgress color="pink"/></Grid> : null
+            } </>
         }
         </div>
 
     </Container>
+    <Modal
+    open={isOpen}
+    onClose={handleClose}
+    aria-labelledby="simple-modal-title"
+    aria-describedby="simple-modal-description"
+  >
+    {body}
+  </Modal>
+  </>
   )
 };
 

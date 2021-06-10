@@ -63,15 +63,13 @@ const DetailsTable = ({details, currency}) => {
   // const emptyRows = rowsPerPage - Math.min(rowsPerPage, details.length - page * rowsPerPage);
 
   return (
-    <Paper
-      elevation={3}
-      style={{maxWidth: "900px", marginRight: "auto", marginLeft: "auto"}}
+
+    <Grid
+      container
+      direction="row"
+      justify="center"
     >
-      <Grid
-        container
-        direction="row"
-        justify="center"
-      >
+    <Grid item xs={12}>
       <TableContainer
       >
       <TableHead>
@@ -82,13 +80,13 @@ const DetailsTable = ({details, currency}) => {
               align={headCell.numeric ? 'right' : 'left'}
               padding={headCell.disablePadding ? 'none' : 'default'}
             >
-             <TableSortLabel
+              <TableSortLabel
               active={orderBy === headCell.id}
               direction={orderBy === headCell.id ? order : 'asc'}
               onClick={createSortHandler(headCell.id)}
-             >
-               {headCell.label}
-             </TableSortLabel>
+              >
+                {headCell.label}
+              </TableSortLabel>
             </TableCell>
           ))}
         </TableRow>
@@ -100,7 +98,9 @@ const DetailsTable = ({details, currency}) => {
           .map((detail, index) => {
             const isItemSelected = isSelected(detail.name);
             const labelId = `enhanced-table-checkbox-${index}`;
-            return (
+            console.log('detail', detail)
+            return detail.address ?
+            (
               <TableRow
                 hover
                 onClick={(event) => handleClick(event, detail.name)}
@@ -116,12 +116,13 @@ const DetailsTable = ({details, currency}) => {
                 <TableCell align="right">{detail.currentValueRewardsFiat}</TableCell>
                 <TableCell align="left">{detail.network}</TableCell>
               </TableRow>
-            );
+            ) : null;
           }): <TableRow> <TableCell /><TableCell /><TableCell /></TableRow>}
       </TableBody>
       </TableContainer>
-      </Grid>
-    </Paper>
+    </Grid>
+    </Grid>
+
   )
 }
 
