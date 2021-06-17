@@ -61,7 +61,7 @@ const DayDetails = ({dayData}) => {
   ]
 
   return (
-    <Paper elevation={3} style={{marginTop: "3em", paddingBottom: '1em', padding: '1em', overFlowY: 'auto'}}>
+    <Paper elevation={1} style={{marginTop: "3em", paddingBottom: '1em', padding: '1em', overFlowY: 'auto'}}>
       <span>
         <h4 style={{fontFamily: "Work Sans", display: "inline-block"}}>Address: </h4>
         <p style={{display: "inline-block"}}>{dayData.address}</p>
@@ -70,7 +70,7 @@ const DayDetails = ({dayData}) => {
         </div>
       </span>
       <Grid container justify="center">
-            <TableContainer>
+            <TableContainer component={Paper}>
               <TableHead>
                 <TableRow>
                   {headCells.map((headCell) => (
