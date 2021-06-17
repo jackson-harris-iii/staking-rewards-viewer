@@ -63,8 +63,11 @@ const DayDetails = ({dayData}) => {
   return (
     <Paper elevation={3} style={{marginTop: "3em", paddingBottom: '1em', padding: '1em', overFlowY: 'auto'}}>
       <span>
-        <h4>Address: {dayData.address}</h4>
-        <h4>Network: {dayData.network}</h4>
+        <h4 style={{fontFamily: "Work Sans", display: "inline-block"}}>Address: </h4>
+        <p style={{display: "inline-block"}}>{dayData.address}</p>
+        <div>
+          <h4 style={{fontFamily: "Work Sans", display: "inline-block"}}>Network: </h4> <p style={{display: "inline-block"}}>{dayData.network}</p>
+        </div>
       </span>
       <Grid container justify="center">
             <TableContainer>
