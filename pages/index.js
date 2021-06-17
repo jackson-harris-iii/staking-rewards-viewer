@@ -13,6 +13,7 @@ import DetailsTable from '../Components/DetailsTable.js'
 import Header from '../Components/Header.js'
 import Collector from '../Utils'
 import { downloadCSV } from '../Utils/fileWorker'
+import DayDetails from '../Components/DayDetails.js'
 // import Chart from 'chart.js/auto';
 
 const fetcher = (url, info) => Collector(info).then(data => data)
@@ -191,6 +192,7 @@ const HomePage = ({props}) => {
       <Header theme={theme} />
 
     <Grid container justify="center" style={{marginTop: "5em"}} spacing={4}>
+        {/* Staking info entry form*/}
         <Grid
           item
           sm={5}
@@ -227,6 +229,7 @@ const HomePage = ({props}) => {
           </form>
         </Grid>
 
+        { /* Daily Dot Price Data*/}
         <Grid
           item
           sm={5}
@@ -251,31 +254,56 @@ const HomePage = ({props}) => {
 
       </Grid>
 
+      {/* Summary Display */}
         <div>
         {
-          // data ? <div> `${JSON.stringify(data)}` </div> : null
           data ?
-            <Paper elevation={3} style={{marginTop: "3em", paddingBottom: '1em', padding: '1em'}}>
-              <Summary currency={currency[0]} details={data[data.length - 1].details}/>
-              <DetailsTable details={data} currency={currency}/>
-              <Grid container alignItems="center" style={{marginLeft: '1em'}} spacing={4}>
-                <Grid item container xs={1} justify="center">
-                  <Button
-                  style={{backgroundColor:`${theme.pink}`, color: "white", marginTop: '1em'}}
-                  onClick={handleExport}
-                >
-                    Export
-                  </Button>
-                </Grid>
-                <Grid item container alignItems="center"xs={6}>
-                  <p style={{display: 'inline', marginBottom: '0', fontFamily: "Work Sans light"}}>CSV</p>
-                  <div style={{marginTop: '.75em'}}>
-                    <Switch inputProps={{ 'aria-label': 'primary checkbox' }} onChange={() => setToggleExport(!toggleExport)}/>
-                  </div>
-                  <p style={{display: 'inline', marginBottom: '0', fontFamily: "Work Sans light"}}>JSON</p>
-                </Grid>
-            </Grid>
-            </Paper>
+            <>
+              {/* summary */}
+              <Paper elevation={3} style={{marginTop: "3em", paddingBottom: '1em', padding: '1em'}}>
+                <Summary currency={currency[0]} details={data[data.length - 1].details}/>
+                <DetailsTable details={data} currency={currency}/>
+
+                {/* export button and toggles */}
+                <Grid container alignItems="center" style={{marginLeft: '1em'}} spacing={4}>
+                  <Grid item container xs={1} justify="center">
+                    <Button
+                    style={{backgroundColor:`${theme.pink}`, color: "white", marginTop: '1em'}}
+                    onClick={handleExport}
+                  >
+                      Export
+                    </Button>
+                  </Grid>
+                  <Grid item container alignItems="center"xs={6}>
+                    <p style={{display: 'inline', marginBottom: '0', fontFamily: "Work Sans light"}}>CSV</p>
+                    <div style={{marginTop: '.75em'}}>
+                      <Switch inputProps={{ 'aria-label': 'primary checkbox' }} onChange={() => setToggleExport(!toggleExport)}/>
+                    </div>
+                    <p style={{display: 'inline', marginBottom: '0', fontFamily: "Work Sans light"}}>JSON</p>
+                  </Grid>
+              </Grid>
+              {/* {console.log('data 289', data.slice(0,-1))} */}
+              </Paper>
+
+              {/* daily data */}
+              {
+                // <DayDetails dayData={day}/>
+                data[0].address ?
+                data.map((item) => {
+                  return item.data && item.data.list ?
+                    <DayDetails dayData={item}/>
+                    // item.data.list.map((day) => {
+                    //   console.log('this is the day', day)
+                    //  return <Paper elevation={3} style={{marginTop: "3em", paddingBottom: '1em', padding: '1em', overFlowY: 'auto'}}>
+                    //    <span>${day.day}</span>
+                    //     <DayDetails dayData={day}/>
+                    //   </Paper>
+                    // }): null
+                    :null
+                }) : null
+              }
+
+            </>
             : <> {
               isLoading ? <Grid container style={{marginTop: '3em'}} justify="center"><CircularProgress color="pink"/></Grid> : null
             } </>
