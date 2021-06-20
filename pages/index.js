@@ -14,6 +14,7 @@ import Header from '../Components/Header.js'
 import Collector from '../Utils'
 import { downloadCSV } from '../Utils/fileWorker'
 import DayDetails from '../Components/DayDetails.js'
+import FormContainer from '../Components/Form'
 // import Chart from 'chart.js/auto';
 
 const fetcher = (url, info) => Collector(info).then(data => data)
@@ -22,11 +23,11 @@ const HomePage = ({props}) => {
 
 
   const theme = useTheme();
-  const [address, setAddress ] = useState();
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
-  const [balance, setBalance ] = useState();
-  const [priceData, setPriceData ] = useState("true");
+  // const [address, setAddress ] = useState();
+  // const [startDate, setStartDate] = useState(new Date());
+  // const [endDate, setEndDate] = useState(new Date());
+  // const [balance, setBalance ] = useState();
+  // const [priceData, setPriceData ] = useState("true");
   const [exportOutput, setExportOutput ] = useState("true");
   const [toggleExport, setToggleExport] = useState(true)
   const [submission, setSubmission] = useState();
@@ -41,11 +42,6 @@ const HomePage = ({props}) => {
   if (error) return "An error has occurred"
 
   const handleCurrencyChange = (e) => {
-
-  }
-
-  //may not be needed
-  const togglePriceData = (e) => {
 
   }
 
@@ -74,56 +70,48 @@ const HomePage = ({props}) => {
     setIsOpen(false)
   }
 
-  const handleAddressChange = (e) => {
-    e.preventDefault();
-    setAddress(e.target.value);
-  }
+  // const handleAddressChange = (e) => {
+  //   e.preventDefault();
+  //   setAddress(e.target.value);
+  // }
 
-  const handleStartBalance = (e) => {
-    e.preventDefault();
-    setBalance(e.target.value);
-  }
+  // const handleStartBalance = (e) => {
+  //   e.preventDefault();
+  //   setBalance(e.target.value);
+  // }
 
-  const handleSubmission = async (e) => {
-    e.preventDefault();
-    setIsLoading(true)
-    let addressesData, balances
-    if (address) {
-      addressesData = address.split(",");
-    } else {
-      alert("please enter valid address")
-    }
-    if (balance) {
-      balances = balance.trim().split(",");
-    } else {
-      alert("please enter valid balances")
-    }
-    let start = moment(startDate).format("YYYY-MM-DD");
-    let end = moment(endDate).format("YYYY-MM-DD");
+  // const handleSubmission = async (e) => {
+  //   e.preventDefault();
+  //   setIsLoading(true)
+  //   let addressesData, balances
+  //   if (address) {
+  //     addressesData = address.split(",");
+  //   } else {
+  //     alert("please enter valid address")
+  //   }
+  //   if (balance) {
+  //     balances = balance.trim().split(",");
+  //   } else {
+  //     alert("please enter valid balances")
+  //   }
+  //   let start = moment(startDate).format("YYYY-MM-DD");
+  //   let end = moment(endDate).format("YYYY-MM-DD");
 
-    const addresses = addressesData.map((address, index) => {
-      return {
-        name: `Account ${index + 1}`,
-        address: address.trim(),
-        startBalance: parseInt(`${balances[index]}`)
-      }
-    })
+  //   const addresses = addressesData.map((address, index) => {
+  //     return {
+  //       name: `Account ${index + 1}`,
+  //       address: address.trim(),
+  //       startBalance: parseInt(`${balances[index]}`)
+  //     }
+  //   })
 
-    let payload = {
-      start, end, currency: currency[1], priceData, exportOutput, addresses
-    };
+  //   let payload = {
+  //     start, end, currency: currency[1], priceData, exportOutput, addresses
+  //   };
 
-    // console.log(payload);
-    setSubmission(payload);
+  //   setSubmission(payload);
 
-    // try {
-    //   console.log(submission)
-    //   const stakeData = await mutate('/api/collector', payload);
-    //   setRewards(stakeData);
-    // } catch (error) {
-    //   console.log(error)
-    // }
-  }
+  // }
 
   const body = (
     <Paper
@@ -160,31 +148,6 @@ const HomePage = ({props}) => {
     </Paper>
   )
 
-  // const config = {
-  //   type: 'line',
-  //   data,
-  //   options: {}
-  // };
-
-  // const labels = [
-  //   'January',
-  //   'February',
-  //   'March',
-  //   'April',
-  //   'May',
-  //   'June',
-  // ];
-  // const chartData = {
-  //   labels: labels,
-  //   datasets: [{
-  //     label: 'My First dataset',
-  //     backgroundColor: 'rgb(255, 99, 132)',
-  //     borderColor: 'rgb(255, 99, 132)',
-  //     chartData: [0, 10, 5, 2, 20, 30, 45],
-  //   }]
-  // };
-
-
   return(
     <>
     <Container fluid>
@@ -197,36 +160,13 @@ const HomePage = ({props}) => {
           item
           sm={5}
         >
-          <form style={{marginTop: "5em"}}>
-            <Grid container>
-              <Grid item xs={12}>
-                <Input fullWidth={true} onChange={(e) => handleAddressChange(e)} placeholder="search by wallet address(s)"></Input>
-              </Grid>
-            </Grid>
-            <br/>
-            <br/>
-            <Grid container>
-            <Grid item xs={6}>
-              <label style={{marginRight: ".5em"}}>StartDate: </label>
-              <DatePicker value={moment(startDate).format("YYYY-MM-DD")} onChange={date => setStartDate(date)} />
-            </Grid>
-            <Grid item xs={6}>
-              <label style={{marginRight: ".5em"}}>EndDate: </label>
-              <DatePicker value={moment(endDate).format("YYYY-MM-DD")} onChange={date => setEndDate(date)} />
-            </Grid>
-            </Grid>
-            <br/>
-            <br/>
-            <Input fullWidth={true} onChange={(e) => handleStartBalance(e)} placeholder="start balance(s)"></Input>
-            <br/>
-            <br/>
-            <Button
-              style={{backgroundColor:`${theme.pink}`, color: "white"}}
-              onClick={handleSubmission}
-            >
-              Search
-            </Button>
-          </form>
+          {/* Import Form Component to capture user data */}
+          <FormContainer
+            submission={submission}
+            setSubmission={setSubmission}
+            setIsLoading={setIsLoading}
+            currency={currency}
+          />
         </Grid>
 
         { /* Daily Dot Price Data*/}
