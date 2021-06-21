@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState} from 'react';
 import useSWR, { mutate } from 'swr'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -16,7 +16,7 @@ import { downloadCSV } from '../Utils/fileWorker'
 import DayDetails from '../Components/DayDetails.js'
 import DotChart from '../Components/DotChart.js'
 import FormContainer from '../Components/Form'
-
+import DownloadModal from '../Components/DownloadModal'
 
 const fetcher = (url, info) => Collector(info).then(data => data)
 
@@ -24,14 +24,13 @@ const HomePage = ({props}) => {
 
 
   const theme = useTheme();
-  const [exportOutput, setExportOutput ] = useState("true");
   const [toggleExport, setToggleExport] = useState(true)
   const [submission, setSubmission] = useState();
   const [isLoading, setIsLoading] = useState(false)
   const [rewards, setRewards] = useState();
   const [currency, setCurrency] = useState(['$', 'USD']);
   const [urls, setUrls] = useState();
-  const [isOpen, setIsOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
 
 
   const { data, error } = useSWR(submission ? ['submisionKey', submission] : null, fetcher);
@@ -56,51 +55,9 @@ const HomePage = ({props}) => {
       const urls = await Promise.all(urlsPromise);
       console.log('these are the urls', urls)
       await setUrls(urls)
-      setIsOpen(true)
-
-
+      setModalOpen(true)
     }
   }
-
-  const handleClose = () => {
-    setIsOpen(false)
-  }
-
-  const body = (
-    <Paper
-      elevation={3}
-      style={{position: 'absolute',
-      width: 400,
-      border: '2px solid #000',
-      boxShadow: theme.shadows[5],
-      paddingTop: "4em",
-      paddingBottom: "5em",
-      paddingRight: "1em",
-      paddingLeft: "1em",
-      top: '50%',
-      left: '50%',
-      transform: `translate(-50%, -50%)`
-      }}
-    >
-      <Grid container justify="center">
-        <Grid item container justify="center" xs={12}>
-          <h3 style={{fontFamily: "Work Sans light", marginTop: 0}}>Your Downloads</h3>
-        </Grid>
-
-        {urls ? urls.map((url, index) => {
-        return(
-          <Grid item container justify="center" xs={6}>
-            <Link target="_blank" href={`${url}`} passHref>
-            <Button style={{backgroundColor:`${theme.pink}`, color: "white", marginTop: '1em'}}>Address{index + 1}.csv</Button>
-            </Link>
-          </Grid>
-        )
-        }): null}
-
-      </Grid>
-    </Paper>
-  )
-
 
   return(
     <>
@@ -203,14 +160,7 @@ const HomePage = ({props}) => {
         </div>
 
     </Container>
-    <Modal
-    open={isOpen}
-    onClose={handleClose}
-    aria-labelledby="simple-modal-title"
-    aria-describedby="simple-modal-description"
-  >
-    {body}
-  </Modal>
+    <DownloadModal urls={urls} theme={theme} setModalOpen={setModalOpen} modalOpen={modalOpen}/>
   </>
   )
 };
