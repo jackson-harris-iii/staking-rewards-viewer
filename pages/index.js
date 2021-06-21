@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState} from 'react';
 import useSWR, { mutate } from 'swr'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -15,6 +15,7 @@ import Collector from '../Utils'
 import { downloadCSV } from '../Utils/fileWorker'
 import DayDetails from '../Components/DayDetails.js'
 import FormContainer from '../Components/Form'
+import DownloadModal from '../Components/DownloadModal'
 // import Chart from 'chart.js/auto';
 
 const fetcher = (url, info) => Collector(info).then(data => data)
@@ -23,19 +24,13 @@ const HomePage = ({props}) => {
 
 
   const theme = useTheme();
-  // const [address, setAddress ] = useState();
-  // const [startDate, setStartDate] = useState(new Date());
-  // const [endDate, setEndDate] = useState(new Date());
-  // const [balance, setBalance ] = useState();
-  // const [priceData, setPriceData ] = useState("true");
-  const [exportOutput, setExportOutput ] = useState("true");
   const [toggleExport, setToggleExport] = useState(true)
   const [submission, setSubmission] = useState();
   const [isLoading, setIsLoading] = useState(false)
   const [rewards, setRewards] = useState();
   const [currency, setCurrency] = useState(['$', 'USD']);
   const [urls, setUrls] = useState();
-  const [isOpen, setIsOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
 
   const { data, error } = useSWR(submission ? ['submisionKey', submission] : null, fetcher);
 
@@ -60,93 +55,9 @@ const HomePage = ({props}) => {
       const urls = await Promise.all(urlsPromise);
       console.log('these are the urls', urls)
       await setUrls(urls)
-      setIsOpen(true)
-
-
+      setModalOpen(true)
     }
   }
-
-  const handleClose = () => {
-    setIsOpen(false)
-  }
-
-  // const handleAddressChange = (e) => {
-  //   e.preventDefault();
-  //   setAddress(e.target.value);
-  // }
-
-  // const handleStartBalance = (e) => {
-  //   e.preventDefault();
-  //   setBalance(e.target.value);
-  // }
-
-  // const handleSubmission = async (e) => {
-  //   e.preventDefault();
-  //   setIsLoading(true)
-  //   let addressesData, balances
-  //   if (address) {
-  //     addressesData = address.split(",");
-  //   } else {
-  //     alert("please enter valid address")
-  //   }
-  //   if (balance) {
-  //     balances = balance.trim().split(",");
-  //   } else {
-  //     alert("please enter valid balances")
-  //   }
-  //   let start = moment(startDate).format("YYYY-MM-DD");
-  //   let end = moment(endDate).format("YYYY-MM-DD");
-
-  //   const addresses = addressesData.map((address, index) => {
-  //     return {
-  //       name: `Account ${index + 1}`,
-  //       address: address.trim(),
-  //       startBalance: parseInt(`${balances[index]}`)
-  //     }
-  //   })
-
-  //   let payload = {
-  //     start, end, currency: currency[1], priceData, exportOutput, addresses
-  //   };
-
-  //   setSubmission(payload);
-
-  // }
-
-  const body = (
-    <Paper
-      elevation={3}
-      style={{position: 'absolute',
-      width: 400,
-      border: '2px solid #000',
-      boxShadow: theme.shadows[5],
-      paddingTop: "4em",
-      paddingBottom: "5em",
-      paddingRight: "1em",
-      paddingLeft: "1em",
-      top: '50%',
-      left: '50%',
-      transform: `translate(-50%, -50%)`
-      }}
-    >
-      <Grid container justify="center">
-        <Grid item container justify="center" xs={12}>
-          <h3 style={{fontFamily: "Work Sans light", marginTop: 0}}>Your Downloads</h3>
-        </Grid>
-
-        {urls ? urls.map((url, index) => {
-        return(
-          <Grid item container justify="center" xs={6}>
-            <Link target="_blank" href={`${url}`} passHref>
-            <Button style={{backgroundColor:`${theme.pink}`, color: "white", marginTop: '1em'}}>Address{index + 1}.csv</Button>
-            </Link>
-          </Grid>
-        )
-        }): null}
-
-      </Grid>
-    </Paper>
-  )
 
   return(
     <>
@@ -251,14 +162,7 @@ const HomePage = ({props}) => {
         </div>
 
     </Container>
-    <Modal
-    open={isOpen}
-    onClose={handleClose}
-    aria-labelledby="simple-modal-title"
-    aria-describedby="simple-modal-description"
-  >
-    {body}
-  </Modal>
+    <DownloadModal urls={urls} theme={theme} setModalOpen={setModalOpen} modalOpen={modalOpen}/>
   </>
   )
 };
