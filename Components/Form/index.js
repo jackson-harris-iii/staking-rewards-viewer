@@ -135,6 +135,7 @@ const FormContainer = ({submission, setSubmission, setIsLoading, currency}) => {
         <br/>
 
         {/* submit button */}
+
         <Button
           style={{backgroundColor:`${theme.pink}`, color: "white"}}
           onClick={handleSubmission}
