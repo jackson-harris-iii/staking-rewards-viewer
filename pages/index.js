@@ -15,6 +15,37 @@ import Collector from '../Utils'
 import { downloadCSV } from '../Utils/fileWorker'
 import DayDetails from '../Components/DayDetails.js'
 // import Chart from 'chart.js/auto';
+import DotChart from '../Components/DotChart.js'
+
+
+//const Dchart = DotChart
+
+
+const input_data = {
+  labels: ['1', '2', '3', '4', '5', '6'],
+  datasets: [
+    {
+      label: 'Dot Price',
+      data: [12, 19, 3, 5, 2, 3],
+      fill: false,
+      backgroundColor: 'rgb(255, 99, 132)',
+      animations: {
+        tension: {
+          duration: 3000,
+          easing: 'linear',
+          from: 0.6,
+          to: 0.35,
+          loop: true
+        }
+      },
+      // tension: 0.3,
+      borderColor: 'rgba(255, 99, 132, 0.2)',
+      yAxisID: 'y-axis-1',
+    },
+  ],
+}
+
+
 
 const fetcher = (url, info) => Collector(info).then(data => data)
 
@@ -35,9 +66,23 @@ const HomePage = ({props}) => {
   const [currency, setCurrency] = useState(['$', 'USD']);
   const [urls, setUrls] = useState();
   const [isOpen, setIsOpen] = useState(false);
+  // const [needsGraphData, setNeedsGraphData] = useState(true);
+
+  // const graphFetcher = (url) => fetch(url).then(response => response.json() ).then( graphData => {setNeedsGraphData(false); console.log(graphData); return graphData})
+  // const { graphData, graphDataError } = useSWR( needsGraphData ? 'https://api.coingecko.com/api/v3/coins/polkadot/market_chart?vs_currency=usd&days=30': null, graphFetcher);
+  // if (graphDataError) return "An error has occurred"
+  
+  
+  const timeStamp = Date.now()
+  let dateHuman = new Intl.DateTimeFormat('en-US', { day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }).format(timeStamp)
+
+  console.log(timeStamp)
+  console.log(dateHuman)
+
+
+
 
   const { data, error } = useSWR(submission ? ['submisionKey', submission] : null, fetcher);
-
   if (error) return "An error has occurred"
 
   const handleCurrencyChange = (e) => {
@@ -113,7 +158,7 @@ const HomePage = ({props}) => {
       start, end, currency: currency[1], priceData, exportOutput, addresses
     };
 
-    // console.log(payload);
+     console.log("test");
     setSubmission(payload);
 
     // try {
@@ -239,11 +284,23 @@ const HomePage = ({props}) => {
           <Paper elevation={3}>
             <Container style={{paddingTop: ".15em", paddingBottom: ".5em"}}>
               <h3 style={{fontFamily: "Work Sans light"}}>Dot Daily Price Data</h3>
-              <Image
+
+              {/* data ? <Skeleton /> : <DotChart /> */}
+
+
+
+              {console.log("About to render component")}
+              <DotChart input_data={input_data}/>
+
+
+
+
+
+              {/* <Image
                 src="/price-chart.png"
                 width={839}
                 height={500}
-              />
+              /> */}
             </Container>
           </Paper>
         </Grid>
