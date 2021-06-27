@@ -1,10 +1,23 @@
 import React, { Fragment } from 'react'
-import {Grid} from '@material-ui/core';
+import {AppBar, Toolbar, IconButton, MenuIcon, Grid} from '@material-ui/core';
 import Image from 'next/image'
 import GitHubIcon from '@material-ui/icons/GitHub';
 import TwitterIcon from '@material-ui/icons/Twitter';
 
 const Header = ({lang, currency, theme}) => (
+  <>
+  {/* <AppBar position="static">
+    <Toolbar>
+          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" className={classes.title}>
+            News
+          </Typography>
+          <Button color="inherit">Login</Button>
+        </Toolbar>
+  </AppBar> */}
+
   <Grid container>
     <Grid xs={3} item>
       <Image
@@ -39,6 +52,7 @@ const Header = ({lang, currency, theme}) => (
     </Grid>
 
   </Grid>
+  </>
 )
 
 export default Header;
