@@ -1,5 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { Container, Input, Grid, Paper, Switch, CircularProgress, Modal } from '@material-ui/core';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import CloseIcon from '@material-ui/icons/Close';
 import DatePicker from 'react-datepicker';
 import moment from 'moment'
 import Button from '@material-ui/core/Button';
@@ -13,6 +15,7 @@ const FormContainer = ({submission, setSubmission, setIsLoading, currency}) => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [balance, setBalance ] = useState();
+  const [addressCount, setAddressCount] = useState([1]);
 
   const handleAddressChange = (e) => {
     e.preventDefault();
@@ -23,6 +26,7 @@ const FormContainer = ({submission, setSubmission, setIsLoading, currency}) => {
     e.preventDefault();
     setBalance(e.target.value);
   }
+
   const handleSubmission = async (e) => {
     e.preventDefault();
     setIsLoading(true)
@@ -55,12 +59,38 @@ const FormContainer = ({submission, setSubmission, setIsLoading, currency}) => {
     setSubmission(payload);
 
   }
+
+  const handleAddAddress = () => {
+    let end = addressCount[addressCount.length - 1]
+    console.log(end)
+    end < 5 ? setAddressCount([...addressCount, end + 1]) : null;
+  }
+
+  const handleRemoveAddress = () => {
+    let temp = [...addressCount];
+    temp.pop()
+    setAddressCount([...temp])
+  }
+
   return(
     <>
       <form style={{marginTop: "5em"}}>
         <Grid container>
-          <Grid item xs={12}>
-            <Input fullWidth={true} onChange={(e) => handleAddressChange(e)} placeholder="search by wallet address(s)"></Input>
+          <Grid item alignItems="flex-end" container xs={12}>
+            <Grid alignItems="center" item xs={1} style={{marginRight: '1.75em'}}>
+                <AddCircleIcon onClick={handleAddAddress} style={{color:`${theme.pink}`}}/>
+              </Grid>
+            {addressCount.map((val) => {
+              return (
+              <Grid item container alignItems="flex-end" xs={10} style={{marginTop: ".5em"}}>
+                {val > 1 ? <Grid item xs={2}><CloseIcon onClick={handleRemoveAddress} /></Grid> : null}
+                <Grid item xs={10}>
+                  <Input fullWidth={true} onChange={(e) => handleAddressChange(e)} placeholder="search by wallet address(s)"></Input>
+                </Grid>
+
+              </Grid>
+              )
+            })}
           </Grid>
         </Grid>
         <br/>

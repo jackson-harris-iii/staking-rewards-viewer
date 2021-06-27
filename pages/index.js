@@ -16,7 +16,6 @@ import { downloadCSV } from '../Utils/fileWorker'
 import DayDetails from '../Components/DayDetails.js'
 import FormContainer from '../Components/Form'
 import DownloadModal from '../Components/DownloadModal'
-// import Chart from 'chart.js/auto';
 
 const fetcher = (url, info) => Collector(info).then(data => data)
 
