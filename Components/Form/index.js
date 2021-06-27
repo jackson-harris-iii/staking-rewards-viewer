@@ -16,7 +16,6 @@ const FormContainer = ({submission, setSubmission, setIsLoading, currency}) => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [balance, setBalance ] = useState();
-  const [addressCount, setAddressCount] = useState([1]);
 
   const handleAddressChange = (e) => {
     e.preventDefault();
