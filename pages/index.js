@@ -217,7 +217,7 @@ const HomePage = ({props}) => {
             <Container style={{paddingTop: ".15em", paddingBottom: ".5em"}}>
               <h3 style={{fontFamily: "Work Sans light"}}>Dot Daily Price Data</h3>
 
-              <DotChart input_data={input_data}/>
+              <DotChart input_data={'USD'}/>
 
             </Container>
           </Paper>
