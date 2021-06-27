@@ -47,28 +47,31 @@ const FormContainer = ({submission, setSubmission, setIsLoading, currency}) => {
   const handleSubmission = async (e) => {
     e.preventDefault();
     setIsLoading(true)
-    let addressesData, balances
-    if (address) {
-      addressesData = address.split(",");
-    } else {
-      alert("please enter valid address")
-    }
-    if (balance) {
-      balances = balance.trim().split(",");
-    } else {
-      alert("please enter valid balances")
-    }
+    // let addressesData, balances
+    // if (address) {
+    //   addressesData = address.split(",");
+    // } else {
+    //   alert("please enter valid address")
+    // }
+    // if (balance) {
+    //   balances = balance.trim().split(",");
+    // } else {
+    //   alert("please enter valid balances")
+    // }
     let start = moment(startDate).format("YYYY-MM-DD");
     let end = moment(endDate).format("YYYY-MM-DD");
 
-    const addresses = addressesData.map((address, index) => {
-      return {
-        name: `Account ${index + 1}`,
-        address: address.trim(),
-        startBalance: parseInt(`${balances[index]}`)
-      }
-    })
+    // const addresses = addressesData.map((address, index) => {
+    //   return {
+    //     name: `Account ${index + 1}`,
+    //     address: address.trim(),
+    //     startBalance: parseInt(`${balances[index]}`)
+    //   }
+    // })
 
+
+    let addresses = Object.entries(accountData).map((account) => (account))
+    console.log('these are the addresses', addresses)
     let payload = {
       start, end, currency: currency[1], priceData, exportOutput, addresses
     };
@@ -78,11 +81,16 @@ const FormContainer = ({submission, setSubmission, setIsLoading, currency}) => {
   }
 
   const handleAddAddress = (e) => {
-    let end = Object.keys(addressCount).[addressCount.length - 1]
+    console.log('accountData', accountData)
+    let end = Object.keys(accountData).[Object.keys(accountData).length - 1]
     console.log(end)
-    end < 2 ? setAddressCount([...addressCount, end + 1]) : null;
+    let temp =  {...accountData};
+    temp[parseInt(end) + 1] = {name: `Account ${parseInt(end + 1) + 1}`};
+    console.log('updated temp', temp)
+    end < 2 ? setAccountData(temp) : null;
   }
 
+  //fix me i need to be an object thing
   const handleRemoveAddress = (e) => {
     let temp = [...addressCount];
     temp.pop()
