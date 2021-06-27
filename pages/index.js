@@ -14,7 +14,8 @@ import Header from '../Components/Header.js'
 import Collector from '../Utils'
 import { downloadCSV } from '../Utils/fileWorker'
 import DayDetails from '../Components/DayDetails.js'
-// import Chart from 'chart.js/auto';
+import DotChart from '../Components/DotChart.js'
+
 
 const fetcher = (url, info) => Collector(info).then(data => data)
 
@@ -36,8 +37,8 @@ const HomePage = ({props}) => {
   const [urls, setUrls] = useState();
   const [isOpen, setIsOpen] = useState(false);
 
-  const { data, error } = useSWR(submission ? ['submisionKey', submission] : null, fetcher);
 
+  const { data, error } = useSWR(submission ? ['submisionKey', submission] : null, fetcher);
   if (error) return "An error has occurred"
 
   const handleCurrencyChange = (e) => {
@@ -113,7 +114,7 @@ const HomePage = ({props}) => {
       start, end, currency: currency[1], priceData, exportOutput, addresses
     };
 
-    // console.log(payload);
+     console.log("test");
     setSubmission(payload);
 
     // try {
@@ -159,30 +160,6 @@ const HomePage = ({props}) => {
       </Grid>
     </Paper>
   )
-
-  // const config = {
-  //   type: 'line',
-  //   data,
-  //   options: {}
-  // };
-
-  // const labels = [
-  //   'January',
-  //   'February',
-  //   'March',
-  //   'April',
-  //   'May',
-  //   'June',
-  // ];
-  // const chartData = {
-  //   labels: labels,
-  //   datasets: [{
-  //     label: 'My First dataset',
-  //     backgroundColor: 'rgb(255, 99, 132)',
-  //     borderColor: 'rgb(255, 99, 132)',
-  //     chartData: [0, 10, 5, 2, 20, 30, 45],
-  //   }]
-  // };
 
 
   return(
@@ -239,11 +216,9 @@ const HomePage = ({props}) => {
           <Paper elevation={3}>
             <Container style={{paddingTop: ".15em", paddingBottom: ".5em"}}>
               <h3 style={{fontFamily: "Work Sans light"}}>Dot Daily Price Data</h3>
-              <Image
-                src="/price-chart.png"
-                width={839}
-                height={500}
-              />
+
+              <DotChart input_data={'USD'}/>
+
             </Container>
           </Paper>
         </Grid>
