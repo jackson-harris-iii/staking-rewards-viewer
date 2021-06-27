@@ -12,20 +12,36 @@ const FormContainer = ({submission, setSubmission, setIsLoading, currency}) => {
   const [priceData, setPriceData ] = useState("true");
   const [exportOutput, setExportOutput ] = useState("true");
   const [address, setAddress ] = useState();
-  const [accountData, setAccountData] = useState();
+  const [accountData, setAccountData] = useState({0:{}});
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [balance, setBalance ] = useState();
-  const [addressCount, setAddressCount] = useState([1]);
 
   const handleAddressChange = (e) => {
     e.preventDefault();
-    setAddress(e.target.value);
+    let key = e.target.attributes.data.value
+    let temp =  {...accountData}
+    if (temp[key]) {
+      temp[key].address = e.target.value
+    }  else {
+      temp[key] = {address : e.target.value}
+    }
+    console.log(temp)
+    temp[key] = {name: `Account ${parseInt(key) + 1}`, address : e.target.value}
+    setAccountData(temp);
   }
 
   const handleStartBalance = (e) => {
     e.preventDefault();
-    setBalance(e.target.value);
+
+    let key = e.target.attributes.data.value;
+    let temp =  {...accountData};
+    if (temp[key]) {
+      temp[key].startBalance = parseInt(e.target.value)
+    }  else {
+      temp[key] = {name: `Account ${parseInt(key) + 1}`, startBalance : parseInt(e.target.value)}
+    }
+    setAccountData(temp);
   }
 
   const handleSubmission = async (e) => {
@@ -61,13 +77,13 @@ const FormContainer = ({submission, setSubmission, setIsLoading, currency}) => {
 
   }
 
-  const handleAddAddress = () => {
-    let end = addressCount[addressCount.length - 1]
+  const handleAddAddress = (e) => {
+    let end = Object.keys(addressCount).[addressCount.length - 1]
     console.log(end)
-    end < 5 ? setAddressCount([...addressCount, end + 1]) : null;
+    end < 2 ? setAddressCount([...addressCount, end + 1]) : null;
   }
 
-  const handleRemoveAddress = () => {
+  const handleRemoveAddress = (e) => {
     let temp = [...addressCount];
     temp.pop()
     setAddressCount([...temp])
@@ -89,23 +105,23 @@ const FormContainer = ({submission, setSubmission, setIsLoading, currency}) => {
         <br/>
         <br/>
 
+
         <Grid container>
           <Grid item alignItems="flex-end" container xs={12}>
             <Grid alignItems="center" item xs={1}
-            // style={{marginRight: '1.75em'}}
             >
               <AddCircleIcon onClick={handleAddAddress} style={{color:`${theme.pink}`}}/>
             </Grid>
-            {addressCount.map((val) => {
+            {Object.keys(accountData).map((val) => {
               return (
               <Grid item container alignItems="flex-end" justify="flex-end" xs={12} style={{marginTop: ".5em"}}>
-                {val > 1 ? <Grid item xs={1} alignItems="flex-end" justify="flex-end"><CancelIcon fontSize="small" onClick={handleRemoveAddress} /></Grid> : null}
+                {val > 0 ? <Grid item container xs={1} alignItems="flex-end" justify="flex-end"><CancelIcon inputProps={{data: val}} fontSize="small" onClick={(e) => handleRemoveAddress(e)} /></Grid> : null}
                 <Grid item container xs={12} spacing={1}>
                   <Grid item xs={9}>
-                    <Input fullWidth={true} onChange={(e) => handleAddressChange(e)} placeholder="search by wallet address(s)"></Input>
+                    <Input inputProps={{data: val}} fullWidth={true} onChange={(e) => handleAddressChange(e)} placeholder="search by wallet address(s)"></Input>
                   </Grid>
                   <Grid item xs={3}>
-                    <Input fullWidth={true} onChange={(e) => handleStartBalance(e)} placeholder="start balance"></Input>
+                    <Input inputProps={{data: val}} fullWidth={true} onChange={(e) => handleStartBalance(e)} placeholder="start balance"></Input>
                   </Grid>
                 </Grid>
 
@@ -116,6 +132,8 @@ const FormContainer = ({submission, setSubmission, setIsLoading, currency}) => {
         </Grid>
         <br/>
         <br/>
+
+        {/* submit button */}
         <Button
           style={{backgroundColor:`${theme.pink}`, color: "white"}}
           onClick={handleSubmission}
