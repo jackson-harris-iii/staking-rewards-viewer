@@ -33,7 +33,6 @@ const FormContainer = ({submission, setSubmission, setIsLoading, currency}) => {
 
   const handleStartBalance = (e) => {
     e.preventDefault();
-
     let key = e.target.attributes.data.value;
     let temp =  {...accountData};
     if (temp[key]) {
@@ -91,10 +90,12 @@ const FormContainer = ({submission, setSubmission, setIsLoading, currency}) => {
   }
 
   //fix me i need to be an object thing
-  const handleRemoveAddress = (e) => {
-    let temp = [...addressCount];
-    temp.pop()
-    setAddressCount([...temp])
+  const handleRemoveAddress = (e, val) => {
+    //attempt to use element.remove (MDN DOM API to delete the specific input field)
+    console.log(e)
+    let temp = {...accountData};
+    delete temp[parseInt(val)]
+    setAccountData(temp)
   }
 
   return(
@@ -123,13 +124,13 @@ const FormContainer = ({submission, setSubmission, setIsLoading, currency}) => {
             {Object.keys(accountData).map((val) => {
               return (
               <Grid item container alignItems="flex-end" justify="flex-end" xs={12} style={{marginTop: ".5em"}}>
-                {val > 0 ? <Grid item container xs={1} alignItems="flex-end" justify="flex-end"><CancelIcon inputProps={{data: val}} fontSize="small" onClick={(e) => handleRemoveAddress(e)} /></Grid> : null}
+                {val > 0 ? <Grid item container xs={1} alignItems="flex-end" justify="flex-end"><CancelIcon fontSize="small" onClick={(e) => handleRemoveAddress(e, val)} /></Grid> : null}
                 <Grid item container xs={12} spacing={1}>
                   <Grid item xs={9}>
-                    <Input inputProps={{data: val}} fullWidth={true} onChange={(e) => handleAddressChange(e)} placeholder="search by wallet address(s)"></Input>
+                    <Input inputProps={{data: val}} fullWidth={true} onChange={(e) => handleAddressChange(e)} placeholder="search by wallet address(s)" value={accountData[val] ? accountData[val].address : ''}></Input>
                   </Grid>
                   <Grid item xs={3}>
-                    <Input inputProps={{data: val}} fullWidth={true} onChange={(e) => handleStartBalance(e)} placeholder="start balance"></Input>
+                    <Input inputProps={{data: val}} fullWidth={true} onChange={(e) => handleStartBalance(e)} placeholder="start balance" value={accountData[val] ? accountData[val].startBalance : ''}></Input>
                   </Grid>
                 </Grid>
 
