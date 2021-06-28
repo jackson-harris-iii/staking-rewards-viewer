@@ -16,6 +16,8 @@ const FormContainer = ({submission, setSubmission, setIsLoading, currency}) => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [balance, setBalance ] = useState();
+  //this set the maximum number of wallet addresses that can be looked up at once
+  const maxFields = 3;
 
   const handleAddressChange = (e) => {
     e.preventDefault();
@@ -27,7 +29,7 @@ const FormContainer = ({submission, setSubmission, setIsLoading, currency}) => {
       temp[key] = {address : e.target.value}
     }
     console.log(temp)
-    temp[key] = {name: `Account ${parseInt(key) + 1}`, address : e.target.value}
+    temp[key] = {address : e.target.value}
     setAccountData(temp);
   }
 
@@ -38,7 +40,7 @@ const FormContainer = ({submission, setSubmission, setIsLoading, currency}) => {
     if (temp[key]) {
       temp[key].startBalance = parseInt(e.target.value)
     }  else {
-      temp[key] = {name: `Account ${parseInt(key) + 1}`, startBalance : parseInt(e.target.value)}
+      temp[key] = {startBalance : parseInt(e.target.value)}
     }
     setAccountData(temp);
   }
@@ -79,14 +81,19 @@ const FormContainer = ({submission, setSubmission, setIsLoading, currency}) => {
 
   }
 
-  const handleAddAddress = (e) => {
+  const handleAddInputFields = (e) => {
     console.log('accountData', accountData)
-    let end = Object.keys(accountData).[Object.keys(accountData).length - 1]
-    console.log(end)
-    let temp =  {...accountData};
-    temp[parseInt(end) + 1] = {name: `Account ${parseInt(end + 1) + 1}`};
-    console.log('updated temp', temp)
-    end < 2 ? setAccountData(temp) : null;
+    let len = Object.keys(accountData).length
+    console.log('this is the len', len)
+    console.log('this is the maxFields',maxFields)
+    if (len < maxFields) {
+      let temp =  {...accountData};
+      let next = Object.keys(accountData).[Object.keys(accountData).length - 1]
+      console.log('next number', next)
+      temp[parseInt(Object.keys(accountData).[Object.keys(accountData).length - 1]) + 1] = {};
+      console.log('updated temp', temp)
+      setAccountData(temp)
+    }
   }
 
   //fix me i need to be an object thing
@@ -119,9 +126,10 @@ const FormContainer = ({submission, setSubmission, setIsLoading, currency}) => {
           <Grid item alignItems="flex-end" container xs={12}>
             <Grid alignItems="center" item xs={1}
             >
-              <AddCircleIcon onClick={handleAddAddress} style={{color:`${theme.pink}`}}/>
+              <AddCircleIcon onClick={handleAddInputFields} style={{color:`${theme.pink}`}}/>
             </Grid>
             {Object.keys(accountData).map((val) => {
+              // console.log('this is the val',val)
               return (
               <Grid item container alignItems="flex-end" justify="flex-end" xs={12} style={{marginTop: ".5em"}}>
                 {val > 0 ? <Grid item container xs={1} alignItems="flex-end" justify="flex-end"><CancelIcon fontSize="small" onClick={(e) => handleRemoveAddress(e, val)} /></Grid> : null}
