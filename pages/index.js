@@ -65,41 +65,40 @@ const HomePage = ({props}) => {
 
       <Header theme={theme} />
 
-    <Grid container justify="center" style={{marginTop: "5em"}} spacing={4}>
-        {/* Staking info entry form*/}
-        <Grid
-          item
-          sm={5}
-        >
-          {/* Import Form Component to capture user data */}
-          <FormContainer
-            submission={submission}
-            setSubmission={setSubmission}
-            setIsLoading={setIsLoading}
-            currency={currency}
-          />
-        </Grid>
+      {/* --- Form & Chart Section --- */}
 
-        { /* Daily Dot Price Data*/}
-        <Grid
-          item
-          sm={5}
-          container
-          justify="center"
-        >
-          <Paper elevation={3}>
-            <Container style={{paddingTop: ".15em", paddingBottom: ".5em"}}>
-              <h3 style={{fontFamily: "Work Sans light"}}>Dot Daily Price Data</h3>
+      <Grid container justify="center" style={{marginTop: "5em"}} spacing={4}>
 
-              <DotChart input_data={'USD'}/>
+          {/* Staking info entry form*/}
+          <Grid
+            item
+            sm={5}
+          >
+            {/* Import Form Component to capture user data */}
+            <FormContainer
+              submission={submission}
+              setSubmission={setSubmission}
+              setIsLoading={setIsLoading}
+              currency={currency}
+            />
+          </Grid>
 
-            </Container>
-          </Paper>
-        </Grid>
+          { /* Daily Dot Price Data*/}
+          <Grid
+            item
+            sm={5}
+            container
+            justify="center"
+          >
+            <Paper elevation={3}>
+              <Container style={{paddingTop: ".15em", paddingBottom: ".5em"}}>
+                <h3 style={{fontFamily: "Work Sans light"}}>Dot Daily Price Data</h3>
 
-      </Grid>
+                <DotChart input_data={'USD'}/>
 
-      <Grid>
+              </Container>
+            </Paper>
+          </Grid>
 
       </Grid>
 
@@ -131,24 +130,19 @@ const HomePage = ({props}) => {
                     <p style={{display: 'inline', marginBottom: '0', fontFamily: "Work Sans light"}}>JSON</p>
                   </Grid>
               </Grid>
-              {/* {console.log('data 289', data.slice(0,-1))} */}
+
               </Paper>
 
               {/* daily data */}
+
               {
-                // <DayDetails dayData={day}/>
                 data[0].address ?
                 data.map((item) => {
-                  return item.data && item.data.list ?
-                    <DayDetails dayData={item}/>
-                    // item.data.list.map((day) => {
-                    //   console.log('this is the day', day)
-                    //  return <Paper elevation={3} style={{marginTop: "3em", paddingBottom: '1em', padding: '1em', overFlowY: 'auto'}}>
-                    //    <span>${day.day}</span>
-                    //     <DayDetails dayData={day}/>
-                    //   </Paper>
-                    // }): null
-                    :null
+                  return (
+                    item.data && item.data.list ?
+                      <DayDetails dayData={item}/>
+                    : null
+                  )
                 }) : null
               }
 
