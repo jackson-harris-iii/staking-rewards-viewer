@@ -16,6 +16,7 @@ const FormContainer = ({submission, setSubmission, setIsLoading, currency}) => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [balance, setBalance ] = useState();
+
   //this set the maximum number of wallet addresses that can be looked up at once
   const maxFields = 3;
 
@@ -48,35 +49,13 @@ const FormContainer = ({submission, setSubmission, setIsLoading, currency}) => {
   const handleSubmission = async (e) => {
     e.preventDefault();
     setIsLoading(true)
-    // let addressesData, balances
-    // if (address) {
-    //   addressesData = address.split(",");
-    // } else {
-    //   alert("please enter valid address")
-    // }
-    // if (balance) {
-    //   balances = balance.trim().split(",");
-    // } else {
-    //   alert("please enter valid balances")
-    // }
+
     let start = moment(startDate).format("YYYY-MM-DD");
     let end = moment(endDate).format("YYYY-MM-DD");
-
-    // const addresses = addressesData.map((address, index) => {
-    //   return {
-    //     name: `Account ${index + 1}`,
-    //     address: address.trim(),
-    //     startBalance: parseInt(`${balances[index]}`)
-    //   }
-    // })
-
-
     let addresses = Object.entries(accountData).map((account, index) => ({name: `Account ${index + 1}`, ...account[1]}))
     let payload = {
       start, end, currency: currency[1], priceData, exportOutput, addresses
     };
-    console.log('here is the payload', payload)
-
     setSubmission(payload);
 
   }
@@ -91,9 +70,7 @@ const FormContainer = ({submission, setSubmission, setIsLoading, currency}) => {
     }
   }
 
-  //fix me i need to be an object thing
   const handleRemoveAddress = (e, val) => {
-    //attempt to use element.remove (MDN DOM API to delete the specific input field)
     let temp = {...accountData};
     delete temp[parseInt(val)]
     setAccountData(temp)
@@ -102,6 +79,9 @@ const FormContainer = ({submission, setSubmission, setIsLoading, currency}) => {
   return(
     <>
       <form style={{marginTop: "5em"}}>
+
+      {/* Start / End Date */}
+
       <Grid container>
         <Grid item xs={6}>
           <label style={{marginRight: ".5em"}}>StartDate: </label>
@@ -115,6 +95,7 @@ const FormContainer = ({submission, setSubmission, setIsLoading, currency}) => {
         <br/>
         <br/>
 
+        {/* Dynamic Form Fields */}
 
         <Grid container>
           <Grid item alignItems="flex-end" container xs={12}>
@@ -123,7 +104,6 @@ const FormContainer = ({submission, setSubmission, setIsLoading, currency}) => {
               <AddCircleIcon onClick={handleAddInputFields} style={{color:`${theme.pink}`}}/>
             </Grid>
             {Object.keys(accountData).map((val) => {
-              // console.log('this is the val',val)
               return (
               <Grid item container alignItems="flex-end" justify="flex-end" xs={12} style={{marginTop: ".5em"}}>
                 {val > 0 ? <Grid item container xs={1} alignItems="flex-end" justify="flex-end"><CancelIcon fontSize="small" onClick={(e) => handleRemoveAddress(e, val)} /></Grid> : null}
