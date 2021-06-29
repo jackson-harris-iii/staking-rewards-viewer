@@ -1,9 +1,9 @@
 import React, { Fragment, useState} from 'react';
 import { Container, Input, Grid, Paper, Switch, CircularProgress, Modal } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
-import DayDetails from '../DayDetails.js'
-import DetailsTable from '../DetailsTable.js'
-import Summary from '../Summary.js'
+import DayDetails from './DayDetails.js'
+import DetailsTable from './DetailsTable.js'
+import Summary from './Summary.js'
 
 const SummaryContainer = ({data, handleExport, toggleExport, setToggleExport, currency, isLoading, theme}) => {
   return (

@@ -3,16 +3,11 @@ import useSWR, { mutate } from 'swr'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useTheme } from '@material-ui/core/styles';
-import { Container, Input, Grid, Paper, Switch, CircularProgress, Modal } from '@material-ui/core';
-import DatePicker from 'react-datepicker';
+import { Container, Input, Grid, Paper, Modal } from '@material-ui/core';
 import moment from 'moment'
-import Button from '@material-ui/core/Button';
-import Summary from '../Components/Summary.js'
-import DetailsTable from '../Components/DetailsTable.js'
 import Header from '../Components/Header.js'
 import Collector from '../Utils'
 import { downloadCSV } from '../Utils/fileWorker'
-import DayDetails from '../Components/DayDetails.js'
 import DotChart from '../Components/DotChart.js'
 import FormContainer from '../Components/Form'
 import DownloadModal from '../Components/DownloadModal'
@@ -36,10 +31,6 @@ const HomePage = ({props}) => {
   const { data, error } = useSWR(submission ? ['submisionKey', submission] : null, fetcher);
   if (error) return "An error has occurred"
 
-  const handleCurrencyChange = (e) => {
-
-  }
-
   const handleExport = async () => {
   // this checks to see if our toggle is set to true for csv or false for json if json open new tab with json data
     if (!toggleExport) {
@@ -53,7 +44,6 @@ const HomePage = ({props}) => {
       copy.pop()
       const urlsPromise = await downloadCSV(copy);
       const urls = await Promise.all(urlsPromise);
-      console.log('these are the urls', urls)
       await setUrls(urls)
       setModalOpen(true)
     }
@@ -72,7 +62,7 @@ const HomePage = ({props}) => {
           {/* Staking info entry form*/}
           <Grid
             item
-            sm={5}
+            md={5}
           >
             {/* Import Form Component to capture user data */}
             <FormContainer
@@ -86,7 +76,7 @@ const HomePage = ({props}) => {
           { /* Daily Dot Price Data*/}
           <Grid
             item
-            sm={5}
+            md={5}
             container
             justify="center"
           >
@@ -102,7 +92,7 @@ const HomePage = ({props}) => {
 
       </Grid>
 
-      {/* Summary Display */}
+      {/* --- Summary Display Section --- */}
 
       <SummaryContainer data={data} handleExport={handleExport} currency={currency} isLoading={isLoading} theme={theme}/>
 

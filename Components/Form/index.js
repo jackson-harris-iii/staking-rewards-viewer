@@ -29,7 +29,6 @@ const FormContainer = ({submission, setSubmission, setIsLoading, currency}) => {
     }  else {
       temp[key] = {address : e.target.value}
     }
-    console.log(temp)
     temp[key] = {address : e.target.value}
     setAccountData(temp);
   }
@@ -83,11 +82,11 @@ const FormContainer = ({submission, setSubmission, setIsLoading, currency}) => {
       {/* Start / End Date */}
 
       <Grid container>
-        <Grid item xs={6}>
+        <Grid item md={6}>
           <label style={{marginRight: ".5em"}}>StartDate: </label>
           <DatePicker value={moment(startDate).format("YYYY-MM-DD")} onChange={date => setStartDate(date)} />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item md={6}>
           <label style={{marginRight: ".5em"}}>EndDate: </label>
           <DatePicker value={moment(endDate).format("YYYY-MM-DD")} onChange={date => setEndDate(date)} />
         </Grid>
