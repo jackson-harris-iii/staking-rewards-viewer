@@ -7,7 +7,6 @@ import { Container, Input, Grid, Paper, Switch, CircularProgress, Modal } from '
 import DatePicker from 'react-datepicker';
 import moment from 'moment'
 import Button from '@material-ui/core/Button';
-import dummyData from '../dummyData.json'
 import Summary from '../Components/Summary.js'
 import DetailsTable from '../Components/DetailsTable.js'
 import Header from '../Components/Header.js'
@@ -17,6 +16,7 @@ import DayDetails from '../Components/DayDetails.js'
 import DotChart from '../Components/DotChart.js'
 import FormContainer from '../Components/Form'
 import DownloadModal from '../Components/DownloadModal'
+import SummaryContainer from '../Components/SummaryContainer'
 
 const fetcher = (url, info) => Collector(info).then(data => data)
 
@@ -103,55 +103,8 @@ const HomePage = ({props}) => {
       </Grid>
 
       {/* Summary Display */}
-        <div>
-        {
-          data ?
-            <>
-              {/* summary */}
-              <Paper elevation={3} style={{marginTop: "3em", paddingBottom: '1em', padding: '1em'}}>
-                <Summary currency={currency[0]} details={data[data.length - 1].details}/>
-                <DetailsTable details={data} currency={currency}/>
 
-                {/* export button and toggles */}
-                <Grid container alignItems="center" style={{marginLeft: '1em'}} spacing={4}>
-                  <Grid item container xs={1} justify="center">
-                    <Button
-                    style={{backgroundColor:`${theme.pink}`, color: "white", marginTop: '1em'}}
-                    onClick={handleExport}
-                  >
-                      Export
-                    </Button>
-                  </Grid>
-                  <Grid item container alignItems="center"xs={6}>
-                    <p style={{display: 'inline', marginBottom: '0', fontFamily: "Work Sans light"}}>CSV</p>
-                    <div style={{marginTop: '.75em'}}>
-                      <Switch inputProps={{ 'aria-label': 'primary checkbox' }} onChange={() => setToggleExport(!toggleExport)}/>
-                    </div>
-                    <p style={{display: 'inline', marginBottom: '0', fontFamily: "Work Sans light"}}>JSON</p>
-                  </Grid>
-              </Grid>
-
-              </Paper>
-
-              {/* daily data */}
-
-              {
-                data[0].address ?
-                data.map((item) => {
-                  return (
-                    item.data && item.data.list ?
-                      <DayDetails dayData={item}/>
-                    : null
-                  )
-                }) : null
-              }
-
-            </>
-            : <> {
-              isLoading ? <Grid container style={{marginTop: '3em'}} justify="center"><CircularProgress color="pink"/></Grid> : null
-            } </>
-        }
-        </div>
+      <SummaryContainer data={data} handleExport={handleExport} currency={currency} isLoading={isLoading} theme={theme}/>
 
     </Container>
     <DownloadModal urls={urls} theme={theme} setModalOpen={setModalOpen} modalOpen={modalOpen}/>
