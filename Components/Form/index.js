@@ -71,27 +71,22 @@ const FormContainer = ({submission, setSubmission, setIsLoading, currency}) => {
     // })
 
 
-    let addresses = Object.entries(accountData).map((account) => (account))
-    console.log('these are the addresses', addresses)
+    let addresses = Object.entries(accountData).map((account, index) => ({name: `Account ${index + 1}`, ...account[1]}))
     let payload = {
       start, end, currency: currency[1], priceData, exportOutput, addresses
     };
+    console.log('here is the payload', payload)
 
     setSubmission(payload);
 
   }
 
   const handleAddInputFields = (e) => {
-    console.log('accountData', accountData)
     let len = Object.keys(accountData).length
-    console.log('this is the len', len)
-    console.log('this is the maxFields',maxFields)
     if (len < maxFields) {
       let temp =  {...accountData};
       let next = Object.keys(accountData).[Object.keys(accountData).length - 1]
-      console.log('next number', next)
       temp[parseInt(Object.keys(accountData).[Object.keys(accountData).length - 1]) + 1] = {};
-      console.log('updated temp', temp)
       setAccountData(temp)
     }
   }
@@ -99,7 +94,6 @@ const FormContainer = ({submission, setSubmission, setIsLoading, currency}) => {
   //fix me i need to be an object thing
   const handleRemoveAddress = (e, val) => {
     //attempt to use element.remove (MDN DOM API to delete the specific input field)
-    console.log(e)
     let temp = {...accountData};
     delete temp[parseInt(val)]
     setAccountData(temp)
