@@ -17,6 +17,9 @@ const FormContainer = ({submission, setSubmission, setIsLoading, currency}) => {
   const [endDate, setEndDate] = useState(new Date());
   const [balance, setBalance ] = useState();
 
+  //this set the maximum number of wallet addresses that can be looked up at once
+  const maxFields = 3;
+
   const handleAddressChange = (e) => {
     e.preventDefault();
     let key = e.target.attributes.data.value
@@ -27,19 +30,18 @@ const FormContainer = ({submission, setSubmission, setIsLoading, currency}) => {
       temp[key] = {address : e.target.value}
     }
     console.log(temp)
-    temp[key] = {name: `Account ${parseInt(key) + 1}`, address : e.target.value}
+    temp[key] = {address : e.target.value}
     setAccountData(temp);
   }
 
   const handleStartBalance = (e) => {
     e.preventDefault();
-
     let key = e.target.attributes.data.value;
     let temp =  {...accountData};
     if (temp[key]) {
       temp[key].startBalance = parseInt(e.target.value)
     }  else {
-      temp[key] = {name: `Account ${parseInt(key) + 1}`, startBalance : parseInt(e.target.value)}
+      temp[key] = {startBalance : parseInt(e.target.value)}
     }
     setAccountData(temp);
   }
@@ -47,59 +49,39 @@ const FormContainer = ({submission, setSubmission, setIsLoading, currency}) => {
   const handleSubmission = async (e) => {
     e.preventDefault();
     setIsLoading(true)
-    // let addressesData, balances
-    // if (address) {
-    //   addressesData = address.split(",");
-    // } else {
-    //   alert("please enter valid address")
-    // }
-    // if (balance) {
-    //   balances = balance.trim().split(",");
-    // } else {
-    //   alert("please enter valid balances")
-    // }
+
     let start = moment(startDate).format("YYYY-MM-DD");
     let end = moment(endDate).format("YYYY-MM-DD");
-
-    // const addresses = addressesData.map((address, index) => {
-    //   return {
-    //     name: `Account ${index + 1}`,
-    //     address: address.trim(),
-    //     startBalance: parseInt(`${balances[index]}`)
-    //   }
-    // })
-
-
-    let addresses = Object.entries(accountData).map((account) => (account))
-    console.log('these are the addresses', addresses)
+    let addresses = Object.entries(accountData).map((account, index) => ({name: `Account ${index + 1}`, ...account[1]}))
     let payload = {
       start, end, currency: currency[1], priceData, exportOutput, addresses
     };
-
     setSubmission(payload);
 
   }
 
-  const handleAddAddress = (e) => {
-    console.log('accountData', accountData)
-    let end = Object.keys(accountData).[Object.keys(accountData).length - 1]
-    console.log(end)
-    let temp =  {...accountData};
-    temp[parseInt(end) + 1] = {name: `Account ${parseInt(end + 1) + 1}`};
-    console.log('updated temp', temp)
-    end < 2 ? setAccountData(temp) : null;
+  const handleAddInputFields = (e) => {
+    let len = Object.keys(accountData).length
+    if (len < maxFields) {
+      let temp =  {...accountData};
+      let next = Object.keys(accountData).[Object.keys(accountData).length - 1]
+      temp[parseInt(Object.keys(accountData).[Object.keys(accountData).length - 1]) + 1] = {};
+      setAccountData(temp)
+    }
   }
 
-  //fix me i need to be an object thing
-  const handleRemoveAddress = (e) => {
-    let temp = [...addressCount];
-    temp.pop()
-    setAddressCount([...temp])
+  const handleRemoveAddress = (e, val) => {
+    let temp = {...accountData};
+    delete temp[parseInt(val)]
+    setAccountData(temp)
   }
 
   return(
     <>
       <form style={{marginTop: "5em"}}>
+
+      {/* Start / End Date */}
+
       <Grid container>
         <Grid item xs={6}>
           <label style={{marginRight: ".5em"}}>StartDate: </label>
@@ -113,23 +95,24 @@ const FormContainer = ({submission, setSubmission, setIsLoading, currency}) => {
         <br/>
         <br/>
 
+        {/* Dynamic Form Fields */}
 
         <Grid container>
           <Grid item alignItems="flex-end" container xs={12}>
             <Grid alignItems="center" item xs={1}
             >
-              <AddCircleIcon onClick={handleAddAddress} style={{color:`${theme.pink}`}}/>
+              <AddCircleIcon onClick={handleAddInputFields} style={{color:`${theme.pink}`}}/>
             </Grid>
             {Object.keys(accountData).map((val) => {
               return (
               <Grid item container alignItems="flex-end" justify="flex-end" xs={12} style={{marginTop: ".5em"}}>
-                {val > 0 ? <Grid item container xs={1} alignItems="flex-end" justify="flex-end"><CancelIcon inputProps={{data: val}} fontSize="small" onClick={(e) => handleRemoveAddress(e)} /></Grid> : null}
+                {val > 0 ? <Grid item container xs={1} alignItems="flex-end" justify="flex-end"><CancelIcon fontSize="small" onClick={(e) => handleRemoveAddress(e, val)} /></Grid> : null}
                 <Grid item container xs={12} spacing={1}>
                   <Grid item xs={9}>
-                    <Input inputProps={{data: val}} fullWidth={true} onChange={(e) => handleAddressChange(e)} placeholder="search by wallet address(s)"></Input>
+                    <Input inputProps={{data: val}} fullWidth={true} onChange={(e) => handleAddressChange(e)} placeholder="search by wallet address(s)" value={accountData[val] ? accountData[val].address : ''}></Input>
                   </Grid>
                   <Grid item xs={3}>
-                    <Input inputProps={{data: val}} fullWidth={true} onChange={(e) => handleStartBalance(e)} placeholder="start balance"></Input>
+                    <Input inputProps={{data: val}} fullWidth={true} onChange={(e) => handleStartBalance(e)} placeholder="start balance" value={accountData[val] ? accountData[val].startBalance : ''}></Input>
                   </Grid>
                 </Grid>
 
