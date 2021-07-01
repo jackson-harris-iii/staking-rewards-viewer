@@ -1,17 +1,15 @@
 import React, { Fragment, useState} from 'react';
 import useSWR, { mutate } from 'swr'
-import Image from 'next/image'
-import Link from 'next/link'
 import { useTheme } from '@material-ui/core/styles';
 import { Container, Input, Grid, Paper, Modal } from '@material-ui/core';
-import moment from 'moment'
-import Header from '../Components/Header.js'
 import Collector from '../Utils'
 import { downloadCSV } from '../Utils/fileWorker'
-import DotChart from '../Components/DotChart.js'
+import Header from '../Components/Header.js'
 import FormContainer from '../Components/Form'
-import DownloadModal from '../Components/DownloadModal'
+import DotChart from '../Components/DotChart.js'
 import SummaryContainer from '../Components/SummaryContainer'
+import DownloadModal from '../Components/DownloadModal'
+import Footer from '../Components/Footer.js'
 
 const fetcher = (url, info) => Collector(info).then(data => data)
 
@@ -51,54 +49,54 @@ const HomePage = ({props}) => {
 
   return(
     <>
-    <Container fluid>
+      <Container fluid styles={{...theme.root}}>
 
-      <Header theme={theme} />
+        <Header theme={theme} />
 
-      {/* --- Form & Chart Section --- */}
+        {/* --- Form & Chart Section --- */}
 
-      <Grid container justify="center" style={{marginTop: "5em"}} spacing={4}>
+        <Grid container justify="center" style={{marginTop: "5em"}} spacing={4}>
 
-          {/* Staking info entry form*/}
-          <Grid
-            item
-            md={5}
-          >
-            {/* Import Form Component to capture user data */}
-            <FormContainer
-              submission={submission}
-              setSubmission={setSubmission}
-              setIsLoading={setIsLoading}
-              currency={currency}
-            />
-          </Grid>
+            {/* Staking info entry form*/}
+            <Grid
+              item
+              md={5}
+            >
+              {/* Import Form Component to capture user data */}
+              <FormContainer
+                submission={submission}
+                setSubmission={setSubmission}
+                setIsLoading={setIsLoading}
+                currency={currency}
+              />
+            </Grid>
 
-          { /* Daily Dot Price Data*/}
-          <Grid
-            item
-            md={5}
-            container
-            justify="center"
-          >
-            <Paper elevation={3}>
-              <Container style={{paddingTop: ".15em", paddingBottom: ".5em"}}>
-                <h3 style={{fontFamily: "Work Sans light"}}>Dot Daily Price Data</h3>
+            { /* Daily Dot Price Data*/}
+            <Grid
+              item
+              md={5}
+              container
+              justify="center"
+            >
+              <Paper elevation={3}>
+                <Container style={{paddingTop: ".15em", paddingBottom: ".5em"}}>
+                  <h3 style={{fontFamily: "Work Sans light"}}>Dot Daily Price Data</h3>
 
-                <DotChart input_data={'USD'}/>
+                  <DotChart input_data={'USD'}/>
 
-              </Container>
-            </Paper>
-          </Grid>
+                </Container>
+              </Paper>
+            </Grid>
 
-      </Grid>
+        </Grid>
 
-      {/* --- Summary Display Section --- */}
+        {/* --- Summary Display Section --- */}
 
-      <SummaryContainer data={data} handleExport={handleExport} currency={currency} isLoading={isLoading} theme={theme}/>
-
-    </Container>
-    <DownloadModal urls={urls} theme={theme} setModalOpen={setModalOpen} modalOpen={modalOpen}/>
-  </>
+        <SummaryContainer data={data} handleExport={handleExport} currency={currency} isLoading={isLoading} theme={theme}/>
+      </Container>
+      <Footer />
+      <DownloadModal urls={urls} theme={theme} setModalOpen={setModalOpen} modalOpen={modalOpen}/>
+    </>
   )
 };
 
