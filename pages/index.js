@@ -55,35 +55,44 @@ const HomePage = ({props}) => {
 
         {/* --- Form & Chart Section --- */}
 
-        <Grid container justify="center" style={{marginTop: "5em"}} spacing={4}>
-
-            {/* Staking info entry form*/}
-            <Grid
-              item
-              md={5}
-            >
-              {/* Import Form Component to capture user data */}
-              <FormContainer
-                submission={submission}
-                setSubmission={setSubmission}
-                setIsLoading={setIsLoading}
-                currency={currency}
-              />
-            </Grid>
+        <Grid container justify="center" style={{marginTop: "5vh", marginBottom: '15vh'}} spacing={5}>
 
             { /* Daily Dot Price Data*/}
             <Grid
               item
-              md={5}
+              md={6}
               container
               justify="center"
+              fluid
             >
-              <Paper elevation={3}>
-                <Container style={{paddingTop: ".15em", paddingBottom: ".5em"}}>
+              <Paper style={{width:'100%'}} elevation={3} >
+                <Container>
                   <h3 style={{fontFamily: "Work Sans light"}}>Dot Daily Price Data</h3>
 
                   <DotChart input_data={'USD'}/>
 
+                </Container>
+              </Paper>
+            </Grid>
+
+            {/* Staking info entry form*/}
+            <Grid
+              item
+              container
+              justify="center"
+              md={6}
+            >
+              {/* Import Form Component to capture user data */}
+              <Paper style={{width:'100%', height:'100%'}} elevation={3} >
+                <Container>
+                  <h3 style={{fontFamily: "Work Sans light", paddingTop: '1em', marginTop: 0}}>Get Staking Data</h3>
+
+                  <FormContainer
+                    submission={submission}
+                    setSubmission={setSubmission}
+                    setIsLoading={setIsLoading}
+                    currency={currency}
+                  />
                 </Container>
               </Paper>
             </Grid>
