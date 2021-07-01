@@ -1,7 +1,5 @@
 import { gatherData } from './gatherData.js';
-// import { exportVariable, writeCSV } from './fileWorker.js';
 import { calculateMetrics, verifyUserInput, getNetwork } from './utils.js';
-import dummyData from '../dummyData.json'
 
 async function Collector (submission) {
   // submission = submission || 'config/userInput.json'
