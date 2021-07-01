@@ -1,17 +1,14 @@
 import React, { Fragment, useState} from 'react';
 import useSWR, { mutate } from 'swr'
-import Image from 'next/image'
-import Link from 'next/link'
 import { useTheme } from '@material-ui/core/styles';
 import { Container, Input, Grid, Paper, Modal } from '@material-ui/core';
-import moment from 'moment'
-import Header from '../Components/Header.js'
 import Collector from '../Utils'
 import { downloadCSV } from '../Utils/fileWorker'
-import DotChart from '../Components/DotChart.js'
+import Header from '../Components/Header.js'
 import FormContainer from '../Components/Form'
-import DownloadModal from '../Components/DownloadModal'
+import DotChart from '../Components/DotChart.js'
 import SummaryContainer from '../Components/SummaryContainer'
+import DownloadModal from '../Components/DownloadModal'
 import Footer from '../Components/Footer.js'
 
 const fetcher = (url, info) => Collector(info).then(data => data)
