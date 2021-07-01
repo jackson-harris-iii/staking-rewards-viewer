@@ -3,6 +3,8 @@ import React, { Fragment, useState, useEffect }  from 'react';
 import { Line } from 'react-chartjs-2';
 import useSWR, { mutate } from 'swr'
 import Button from '@material-ui/core/Button';
+import Skeleton from '@material-ui/lab/Skeleton';
+import { Container, Input, Grid, Paper, Switch, CircularProgress, Modal } from '@material-ui/core';
 
 
   const DotChart = ({input_data}) => {
@@ -64,10 +66,10 @@ import Button from '@material-ui/core/Button';
 
     /* ================================================================== */
     // Inital setup of data for the graph.
-    // Other displays follow simliar procedure: 
+    // Other displays follow simliar procedure:
     // fetcher -> check for data -> format and display.
     /* ================================================================== */
-    
+
     /* Initial fetch to get data */
     let graphFetcher = (url) => fetch(url).then(response => response.json() ).then( graphData => {setGeckoReturnedHourData(graphData);setInitialDataToShow(graphData);setHasGraphDataHourly(true);})
     const { graphData, graphDataError } = useSWR( !hasGraphDataHourly ? 'https://api.coingecko.com/api/v3/coins/polkadot/market_chart?vs_currency=usd&days=30': null, graphFetcher);
@@ -108,7 +110,7 @@ import Button from '@material-ui/core/Button';
 
 
     /* ================================================================== */
-    // Calls to fetch data as user clicks different buttons. 
+    // Calls to fetch data as user clicks different buttons.
     // This does not happen all at once.
     /* ================================================================== */
     /* Minute data of 24 hours */
@@ -130,7 +132,7 @@ import Button from '@material-ui/core/Button';
     const graphFetcher5 = (url) => fetch(url).then(response => response.json() ).then( graphData => {setGeckoReturnedMaxData(graphData);setHasGraphDataMax(true)})
     const { graphData5, graphDataError5 } = useSWR( doModifyMaxData && !hasGraphDataMax ? 'https://api.coingecko.com/api/v3/coins/polkadot/market_chart?vs_currency=usd&days=max': null, graphFetcher5);
     if (graphDataError5) return "An error has occurred"
-    
+
 
     /* ================================================================== */
     // Main Format and Update display with data recieved after click.
@@ -163,7 +165,7 @@ import Button from '@material-ui/core/Button';
       stateSetter(false);
     }
 
-    
+
     /* ================================================================== */
     // Handle client clicks.
     /* ================================================================== */
@@ -185,33 +187,36 @@ import Button from '@material-ui/core/Button';
 
 
     return hasGraphDataHourly ?
-      <>
-      <Line data={DisplayData} />
-      {/* Minute data for hours */}
-      <Button color="primary" onClick={() => handleTimeClick("1H")}>
-        1H
-      </Button>
-      <Button color="primary" onClick={() => handleTimeClick("24H")}>
-        24H 
-      </Button>
-      {/* Hourly Data for Days */}
-      <Button color="primary" onClick={() => handleTimeClick("1W")}>
-        1W 
-      </Button>
-      <Button color="primary" onClick={() => handleTimeClick("1M")}>
-        1M 
-      </Button>
-      {/* Daily Data for Years */}
-      <Button color="primary" onClick={() => handleTimeClick("1Y")}>
-        1Y 
-      </Button>
-      {/* Daily Data for All time */}
-      <Button color="primary" onClick={() => handleTimeClick("MAX")}>
-        MAX 
-      </Button>
-      </> : <>
+      <Grid container justify="center">
+        <Line data={DisplayData} />
+        {/* Minute data for hours */}
+        <Button color="primary" onClick={() => handleTimeClick("1H")}>
+          1H
+        </Button>
+        <Button color="primary" onClick={() => handleTimeClick("24H")}>
+          24H
+        </Button>
+        {/* Hourly Data for Days */}
+        <Button color="primary" onClick={() => handleTimeClick("1W")}>
+          1W
+        </Button>
+        <Button color="primary" onClick={() => handleTimeClick("1M")}>
+          1M
+        </Button>
+        {/* Daily Data for Years */}
+        <Button color="primary" onClick={() => handleTimeClick("1Y")}>
+          1Y
+        </Button>
+        {/* Daily Data for All time */}
+        <Button color="primary" onClick={() => handleTimeClick("MAX")}>
+          MAX
+        </Button>
+      </Grid> : <>
       {/* Put skeleton here while loading data for graph. */}
+      <Skeleton animation="wave" variant="rect" width="100%" height="25vh"/>
+      <br/>
+      <Skeleton animation="wave" variant="rect" style={{marginBottom: '2em'}}/>
       </>
   };
-  
+
   export default DotChart;

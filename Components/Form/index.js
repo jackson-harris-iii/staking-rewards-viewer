@@ -77,7 +77,7 @@ const FormContainer = ({submission, setSubmission, setIsLoading, currency}) => {
 
   return(
     <>
-      <form style={{marginTop: "5em"}}>
+      <form style={{paddingTop: "3em", paddingBottom: '.5em'}}>
 
       {/* Start / End Date */}
 

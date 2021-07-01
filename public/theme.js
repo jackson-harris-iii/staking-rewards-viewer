@@ -4,7 +4,7 @@ import { red } from '@material-ui/core/colors';
 // Create a theme instance.
 const theme = createMuiTheme({
   root: {
-    fontFamily: 'Work Sans'
+    fontFamily: 'Work Sans',
   },
   light: {
     pink: '#E7007B',
