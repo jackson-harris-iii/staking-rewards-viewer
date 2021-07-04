@@ -24,6 +24,7 @@ const HomePage = ({props}) => {
   const [currency, setCurrency] = useState(['$', 'USD']);
   const [urls, setUrls] = useState();
   const [modalOpen, setModalOpen] = useState(false);
+  const [positionVal, setPositionVal] = useState('absolute');
 
 
   const { data, error } = useSWR(submission ? ['submisionKey', submission] : null, fetcher);
@@ -49,61 +50,67 @@ const HomePage = ({props}) => {
 
   return(
     <>
-      <Container fluid styles={{...theme.root}}>
+    <Grid container style={{height: "100vh"}}>
+      <Grid item container style={{marginBottom: '3em'}}>
+        <Container>
+          <Header theme={theme} />
 
-        <Header theme={theme} />
+          {/* --- Form & Chart Section --- */}
 
-        {/* --- Form & Chart Section --- */}
+          <Grid container justify="center" style={{marginTop: "5vh"}} spacing={5}>
 
-        <Grid container justify="center" style={{marginTop: "5vh", marginBottom: '15vh'}} spacing={5}>
+              { /* Daily Dot Price Data*/}
+              <Grid
+                item
+                md={6}
+                container
+                justify="center"
+                fluid
+              >
+                <Paper style={{width:'100%'}} elevation={3} >
+                  <Container>
+                    <h3 style={{fontFamily: "Work Sans light"}}>Dot Daily Price Data</h3>
 
-            { /* Daily Dot Price Data*/}
-            <Grid
-              item
-              md={6}
-              container
-              justify="center"
-              fluid
-            >
-              <Paper style={{width:'100%'}} elevation={3} >
-                <Container>
-                  <h3 style={{fontFamily: "Work Sans light"}}>Dot Daily Price Data</h3>
+                    <DotChart input_data={'USD'}/>
 
-                  <DotChart input_data={'USD'}/>
+                  </Container>
+                </Paper>
+              </Grid>
 
-                </Container>
-              </Paper>
-            </Grid>
+              {/* Staking info entry form*/}
+              <Grid
+                item
+                container
+                justify="center"
+                md={6}
+              >
+                {/* Import Form Component to capture user data */}
+                <Paper style={{width:'100%', height:'100%'}} elevation={3} >
+                  <Container>
+                    <h3 style={{fontFamily: "Work Sans light", paddingTop: '1em', marginTop: 0}}>Get Staking Data</h3>
 
-            {/* Staking info entry form*/}
-            <Grid
-              item
-              container
-              justify="center"
-              md={6}
-            >
-              {/* Import Form Component to capture user data */}
-              <Paper style={{width:'100%', height:'100%'}} elevation={3} >
-                <Container>
-                  <h3 style={{fontFamily: "Work Sans light", paddingTop: '1em', marginTop: 0}}>Get Staking Data</h3>
+                    <FormContainer
+                      submission={submission}
+                      setSubmission={setSubmission}
+                      setIsLoading={setIsLoading}
+                      currency={currency}
+                    />
+                  </Container>
+                </Paper>
+              </Grid>
 
-                  <FormContainer
-                    submission={submission}
-                    setSubmission={setSubmission}
-                    setIsLoading={setIsLoading}
-                    currency={currency}
-                  />
-                </Container>
-              </Paper>
-            </Grid>
+          </Grid>
 
-        </Grid>
+          {/* --- Summary Display Section --- */}
 
-        {/* --- Summary Display Section --- */}
+          <SummaryContainer setToggleExport={setToggleExport} toggleExport={toggleExport} data={data} handleExport={handleExport} currency={currency} isLoading={isLoading} theme={theme}/>
+        </Container>
+      </Grid>
 
-        <SummaryContainer setToggleExport={setToggleExport} toggleExport={toggleExport} data={data} handleExport={handleExport} currency={currency} isLoading={isLoading} theme={theme}/>
-      </Container>
-      <Footer />
+      <Grid item container alignContent="flex-end">
+        <Footer positionVal={positionVal}/>
+      </Grid>
+      </Grid>
       <DownloadModal urls={urls} theme={theme} setModalOpen={setModalOpen} modalOpen={modalOpen}/>
     </>
   )
