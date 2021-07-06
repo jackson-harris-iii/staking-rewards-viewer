@@ -65,7 +65,6 @@ const HomePage = ({props}) => {
                 md={6}
                 container
                 justify="center"
-                fluid
               >
                 <Paper style={{width:'100%'}} elevation={3} >
                   <Container>

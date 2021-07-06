@@ -47,6 +47,7 @@ const FormContainer = ({submission, setSubmission, setIsLoading, currency}) => {
 
   const handleSubmission = async (e) => {
     e.preventDefault();
+    console.log(addresses)
     setIsLoading(true)
 
     let start = moment(startDate).format("YYYY-MM-DD");
@@ -77,7 +78,7 @@ const FormContainer = ({submission, setSubmission, setIsLoading, currency}) => {
 
   return(
     <>
-      <form style={{paddingTop: "3em", paddingBottom: '.5em'}}>
+      <form noValidate style={{paddingTop: "3em", paddingBottom: '.5em'}}>
 
       {/* Start / End Date */}
 
@@ -97,14 +98,14 @@ const FormContainer = ({submission, setSubmission, setIsLoading, currency}) => {
         {/* Dynamic Form Fields */}
 
         <Grid container>
-          <Grid item alignItems="flex-end" container xs={12}>
-            <Grid alignItems="center" item xs={1}
+          <Grid item container alignItems="flex-end" xs={12}>
+            <Grid item container alignItems="center" xs={1}
             >
               <AddCircleIcon onClick={handleAddInputFields} style={{color:`${theme.pink}`}}/>
             </Grid>
-            {Object.keys(accountData).map((val) => {
+            {Object.keys(accountData).map((val, index) => {
               return (
-              <Grid item container alignItems="flex-end" justify="flex-end" xs={12} style={{marginTop: ".5em"}}>
+              <Grid key={index} item container alignItems="flex-end" justify="flex-end" xs={12} style={{marginTop: ".5em"}}>
                 {val > 0 ? <Grid item container xs={1} alignItems="flex-end" justify="flex-end"><CancelIcon fontSize="small" onClick={(e) => handleRemoveAddress(e, val)} /></Grid> : null}
                 <Grid item container xs={12} spacing={1}>
                   <Grid item xs={9}>

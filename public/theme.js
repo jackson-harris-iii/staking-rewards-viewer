@@ -17,7 +17,6 @@ const theme = createMuiTheme({
     border-right: none !important;
     `
   ,
-  spacing: [0, 4, 8, 16, 32, 64],
 });
 
 export default theme;
