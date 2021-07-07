@@ -15,7 +15,7 @@ const FormContainer = ({submission, setSubmission, setSubmit, setIsLoading, curr
   const [accountData, setAccountData] = useState({0:{}});
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
-  const [balance, setBalance ] = useState("");
+  const [balance, setBalance ] = useState(0);
 
   //this set the maximum number of wallet addresses that can be looked up at once
   const maxFields = 3;
@@ -38,9 +38,9 @@ const FormContainer = ({submission, setSubmission, setSubmit, setIsLoading, curr
     let key = e.target.attributes.data.value;
     let temp =  {...accountData};
     if (temp[key]) {
-      temp[key].startBalance = parseInt(e.target.value)
+      temp[key].startBalance = e.target.value
     }  else {
-      temp[key] = {startBalance : parseInt(e.target.value)}
+      temp[key] = {startBalance : e.target.value}
     }
     setAccountData(temp);
   }
