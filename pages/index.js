@@ -19,6 +19,7 @@ const HomePage = ({props}) => {
   const theme = useTheme();
   const [toggleExport, setToggleExport] = useState(true)
   const [submission, setSubmission] = useState();
+  const [submit, setSubmit] = useState();
   const [isLoading, setIsLoading] = useState(false)
   const [rewards, setRewards] = useState();
   const [currency, setCurrency] = useState(['$', 'USD']);
@@ -27,8 +28,10 @@ const HomePage = ({props}) => {
   const [positionVal, setPositionVal] = useState('absolute');
 
 
-  const { data, error } = useSWR(submission ? ['submisionKey', submission] : null, fetcher);
-  if (error) return "An error has occurred"
+  const { data, error } = useSWR(submission && submit ? ['submisionKey', submission] : null, fetcher);
+  if (error) {
+    isLoading ? setIsLoading(false) : null;
+  }
 
   const handleExport = async () => {
   // this checks to see if our toggle is set to true for csv or false for json if json open new tab with json data
@@ -92,6 +95,7 @@ const HomePage = ({props}) => {
                       submission={submission}
                       setSubmission={setSubmission}
                       setIsLoading={setIsLoading}
+                      setSubmit={setSubmit}
                       currency={currency}
                     />
                   </Container>
@@ -103,6 +107,11 @@ const HomePage = ({props}) => {
           {/* --- Summary Display Section --- */}
 
           <SummaryContainer setToggleExport={setToggleExport} toggleExport={toggleExport} data={data} handleExport={handleExport} currency={currency} isLoading={isLoading} theme={theme}/>
+
+          {
+            error ? <Container><h3 style={{marginTop: '3em'}}>No Results Found</h3></Container> : null
+          }
+
         </Container>
       </Grid>
 

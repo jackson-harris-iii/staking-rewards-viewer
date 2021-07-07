@@ -4,7 +4,7 @@ import { calculateMetrics, verifyUserInput, getNetwork } from './utils.js';
 async function Collector (submission) {
   // submission = submission || 'config/userInput.json'
   // submission = JSON.stringify(dummyData);
-  console.log('this is the submission', submission)
+  // console.log('this is the submission', submission)
   let obj = {};
   let results = []
   // let userInput = readJSON(submission);

@@ -7,15 +7,15 @@ import moment from 'moment'
 import Button from '@material-ui/core/Button';
 import { useTheme } from '@material-ui/core/styles';
 
-const FormContainer = ({submission, setSubmission, setIsLoading, currency}) => {
+const FormContainer = ({submission, setSubmission, setSubmit, setIsLoading, currency}) => {
   const theme = useTheme();
   const [priceData, setPriceData ] = useState("true");
   const [exportOutput, setExportOutput ] = useState("true");
-  const [address, setAddress ] = useState();
+  const [address, setAddress ] = useState("");
   const [accountData, setAccountData] = useState({0:{}});
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
-  const [balance, setBalance ] = useState();
+  const [balance, setBalance ] = useState("");
 
   //this set the maximum number of wallet addresses that can be looked up at once
   const maxFields = 3;
@@ -47,8 +47,16 @@ const FormContainer = ({submission, setSubmission, setIsLoading, currency}) => {
 
   const handleSubmission = async (e) => {
     e.preventDefault();
-    console.log(addresses)
-    setIsLoading(true)
+    let entries = 0;
+    let lengths = 0;
+    // let addresses = Object.entries(accountData).map((account, index) => {
+    //   entries++
+    //   lengths += 11
+    //   return {name: `Account ${index + 1}`, ...account[1]}
+    // })
+    // console.log(accountData)
+    setIsLoading(true);
+    setSubmit(true);
 
     let start = moment(startDate).format("YYYY-MM-DD");
     let end = moment(endDate).format("YYYY-MM-DD");
