@@ -14,9 +14,9 @@ import Header from '../Components/Header.js'
 import Collector from '../Utils'
 import { downloadCSV } from '../Utils/fileWorker'
 import DayDetails from '../Components/DayDetails.js'
-import DotChart from '../Components/DotChart.js'
 import FormContainer from '../Components/Form'
 import DownloadModal from '../Components/DownloadModal'
+import DotChart from '../Components/DotChart.js'
 
 const fetcher = (url, info) => Collector(info).then(data => data)
 
@@ -31,6 +31,7 @@ const HomePage = ({props}) => {
   const [currency, setCurrency] = useState(['$', 'USD']);
   const [urls, setUrls] = useState();
   const [modalOpen, setModalOpen] = useState(false);
+  const [curtest, setcurtest] = useState(['$','USD']);
 
 
   const { data, error } = useSWR(submission ? ['submisionKey', submission] : null, fetcher);
@@ -39,6 +40,8 @@ const HomePage = ({props}) => {
   const handleCurrencyChange = (e) => {
 
   }
+  
+  
 
   const handleExport = async () => {
   // this checks to see if our toggle is set to true for csv or false for json if json open new tab with json data
@@ -63,7 +66,7 @@ const HomePage = ({props}) => {
     <>
     <Container fluid>
 
-      <Header theme={theme} />
+      <Header theme={theme} setCurrency={setcurtest}/>
 
     <Grid container justify="center" style={{marginTop: "5em"}} spacing={4}>
         {/* Staking info entry form*/}
@@ -77,7 +80,9 @@ const HomePage = ({props}) => {
             setSubmission={setSubmission}
             setIsLoading={setIsLoading}
             currency={currency}
+            
           />
+          
         </Grid>
 
         { /* Daily Dot Price Data*/}
@@ -91,7 +96,7 @@ const HomePage = ({props}) => {
             <Container style={{paddingTop: ".15em", paddingBottom: ".5em"}}>
               <h3 style={{fontFamily: "Work Sans light"}}>Dot Daily Price Data</h3>
 
-              <DotChart input_data={'USD'}/>
+              <DotChart input_data={curtest}/>
 
             </Container>
           </Paper>

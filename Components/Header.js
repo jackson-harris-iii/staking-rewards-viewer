@@ -3,8 +3,10 @@ import {AppBar, Toolbar, IconButton, MenuIcon, Grid} from '@material-ui/core';
 import Image from 'next/image'
 import GitHubIcon from '@material-ui/icons/GitHub';
 import TwitterIcon from '@material-ui/icons/Twitter';
+import CurrencyMenu from '../Components/CurrencyPicker.js';
 
-const Header = ({lang, currency, theme}) => (
+
+const Header = ({lang, setCurrency, theme}) => (
   <>
   {/* <AppBar position="static">
     <Toolbar>
@@ -35,10 +37,10 @@ const Header = ({lang, currency, theme}) => (
     <Grid xs={3} container spacing={3} style={{marginTop: "1em"}} >
       <Grid item style={{marginTop: ".5em"}}>
         <h4 style={{marginRight: "1em", display: "inline", fontFamily: "Work Sans"}}>EN</h4>
-        <h4 style={{display: "inline", fontFamily: "Work Sans light"}}>$USD</h4>
       </Grid>
-
-      <Grid item>
+      
+      <Grid item alignments="center">
+        <CurrencyMenu call_back={setCurrency}/>
       </Grid>
 
       <Grid item alignments="center" style={{marginTop: ".25em"}}>

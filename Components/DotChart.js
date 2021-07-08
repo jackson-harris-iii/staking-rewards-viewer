@@ -16,15 +16,6 @@ import Button from '@material-ui/core/Button';
           fill: false,
           backgroundColor: 'rgb(255, 99, 132)',
           radius: 0.5,
-          // animations: {
-          //   tension: {
-          //     duration: 3000,
-          //     easing: 'linear',
-          //     from: 1,
-          //     to: 0.05,
-          //     loop: true
-          //   }
-          // },
           tension: 0.3,
           borderColor: 'rgba(255, 99, 132, 0.9)',
           yAxisID: 'y-axis-1',
@@ -59,7 +50,27 @@ import Button from '@material-ui/core/Button';
 
     // String containing which time range to display on graph. set my click.
     const [timeString, setTimeString] = useState(null);
+    const [currency, setCurrency] = useState('USD')
+    
+    
+    if (input_data[1] != currency)
+    {
+      // Update data by currency
+      // Default to past 30 days.
+      setCurrency(input_data[1])
+      
+      let temp = {...DisplayData};
+      temp.datasets[0].label = `Dot Price (${input_data[1]})`;
+      setDisplayData(temp);
 
+      setHasGraphDataMinute(false);
+      setHasGraphDataHourly(false);
+      setHasGraphDataDaily(false);
+      setHasGraphDataMax(false);
+
+      setTimeString("1M");
+      setDoModifyHourData(true);
+    } 
 
 
     /* ================================================================== */
@@ -70,7 +81,7 @@ import Button from '@material-ui/core/Button';
     
     /* Initial fetch to get data */
     let graphFetcher = (url) => fetch(url).then(response => response.json() ).then( graphData => {setGeckoReturnedHourData(graphData);setInitialDataToShow(graphData);setHasGraphDataHourly(true);})
-    const { graphData, graphDataError } = useSWR( !hasGraphDataHourly ? 'https://api.coingecko.com/api/v3/coins/polkadot/market_chart?vs_currency=usd&days=30': null, graphFetcher);
+    const { graphData, graphDataError } = useSWR( !hasGraphDataHourly ? `https://api.coingecko.com/api/v3/coins/polkadot/market_chart?vs_currency=${currency}&days=30`: null, graphFetcher);
     if (graphDataError) return "An error has occurred"
 
     /* Initial call to update graph once data is recieved */
@@ -93,6 +104,7 @@ import Button from '@material-ui/core/Button';
       let temp = {...DisplayData}
       temp.labels = times
       temp.datasets[0].data = prices
+      temp.datasets[0].label = `Dot Price (${currency})`;
       setDisplayData(temp)
       setDoModifyInitialData(false);
     }
@@ -101,9 +113,9 @@ import Button from '@material-ui/core/Button';
     // Calls to the update display, from the render once data is recieved
     /* ================================================================== */
     doModifyMinuteData && hasGraphDataMinute ? updateDisplayChartData({ minute: "2-digit", hour: "2-digit" }, setDoModifyMinuteData) : {}
-    doModifyHourData && hasGraphDataHourly ? updateDisplayChartData( { hour: '2-digit', day: '2-digit' } ,setDoModifyHourData) : {}
-    doModifyDayData && hasGraphDataDaily ? updateDisplayChartData( { day: '2-digit', month: '2-digit' } ,setDoModifyDayData) : {}
-    doModifyMaxData && hasGraphDataMax ? updateDisplayChartData( { day: '2-digit', month: '2-digit' } ,setDoModifyMaxData) : {}
+    doModifyHourData && hasGraphDataHourly ? updateDisplayChartData( { hour: '2-digit', day: '2-digit' } , setDoModifyHourData) : {}
+    doModifyDayData && hasGraphDataDaily ? updateDisplayChartData( { day: '2-digit', month: '2-digit' } , setDoModifyDayData) : {}
+    doModifyMaxData && hasGraphDataMax ? updateDisplayChartData( { day: '2-digit', month: '2-digit' } , setDoModifyMaxData) : {}
 
 
 
@@ -113,22 +125,22 @@ import Button from '@material-ui/core/Button';
     /* ================================================================== */
     /* Minute data of 24 hours */
     const graphFetcher2 = (url) => fetch(url).then(response => response.json() ).then( graphData => {setGeckoReturnedMinuteData(graphData);setHasGraphDataMinute(true)})
-    const { graphData2, graphDataError2 } = useSWR( doModifyMinuteData && !hasGraphDataMinute ? 'https://api.coingecko.com/api/v3/coins/polkadot/market_chart?vs_currency=usd&days=1': null, graphFetcher2);
+    const { graphData2, graphDataError2 } = useSWR( doModifyMinuteData && !hasGraphDataMinute ? `https://api.coingecko.com/api/v3/coins/polkadot/market_chart?vs_currency=${currency}&days=1`: null, graphFetcher2);
     if (graphDataError2) return "An error has occurred"
 
     /* hourly data of 1 month */
     const graphFetcher3 = (url) => fetch(url).then(response => response.json() ).then( graphData => {setGeckoReturnedHourData(graphData);setHasGraphDataHourly(true)})
-    const { graphData3, graphDataError3 } = useSWR( doModifyHourData && !hasGraphDataHourly ? 'https://api.coingecko.com/api/v3/coins/polkadot/market_chart?vs_currency=usd&days=30': null, graphFetcher3);
+    const { graphData3, graphDataError3 } = useSWR( doModifyHourData && !hasGraphDataHourly ? `https://api.coingecko.com/api/v3/coins/polkadot/market_chart?vs_currency=${currency}&days=30`: null, graphFetcher3);
     if (graphDataError3) return "An error has occurred"
 
     // /* Daily data of 1 year */
     const graphFetcher4 = (url) => fetch(url).then(response => response.json() ).then( graphData => { setGeckoReturnedDayData(graphData); setHasGraphDataDaily(true)})
-    const { graphData4, graphDataError4 } = useSWR( doModifyDayData && !hasGraphDataDaily ? 'https://api.coingecko.com/api/v3/coins/polkadot/market_chart?vs_currency=usd&days=365': null, graphFetcher4);
+    const { graphData4, graphDataError4 } = useSWR( doModifyDayData && !hasGraphDataDaily ? `https://api.coingecko.com/api/v3/coins/polkadot/market_chart?vs_currency=${currency}&days=365`: null, graphFetcher4);
     if (graphDataError4) return "An error has occurred"
 
     // /* Daily data of 1 year */
     const graphFetcher5 = (url) => fetch(url).then(response => response.json() ).then( graphData => {setGeckoReturnedMaxData(graphData);setHasGraphDataMax(true)})
-    const { graphData5, graphDataError5 } = useSWR( doModifyMaxData && !hasGraphDataMax ? 'https://api.coingecko.com/api/v3/coins/polkadot/market_chart?vs_currency=usd&days=max': null, graphFetcher5);
+    const { graphData5, graphDataError5 } = useSWR( doModifyMaxData && !hasGraphDataMax ? `https://api.coingecko.com/api/v3/coins/polkadot/market_chart?vs_currency=${currency}&days=max`: null, graphFetcher5);
     if (graphDataError5) return "An error has occurred"
     
 
