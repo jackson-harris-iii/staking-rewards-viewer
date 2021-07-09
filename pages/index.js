@@ -9,7 +9,6 @@ import FormContainer from '../Components/Form'
 import DotChart from '../Components/DotChart.js'
 import SummaryContainer from '../Components/SummaryContainer'
 import DownloadModal from '../Components/DownloadModal'
-import DotChart from '../Components/DotChart.js'
 import Footer from '../Components/Footer.js'
 
 const fetcher = (url, info) => Collector(info).then(data => data)
