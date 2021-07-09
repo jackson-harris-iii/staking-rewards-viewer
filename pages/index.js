@@ -4,7 +4,6 @@ import { useTheme } from '@material-ui/core/styles';
 import { Container, Input, Grid, Paper, Modal } from '@material-ui/core';
 import Collector from '../Utils'
 import { downloadCSV } from '../Utils/fileWorker'
-import DayDetails from '../Components/DayDetails.js'
 import Header from '../Components/Header.js'
 import FormContainer from '../Components/Form'
 import DotChart from '../Components/DotChart.js'
