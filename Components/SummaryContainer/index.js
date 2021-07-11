@@ -13,8 +13,11 @@ const SummaryContainer = ({data, handleExport, toggleExport, setToggleExport, cu
             <>
               {/* summary */}
               <Paper elevation={3} style={{marginTop: "3em", paddingBottom: '1em', padding: '1em'}}>
+                <Grid container justify='center'>
                 <Summary currency={currency[0]} details={data[data.length - 1].details}/>
-                <DetailsTable details={data} currency={currency}/>
+                <Container>
+                  <DetailsTable details={data} currency={currency}/>
+                </Container>
 
                 {/* export button and toggles */}
                 <Grid container alignItems="center" style={{marginLeft: '1em'}} spacing={4}>
@@ -34,21 +37,24 @@ const SummaryContainer = ({data, handleExport, toggleExport, setToggleExport, cu
                     <p style={{display: 'inline', marginBottom: '0', fontFamily: "Work Sans light"}}>JSON</p>
                   </Grid>
               </Grid>
-
+              </Grid>
               </Paper>
 
               {/* daily data */}
-
+              <Grid container item justify="space-around">
               {
                 data[0].address ?
                 data.map((item) => {
                   return (
                     item.data && item.data.list ?
+                    <Grid container item md={4} justify="center">
                       <DayDetails dayData={item}/>
+                    </Grid>
                     : null
                   )
                 }) : null
               }
+              </Grid>
 
             </>
             : <> {
