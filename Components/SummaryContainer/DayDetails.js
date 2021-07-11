@@ -15,13 +15,15 @@ const descendingComparator = (a, b, orderBy) => {
 }
 
 const getComparator = (order, orderBy) => {
+  console.log('order', order)
+  console.log('orderBy', orderBy)
   return order === 'desc'
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
 const stableSort = (array, comparator) => {
-  // console.log(array)
+  console.log(array)
   const stabilizedThis = array.map((el, index) => [el, index]);
   stabilizedThis.sort((a, b) => {
     const order = comparator(a[0], b[0]);
@@ -32,11 +34,11 @@ const stableSort = (array, comparator) => {
 }
 
 const headCells = [
-  { id: 'Date', numeric: false, disablePadding: false, label: 'Date [d/m/y]' },
+  { id: 'day', numeric: false, disablePadding: false, label: 'Date [d/m/y]' },
   { id: 'Amount', numeric: true, disablePadding: false, label: 'Amount' },
-  { id: 'Price', numeric: true, disablePadding: false, label: 'Price' },
-  { id: 'Fiat Value', numeric: true, disablePadding: false, label: 'Fiat Value'},
-  { id: 'Total Payouts', numeric: false, disablePadding: false, label: 'Total Payouts'},
+  { id: 'price', numeric: true, disablePadding: false, label: 'Price' },
+  { id: 'valueFiat', numeric: true, disablePadding: false, label: 'Fiat Value'},
+  { id: 'numberPayouts', numeric: false, disablePadding: false, label: 'Total Payouts'},
   // { id: 'Fiat Value', numeric: true, disablePadding: false, label: `Fiat Value (${currency[1]})`},
 
 ]
@@ -122,7 +124,7 @@ const DayDetails = ({dayData}) => {
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [dense, setDense] = useState(false);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(15);
 
   const rows = dayData.data.list;
 
@@ -198,7 +200,7 @@ const DayDetails = ({dayData}) => {
                 onRequestSort={handleRequestSort}
                 rowCount={rows.length}
               />
-              <TableHead>
+              {/* <TableHead>
                 <TableRow>
                   {headCells.map((headCell) => (
                     <TableCell
@@ -216,10 +218,10 @@ const DayDetails = ({dayData}) => {
                     </TableCell>
                   ))}
                 </TableRow>
-              </TableHead>
+              </TableHead> */}
 
               <TableBody>
-                {dayData.data && dayData.data.list ? stableSort(dayData.data.list, getComparator(order, orderBy))
+                {dayData.data && dayData.data.list ? stableSort(rows, getComparator(order, orderBy))
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((day, index) => {
                     const isItemSelected = isSelected(day.extrinsicHash);
