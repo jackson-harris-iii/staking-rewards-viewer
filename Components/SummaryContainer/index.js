@@ -23,7 +23,7 @@ const SummaryContainer = ({data, handleExport, toggleExport, setToggleExport, cu
                 {/* export button and toggles */}
                 <Grid container alignItems="center" style={{marginLeft: '1em'}} spacing={4} justify="flex-start">
                   <Grid container item xs={1} alignItems="center" justify="flex-end">
-                    <Tooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title="Missing some data? The results only show days with information even if there are additional days in you results.">
+                    <Tooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title="Export your raw data results as either a CSV or JSON">
                       <InfoIcon />
                     </Tooltip>
                   </Grid>
