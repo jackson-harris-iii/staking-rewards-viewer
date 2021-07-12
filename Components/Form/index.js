@@ -7,15 +7,15 @@ import moment from 'moment'
 import Button from '@material-ui/core/Button';
 import { useTheme } from '@material-ui/core/styles';
 
-const FormContainer = ({submission, setSubmission, setIsLoading, currency}) => {
+const FormContainer = ({submission, setSubmission, setSubmit, setIsLoading, currency}) => {
   const theme = useTheme();
   const [priceData, setPriceData ] = useState("true");
   const [exportOutput, setExportOutput ] = useState("true");
-  const [address, setAddress ] = useState();
+  const [address, setAddress ] = useState("");
   const [accountData, setAccountData] = useState({0:{}});
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
-  const [balance, setBalance ] = useState();
+  const [balance, setBalance ] = useState(0);
 
   //this set the maximum number of wallet addresses that can be looked up at once
   const maxFields = 3;
@@ -38,16 +38,20 @@ const FormContainer = ({submission, setSubmission, setIsLoading, currency}) => {
     let key = e.target.attributes.data.value;
     let temp =  {...accountData};
     if (temp[key]) {
-      temp[key].startBalance = parseInt(e.target.value)
+      temp[key].startBalance = e.target.value
     }  else {
-      temp[key] = {startBalance : parseInt(e.target.value)}
+      temp[key] = {startBalance : e.target.value}
     }
     setAccountData(temp);
   }
 
   const handleSubmission = async (e) => {
     e.preventDefault();
-    setIsLoading(true)
+    let entries = 0;
+    let lengths = 0;
+
+    setIsLoading(true);
+    setSubmit(true);
 
     let start = moment(startDate).format("YYYY-MM-DD");
     let end = moment(endDate).format("YYYY-MM-DD");
@@ -77,7 +81,7 @@ const FormContainer = ({submission, setSubmission, setIsLoading, currency}) => {
 
   return(
     <>
-      <form style={{paddingTop: "3em", paddingBottom: '.5em'}}>
+      <form noValidate style={{paddingTop: "3em", paddingBottom: '.5em'}}>
 
       {/* Start / End Date */}
 
@@ -97,14 +101,14 @@ const FormContainer = ({submission, setSubmission, setIsLoading, currency}) => {
         {/* Dynamic Form Fields */}
 
         <Grid container>
-          <Grid item alignItems="flex-end" container xs={12}>
-            <Grid alignItems="center" item xs={1}
+          <Grid item container alignItems="flex-end" xs={12}>
+            <Grid item container alignItems="center" xs={1}
             >
               <AddCircleIcon onClick={handleAddInputFields} style={{color:`${theme.pink}`}}/>
             </Grid>
-            {Object.keys(accountData).map((val) => {
+            {Object.keys(accountData).map((val, index) => {
               return (
-              <Grid item container alignItems="flex-end" justify="flex-end" xs={12} style={{marginTop: ".5em"}}>
+              <Grid key={index} item container alignItems="flex-end" justify="flex-end" xs={12} style={{marginTop: ".5em"}}>
                 {val > 0 ? <Grid item container xs={1} alignItems="flex-end" justify="flex-end"><CancelIcon fontSize="small" onClick={(e) => handleRemoveAddress(e, val)} /></Grid> : null}
                 <Grid item container xs={12} spacing={1}>
                   <Grid item xs={9}>

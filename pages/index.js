@@ -1,7 +1,8 @@
 import React, { Fragment, useState} from 'react';
 import useSWR, { mutate } from 'swr'
 import { useTheme } from '@material-ui/core/styles';
-import { Container, Input, Grid, Paper, Modal } from '@material-ui/core';
+import { Container, Input, Grid, Paper, Modal, Tooltip, Fade } from '@material-ui/core';
+import InfoIcon from '@material-ui/icons/Info';
 import Collector from '../Utils'
 import { downloadCSV } from '../Utils/fileWorker'
 import Header from '../Components/Header.js'
@@ -11,24 +12,35 @@ import SummaryContainer from '../Components/SummaryContainer'
 import DownloadModal from '../Components/DownloadModal'
 import Footer from '../Components/Footer.js'
 
-const fetcher = (url, info) => Collector(info).then(data => data)
-
 const HomePage = ({props}) => {
 
 
   const theme = useTheme();
   const [toggleExport, setToggleExport] = useState(true)
   const [submission, setSubmission] = useState();
+  const [submit, setSubmit] = useState(false);
   const [isLoading, setIsLoading] = useState(false)
   const [rewards, setRewards] = useState();
   const [currency, setCurrency] = useState(['$', 'USD']);
   const [urls, setUrls] = useState();
   const [modalOpen, setModalOpen] = useState(false);
   const [positionVal, setPositionVal] = useState('absolute');
+  const [data, setData] = useState();
 
+  const fetcher = (url, info) => Collector(info).then((data) => {responder(data); return data})
 
-  const { data, error } = useSWR(submission ? ['submisionKey', submission] : null, fetcher);
-  if (error) return "An error has occurred"
+  const responder = (data) => {
+    console.log('this is the data', data)
+    setIsLoading(false)
+    setData(data);
+    setSubmit(false)
+    return data
+  }
+
+  const { info, error } = useSWR(submission && submit ? ['submisionKey', submission] : null, fetcher);
+  if (error) {
+    isLoading ? setIsLoading(false) : null;
+  }
 
   const handleExport = async () => {
   // this checks to see if our toggle is set to true for csv or false for json if json open new tab with json data
@@ -65,7 +77,6 @@ const HomePage = ({props}) => {
                 md={6}
                 container
                 justify="center"
-                fluid
               >
                 <Paper style={{width:'100%'}} elevation={3} >
                   <Container>
@@ -87,12 +98,28 @@ const HomePage = ({props}) => {
                 {/* Import Form Component to capture user data */}
                 <Paper style={{width:'100%', height:'100%'}} elevation={3} >
                   <Container>
-                    <h3 style={{fontFamily: "Work Sans light", paddingTop: '1em', marginTop: 0}}>Get Staking Data</h3>
+                    <Grid container>
 
+                      {/* Staking Form title */}
+                      <Grid container item xs={4}>
+                        <h3 style={{fontFamily: "Work Sans light", paddingTop: '1em', marginTop: 0}}>Get Staking Data</h3>
+                      </Grid>
+
+                      {/* Staking form Tooltip */}
+                      <Grid container item xs={4} alignItems="center">
+                        <Tooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title="Cool info about what this form does!">
+                          <InfoIcon />
+                        </Tooltip>
+                      </Grid>
+
+                    </Grid>
+
+                    {/* Staking form component */}
                     <FormContainer
                       submission={submission}
                       setSubmission={setSubmission}
                       setIsLoading={setIsLoading}
+                      setSubmit={setSubmit}
                       currency={currency}
                     />
                   </Container>
@@ -104,6 +131,11 @@ const HomePage = ({props}) => {
           {/* --- Summary Display Section --- */}
 
           <SummaryContainer setToggleExport={setToggleExport} toggleExport={toggleExport} data={data} handleExport={handleExport} currency={currency} isLoading={isLoading} theme={theme}/>
+
+          {
+            error ? <Container><h3 style={{marginTop: '3em'}}>No Results Found</h3></Container> : null
+          }
+
         </Container>
       </Grid>
 
