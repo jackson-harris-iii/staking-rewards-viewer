@@ -49,12 +49,7 @@ const FormContainer = ({submission, setSubmission, setSubmit, setIsLoading, curr
     e.preventDefault();
     let entries = 0;
     let lengths = 0;
-    // let addresses = Object.entries(accountData).map((account, index) => {
-    //   entries++
-    //   lengths += 11
-    //   return {name: `Account ${index + 1}`, ...account[1]}
-    // })
-    // console.log(accountData)
+
     setIsLoading(true);
     setSubmit(true);
 

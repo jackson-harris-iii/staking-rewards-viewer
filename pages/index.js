@@ -1,7 +1,8 @@
 import React, { Fragment, useState} from 'react';
 import useSWR, { mutate } from 'swr'
 import { useTheme } from '@material-ui/core/styles';
-import { Container, Input, Grid, Paper, Modal } from '@material-ui/core';
+import { Container, Input, Grid, Paper, Modal, Tooltip, Fade } from '@material-ui/core';
+import InfoIcon from '@material-ui/icons/Info';
 import Collector from '../Utils'
 import { downloadCSV } from '../Utils/fileWorker'
 import Header from '../Components/Header.js'
@@ -27,8 +28,10 @@ const HomePage = ({props}) => {
   const [data, setData] = useState();
 
   const fetcher = (url, info) => Collector(info).then((data) => {responder(data); return data})
+
   const responder = (data) => {
     console.log('this is the data', data)
+    setIsLoading(false)
     setData(data);
     setSubmit(false)
     return data
@@ -95,8 +98,23 @@ const HomePage = ({props}) => {
                 {/* Import Form Component to capture user data */}
                 <Paper style={{width:'100%', height:'100%'}} elevation={3} >
                   <Container>
-                    <h3 style={{fontFamily: "Work Sans light", paddingTop: '1em', marginTop: 0}}>Get Staking Data</h3>
+                    <Grid container>
 
+                      {/* Staking Form title */}
+                      <Grid container item xs={4}>
+                        <h3 style={{fontFamily: "Work Sans light", paddingTop: '1em', marginTop: 0}}>Get Staking Data</h3>
+                      </Grid>
+
+                      {/* Staking form Tooltip */}
+                      <Grid container item xs={4} alignItems="center">
+                        <Tooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title="Cool info about what this form does!">
+                          <InfoIcon />
+                        </Tooltip>
+                      </Grid>
+
+                    </Grid>
+
+                    {/* Staking form component */}
                     <FormContainer
                       submission={submission}
                       setSubmission={setSubmission}

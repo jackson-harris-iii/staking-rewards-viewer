@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import { lighten, makeStyles } from '@material-ui/core/styles';
-import { Grid, Container, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TableSortLabel, Paper, Checkbox, TablePagination } from '@material-ui/core'
+import { Grid, Container, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TableSortLabel, Paper, Checkbox, TablePagination, Tooltip, Fade, Button } from '@material-ui/core'
+import InfoIcon from '@material-ui/icons/Info';
 import EnhancedTableHead from './EnhancedTableHead.js'
 
 const descendingComparator = (a, b, orderBy) => {
@@ -179,7 +180,7 @@ const DayDetails = ({dayData}) => {
                   }): <TableRow> <TableCell /><TableCell /><TableCell /></TableRow>}
               </TableBody>
               <Grid container justify="flex-start">
-                <Grid container item justify="flex-start" md={10}>
+                <Grid container item justify="flex-start" xs={10}>
                   <TablePagination
                     rowsPerPageOptions={[5, 10, 25, rows.length]}
                     component="div"
@@ -189,6 +190,11 @@ const DayDetails = ({dayData}) => {
                     onChangePage={handleChangePage}
                     onChangeRowsPerPage={handleChangeRowsPerPage}
                   />
+                </Grid>
+                <Grid container item xs={1} alignItems="center">
+                <Tooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title="Missing some data? The results only show days with information even if there are additional days in you results.">
+                    <InfoIcon />
+                  </Tooltip>
                 </Grid>
               </Grid>
 
