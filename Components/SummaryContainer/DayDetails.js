@@ -1,8 +1,34 @@
 import React, { Fragment, useState } from 'react';
 import { lighten, makeStyles } from '@material-ui/core/styles';
 import { Grid, Container, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TableSortLabel, Paper, Checkbox, TablePagination } from '@material-ui/core'
-import {descendingComparator, getComparator, stableSort, isSelected} from './utils.js'
 import EnhancedTableHead from './EnhancedTableHead.js'
+
+const descendingComparator = (a, b, orderBy) => {
+  if (b[orderBy] < a[orderBy]) {
+    return -1;
+  }
+  if (b[orderBy] > a[orderBy]) {
+    return 1;
+  }
+  return 0;
+}
+
+const getComparator = (order, orderBy) => {
+  return order === 'desc'
+    ? (a, b) => descendingComparator(a, b, orderBy)
+    : (a, b) => -descendingComparator(a, b, orderBy);
+}
+
+const stableSort = (array, comparator) => {
+  console.log(array)
+  const stabilizedThis = array.map((el, index) => [el, index]);
+  stabilizedThis.sort((a, b) => {
+    const order = comparator(a[0], b[0]);
+    if (order !== 0) return order;
+    return a[1] - b[1];
+  });
+  return stabilizedThis.map((el) => el[0]);
+}
 
 const headCells = [
   { id: 'day', numeric: false, disablePadding: false, label: 'Date [d/m/y]' },
@@ -92,7 +118,7 @@ const DayDetails = ({dayData}) => {
   };
 
   const handleChangeRowsPerPage = (event) => {
-    console.log('changing rows per page', event.target.value)
+    console.log('changing rows per page')
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };

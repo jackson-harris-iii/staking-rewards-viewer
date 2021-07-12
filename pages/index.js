@@ -11,24 +11,30 @@ import SummaryContainer from '../Components/SummaryContainer'
 import DownloadModal from '../Components/DownloadModal'
 import Footer from '../Components/Footer.js'
 
-const fetcher = (url, info) => Collector(info).then(data => data)
-
 const HomePage = ({props}) => {
 
 
   const theme = useTheme();
   const [toggleExport, setToggleExport] = useState(true)
   const [submission, setSubmission] = useState();
-  const [submit, setSubmit] = useState();
+  const [submit, setSubmit] = useState(false);
   const [isLoading, setIsLoading] = useState(false)
   const [rewards, setRewards] = useState();
   const [currency, setCurrency] = useState(['$', 'USD']);
   const [urls, setUrls] = useState();
   const [modalOpen, setModalOpen] = useState(false);
   const [positionVal, setPositionVal] = useState('absolute');
+  const [data, setData] = useState();
 
+  const fetcher = (url, info) => Collector(info).then((data) => {responder(data); return data})
+  const responder = (data) => {
+    console.log('this is the data', data)
+    setData(data);
+    setSubmit(false)
+    return data
+  }
 
-  const { data, error } = useSWR(submission && submit ? ['submisionKey', submission] : null, fetcher);
+  const { info, error } = useSWR(submission && submit ? ['submisionKey', submission] : null, fetcher);
   if (error) {
     isLoading ? setIsLoading(false) : null;
   }
