@@ -1,24 +1,28 @@
 import React, { Fragment, useState } from 'react';
+import { lighten, makeStyles } from '@material-ui/core/styles';
 import { Grid, Container, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TableSortLabel, Paper, Checkbox, TablePagination } from '@material-ui/core'
+import {descendingComparator, getComparator, stableSort, useStyles, isSelected} from './utils.js'
 import EnhancedTableHead from './EnhancedTableHead.js'
-import {descendingComparator, getComparator, stableSort} from './utils.js'
 
 const DetailsTable = ({details, currency}) => {
 
+  const classes = useStyles();
   const [order, setOrder] = useState('asc');
-  const [orderBy, setOrderBy] = useState('calories');
+  const [orderBy, setOrderBy] = useState('');
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [dense, setDense] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
+  const rows = details
+
   const headCells = [
-    { id: 'Address', numeric: false, disablePadding: false, label: 'Address' },
-    { id: 'StartBalance', numeric: true, disablePadding: false, label: 'StartBalance' },
-    { id: 'EndBalance', numeric: true, disablePadding: false, label: 'EndBalance' },
-    { id: 'Annualized Return', numeric: true, disablePadding: false, label: 'Annualized Return'},
-    { id: 'Fiat Value', numeric: true, disablePadding: false, label: `Fiat Value (${currency[1]})`},
-    { id: 'Netowrk', numeric: false, disablePadding: false, label: 'Network'},
+    { id: 'address', numeric: false, disablePadding: false, label: 'Address' },
+    { id: 'startBalance', numeric: true, disablePadding: false, label: 'StartBalance' },
+    { id: 'endBalance', numeric: true, disablePadding: false, label: 'EndBalance' },
+    { id: 'annualizedReturn', numeric: true, disablePadding: false, label: 'Annualized Return'},
+    { id: 'valueFiat', numeric: true, disablePadding: false, label: `Fiat Value (${currency[1]})`},
+    { id: 'network', numeric: false, disablePadding: false, label: 'Network'},
   ]
 
 
@@ -28,12 +32,49 @@ const DetailsTable = ({details, currency}) => {
     setOrderBy(property);
   };
 
-
-  const createSortHandler = (property) => (event) => {
-    handleRequestSort(event, property);
+  const handleSelectAllClick = (event) => {
+    if (event.target.checked) {
+      const newSelecteds = rows.map((n) => n.name);
+      setSelected(newSelecteds);
+      return;
+    }
+    setSelected([]);
   };
 
-  const isSelected = (name) => selected.indexOf(name) !== -1;
+  const handleClick = (event, name) => {
+    const selectedIndex = selected.indexOf(name);
+    let newSelected = [];
+
+    if (selectedIndex === -1) {
+      newSelected = newSelected.concat(selected, name);
+    } else if (selectedIndex === 0) {
+      newSelected = newSelected.concat(selected.slice(1));
+    } else if (selectedIndex === selected.length - 1) {
+      newSelected = newSelected.concat(selected.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      newSelected = newSelected.concat(
+        selected.slice(0, selectedIndex),
+        selected.slice(selectedIndex + 1),
+      );
+    }
+
+    setSelected(newSelected);
+  };
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    console.log('changing rows per page', event.target.value)
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
+  const handleChangeDense = (event) => {
+    setDense(event.target.checked);
+  };
+
 
   // const emptyRows = rowsPerPage - Math.min(rowsPerPage, details.length - page * rowsPerPage);
 
@@ -46,31 +87,22 @@ const DetailsTable = ({details, currency}) => {
       >
         <Grid item xs={12}>
           <TableContainer>
-            <TableHead>
-              <TableRow>
-                {headCells.map((headCell) => (
-                  <TableCell
-                    key={headCell.id}
-                    align={headCell.numeric ? 'right' : 'left'}
-                    padding={headCell.disablePadding ? 'none' : 'default'}
-                  >
-                    <TableSortLabel
-                    active={orderBy === headCell.id}
-                    direction={orderBy === headCell.id ? order : 'asc'}
-                    onClick={createSortHandler(headCell.id)}
-                    >
-                      {headCell.label}
-                    </TableSortLabel>
-                  </TableCell>
-                ))}
-              </TableRow>
-            </TableHead>
+          <EnhancedTableHead
+            classes={classes}
+            numSelected={selected.length}
+            order={order}
+            orderBy={orderBy}
+            onSelectAllClick={handleSelectAllClick}
+            onRequestSort={handleRequestSort}
+            rowCount={rows.length}
+            headCells={headCells}
+          />
 
           <TableBody>
             {details ? stableSort(details, getComparator(order, orderBy))
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((detail, index) => {
-                const isItemSelected = isSelected(detail.name);
+                const isItemSelected = isSelected(detail.name, selected);
                 const labelId = `enhanced-table-checkbox-${index}`;
                 // console.log('detail', detail)
                 return detail.address ?

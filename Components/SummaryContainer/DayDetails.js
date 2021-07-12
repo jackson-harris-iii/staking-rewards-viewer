@@ -1,8 +1,7 @@
 import React, { Fragment, useState } from 'react';
-import PropTypes from 'prop-types';
 import { lighten, makeStyles } from '@material-ui/core/styles';
 import { Grid, Container, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TableSortLabel, Paper, Checkbox, TablePagination } from '@material-ui/core'
-import {descendingComparator, getComparator, stableSort} from './utils.js'
+import {descendingComparator, getComparator, stableSort, isSelected} from './utils.js'
 import EnhancedTableHead from './EnhancedTableHead.js'
 
 const headCells = [

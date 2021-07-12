@@ -1,3 +1,5 @@
+import { lighten, makeStyles } from '@material-ui/core/styles';
+
 export const descendingComparator = (a, b, orderBy) => {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -24,3 +26,31 @@ export const stableSort = (array, comparator) => {
   });
   return stabilizedThis.map((el) => el[0]);
 }
+
+export const isSelected = (name, selected) => selected.indexOf(name) !== -1;
+
+export const useStyles = makeStyles((theme) => ({
+  root: {
+    width: '100%',
+  },
+  paper: {
+    width: '100%',
+    marginBottom: theme.spacing(2),
+  },
+  table: {
+    minWidth: 750,
+  },
+  visuallyHidden: {
+    border: 0,
+    clip: 'rect(0 0 0 0)',
+    height: 1,
+    margin: -1,
+    overflow: 'hidden',
+    padding: 0,
+    position: 'absolute',
+    top: 20,
+    width: 1,
+  },
+}));
+
+  // const emptyRows = rowsPerPage - Math.min(rowsPerPage, details.length - page * rowsPerPage);
