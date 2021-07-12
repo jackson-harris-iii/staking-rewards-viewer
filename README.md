@@ -9,9 +9,9 @@ Program/blob/master/rfps/staking-rewards-collector-front-end.md).
 Accepted Grant Proposal: https://github.com/w3f/Open-Grants-Program/blob/master/applications/staking-rewards-collector-front-end.md
 
 
-## Mockup :crystal_ball:
+## Mockup :camera:
 
-![Mockup](mockup.png)
+![Screen Capture](screen-cap.png)
 
 ## Deliverables :nut_and_bolt:
 - **Implementation of a user interface**:
@@ -38,7 +38,7 @@ Accepted Grant Proposal: https://github.com/w3f/Open-Grants-Program/blob/master/
     - Test if the code behaves as expected.
 
 ## Development Roadmap :nut_and_bolt:
-    
+
 | Number | Deliverable | Specification |
 | -----: | ----------- | ------------- |
 | 0a. | License | Apache 2.0 |
@@ -52,7 +52,7 @@ Accepted Grant Proposal: https://github.com/w3f/Open-Grants-Program/blob/master/
 | 4.  | UI for data visualizer  | Develop an environment to display the output (.csv and .json) for the end user in a pleasurable way. |
 | 5. | Tooltips/Helpers | Implement help texts and tooltips to explain the different features and inputs to users. |
 | 6. | Testing | Write tests to confirm the application behaves as expected |
-| 7. | Polishing & Delivery | Reach out for feedback to the Grants Team. Integrate final feedback on functional, as well as cosmetic changes like font size, colors, typos etc. | 
+| 7. | Polishing & Delivery | Reach out for feedback to the Grants Team. Integrate final feedback on functional, as well as cosmetic changes like font size, colors, typos etc. |
 
 ## Future Plans
 
