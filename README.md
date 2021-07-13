@@ -8,6 +8,17 @@ Program/blob/master/rfps/staking-rewards-collector-front-end.md).
 
 Accepted Grant Proposal: https://github.com/w3f/Open-Grants-Program/blob/master/applications/staking-rewards-collector-front-end.md
 
+## Setup
+
+* Install npm packages using yarn (npm should work, but all development has been done using yarn)
+  from src folder run the `yarn` command
+
+* Start the server
+```yarn run dev
+
+* Deployment
+
+Follow the [steps](https://nextjs.org/docs/deployment) to deploy a Next.js application to vercel.
 
 ## Mockup :camera:
 
