@@ -74,6 +74,7 @@ import { Container, Input, Grid, Paper, Switch, CircularProgress, Modal } from '
       setDoModifyHourData(true);
     }
 
+
     /* ================================================================== */
     // Inital setup of data for the graph.
     // Other displays follow simliar procedure:
@@ -82,7 +83,7 @@ import { Container, Input, Grid, Paper, Switch, CircularProgress, Modal } from '
 
     /* Initial fetch to get data */
     let graphFetcher = (url) => fetch(url).then(response => response.json() ).then( graphData => {setGeckoReturnedHourData(graphData);setInitialDataToShow(graphData);setHasGraphDataHourly(true);})
-    const { graphData, graphDataError } = useSWR( !hasGraphDataHourly ? 'https://api.coingecko.com/api/v3/coins/polkadot/market_chart?vs_currency=usd&days=30': null, graphFetcher);
+    const { graphData, graphDataError } = useSWR( !hasGraphDataHourly ? `https://api.coingecko.com/api/v3/coins/polkadot/market_chart?vs_currency=${currency}&days=30`: null, graphFetcher);
     if (graphDataError) return "An error has occurred"
 
     /* Initial call to update graph once data is recieved */
