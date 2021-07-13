@@ -68,68 +68,67 @@ const HomePage = ({props}) => {
           <Header theme={theme} setCurrency={setCurrency}/>
 
           {/* --- Form & Chart Section --- */}
+          <Fade in={true} timeout={600}>
+            <Grid container justify="center" style={{marginTop: "5vh"}} spacing={5}>
 
-          <Grid container justify="center" style={{marginTop: "5vh"}} spacing={5}>
+                { /* Daily Dot Price Data*/}
+                <Grid
+                  item
+                  md={6}
+                  container
+                  justify="center"
+                >
+                  <Paper style={{width:'100%'}} elevation={3} >
+                    <Container>
+                      <h3 style={{fontFamily: "Work Sans light"}}>Dot Daily Price Data</h3>
 
-              { /* Daily Dot Price Data*/}
-              <Grid
-                item
-                md={6}
-                container
-                justify="center"
-              >
-                <Paper style={{width:'100%'}} elevation={3} >
-                  <Container>
-                    <h3 style={{fontFamily: "Work Sans light"}}>Dot Daily Price Data</h3>
+                      <DotChart input_data={currency}/>
 
-                    <DotChart input_data={currency}/>
+                    </Container>
+                  </Paper>
+                </Grid>
 
-                  </Container>
-                </Paper>
-              </Grid>
+                {/* Staking info entry form*/}
+                <Grid
+                  item
+                  container
+                  justify="center"
+                  md={6}
+                >
+                  {/* Import Form Component to capture user data */}
+                  <Paper style={{width:'100%', height:'100%'}} elevation={3} >
+                    <Container>
+                      <Grid container>
 
-              {/* Staking info entry form*/}
-              <Grid
-                item
-                container
-                justify="center"
-                md={6}
-              >
-                {/* Import Form Component to capture user data */}
-                <Paper style={{width:'100%', height:'100%'}} elevation={3} >
-                  <Container>
-                    <Grid container>
+                        {/* Staking Form title */}
+                        <Grid container item xs={4}>
+                          <h3 style={{fontFamily: "Work Sans light", paddingTop: '1em', marginTop: 0}}>Get Staking Data</h3>
+                        </Grid>
 
-                      {/* Staking Form title */}
-                      <Grid container item xs={4}>
-                        <h3 style={{fontFamily: "Work Sans light", paddingTop: '1em', marginTop: 0}}>Get Staking Data</h3>
+                        {/* Staking form Tooltip */}
+                        <Grid container item xs={4} alignItems="center">
+                          <Tooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title="Cool info about what this form does!">
+                            <InfoIcon />
+                          </Tooltip>
+                        </Grid>
+
                       </Grid>
 
-                      {/* Staking form Tooltip */}
-                      <Grid container item xs={4} alignItems="center">
-                        <Tooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title="Cool info about what this form does!">
-                          <InfoIcon />
-                        </Tooltip>
-                      </Grid>
+                      {/* Staking form component */}
+                      <FormContainer
+                        submission={submission}
+                        setSubmission={setSubmission}
+                        setIsLoading={setIsLoading}
+                        setSubmit={setSubmit}
+                        currency={currency}
+                      />
+                    </Container>
+                  </Paper>
+                </Grid>
 
-                    </Grid>
-
-                    {/* Staking form component */}
-                    <FormContainer
-                      submission={submission}
-                      setSubmission={setSubmission}
-                      setIsLoading={setIsLoading}
-                      setSubmit={setSubmit}
-                      currency={currency}
-                    />
-                  </Container>
-                </Paper>
-              </Grid>
-
-          </Grid>
-
+            </Grid>
+          </Fade>
           {/* --- Summary Display Section --- */}
-
           <SummaryContainer setToggleExport={setToggleExport} toggleExport={toggleExport} data={data} handleExport={handleExport} currency={currency} isLoading={isLoading} theme={theme}/>
 
           {
