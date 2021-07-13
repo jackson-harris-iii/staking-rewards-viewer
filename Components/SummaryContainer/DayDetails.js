@@ -21,7 +21,6 @@ const getComparator = (order, orderBy) => {
 }
 
 const stableSort = (array, comparator) => {
-  console.log(array)
   const stabilizedThis = array.map((el, index) => [el, index]);
   stabilizedThis.sort((a, b) => {
     const order = comparator(a[0], b[0]);
@@ -119,7 +118,6 @@ const DayDetails = ({dayData}) => {
   };
 
   const handleChangeRowsPerPage = (event) => {
-    console.log('changing rows per page')
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };

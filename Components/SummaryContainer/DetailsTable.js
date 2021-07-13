@@ -169,7 +169,7 @@ const DetailsTable = ({details, currency}) => {
                     <TableCell align="right">{detail.address}</TableCell>
                     <TableCell align="right">{detail.startBalance}</TableCell>
                     <TableCell align="right">{detail.endBalance}</TableCell>
-                    <TableCell align="right">{detail.annualizedReturn}</TableCell>
+                    <TableCell align="right">{detail.annualizedReturn.toFixed(2)} %</TableCell>
                     <TableCell align="right">{detail.currentValueRewardsFiat}</TableCell>
                     <TableCell align="left">{detail.network}</TableCell>
                   </TableRow>
@@ -179,12 +179,6 @@ const DetailsTable = ({details, currency}) => {
           </TableContainer>
         </Grid>
       </Grid>
-    {/* {details.map((item) => {
-      item.data ?
-      <>
-        <DayDetails daysData={item.data} />
-      </>: null
-    })} */}
     </>
 
   )
