@@ -15,7 +15,7 @@ const SummaryContainer = ({data, handleExport, toggleExport, setToggleExport, cu
               {/* summary */}
               <Paper elevation={3} style={{marginTop: "3em", paddingBottom: '1em', padding: '1em'}}>
                 <Grid container justify='center'>
-                <Summary currency={currency[0]} details={data[data.length - 1].details}/>
+                <Summary currency={currency} details={data[data.length - 1].details}/>
                 <Container>
                   <DetailsTable details={data} currency={currency}/>
                 </Container>

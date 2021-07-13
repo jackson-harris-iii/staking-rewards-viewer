@@ -18,15 +18,6 @@ import { Container, Input, Grid, Paper, Switch, CircularProgress, Modal } from '
           fill: false,
           backgroundColor: 'rgb(255, 99, 132)',
           radius: 0.5,
-          // animations: {
-          //   tension: {
-          //     duration: 3000,
-          //     easing: 'linear',
-          //     from: 1,
-          //     to: 0.05,
-          //     loop: true
-          //   }
-          // },
           tension: 0.3,
           borderColor: 'rgba(255, 99, 132, 0.9)',
           yAxisID: 'y-axis-1',
@@ -36,6 +27,7 @@ import { Container, Input, Grid, Paper, Switch, CircularProgress, Modal } from '
 
     // Time stamp at click
     const [timeStamp, setTimeStamp] = useState(Date.now());
+    const [currency, setCurrency] = useState('USD')
 
     // boolean of if data is retrieved from api
     const [hasGraphDataMinute, setHasGraphDataMinute] = useState(false);
@@ -63,6 +55,24 @@ import { Container, Input, Grid, Paper, Switch, CircularProgress, Modal } from '
     const [timeString, setTimeString] = useState(null);
 
 
+    if (input_data[1] != currency)
+    {
+      // Update data by currency
+      // Default to past 30 days.
+      setCurrency(input_data[1])
+
+      let temp = {...DisplayData};
+      temp.datasets[0].label = `Dot Price (${input_data[1]})`;
+      setDisplayData(temp);
+
+      setHasGraphDataMinute(false);
+      setHasGraphDataHourly(false);
+      setHasGraphDataDaily(false);
+      setHasGraphDataMax(false);
+
+      setTimeString("1M");
+      setDoModifyHourData(true);
+    }
 
     /* ================================================================== */
     // Inital setup of data for the graph.

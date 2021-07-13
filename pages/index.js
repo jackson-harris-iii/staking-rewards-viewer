@@ -65,7 +65,7 @@ const HomePage = ({props}) => {
     <Grid container style={{height: "100vh"}}>
       <Grid item container style={{marginBottom: '3em'}}>
         <Container>
-          <Header theme={theme} />
+          <Header theme={theme} setCurrency={setCurrency}/>
 
           {/* --- Form & Chart Section --- */}
 
@@ -82,7 +82,7 @@ const HomePage = ({props}) => {
                   <Container>
                     <h3 style={{fontFamily: "Work Sans light"}}>Dot Daily Price Data</h3>
 
-                    <DotChart input_data={'USD'}/>
+                    <DotChart input_data={currency}/>
 
                   </Container>
                 </Paper>
