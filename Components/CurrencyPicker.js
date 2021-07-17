@@ -101,6 +101,7 @@ const CurrencyPicker = ({setCurrency}) => {
     <div style={{fontFamily: "Work Sans light"}}>
 
       <Button
+      aria-label={"currency picker"}
       aria-controls="simple-menu"
       aria-haspopup="true"
       onClick={handleClick}>

@@ -104,21 +104,22 @@ const FormContainer = ({submission, setSubmission, setSubmit, setIsLoading, curr
           <Grid item container alignItems="flex-end" xs={12}>
             <Grid item container alignItems="center" xs={1}
             >
-              <AddCircleIcon onClick={handleAddInputFields} style={{color:`${theme.pink}`}}/>
+              <AddCircleIcon aria-label={"add address field"} onClick={handleAddInputFields} style={{color:`${theme.pink}`}}/>
             </Grid>
             {Object.keys(accountData).map((val, index) => {
               return (
               <Grid key={index} item container alignItems="flex-end" justify="flex-end" xs={12} style={{marginTop: ".5em"}}>
-                {val > 0 ? <Grid item container xs={1} alignItems="flex-end" justify="flex-end"><CancelIcon fontSize="small" onClick={(e) => handleRemoveAddress(e, val)} /></Grid> : null}
+                {val > 0 ? <Grid item container xs={1} alignItems="flex-end" justify="flex-end">
+                  <CancelIcon aria-label={"remove address field"}fontSize="small" onClick={(e) => handleRemoveAddress(e, val)} />
+                </Grid> : null}
                 <Grid item container xs={12} spacing={1}>
                   <Grid item xs={9}>
-                    <Input inputProps={{data: val}} fullWidth={true} onChange={(e) => handleAddressChange(e)} placeholder="search by wallet address(s)" value={accountData[val] ? accountData[val].address : ''}></Input>
+                    <Input name={'address input'} inputProps={{data: val}} fullWidth={true} onChange={(e) => handleAddressChange(e)} placeholder="search by wallet address(s)" value={accountData[val] ? accountData[val].address : ''}></Input>
                   </Grid>
                   <Grid item xs={3}>
-                    <Input inputProps={{data: val}} fullWidth={true} onChange={(e) => handleStartBalance(e)} placeholder="start balance" value={accountData[val] ? accountData[val].startBalance : ''}></Input>
+                    <Input name={'amount input'} inputProps={{data: val}} fullWidth={true} onChange={(e) => handleStartBalance(e)} placeholder="start balance" value={accountData[val] ? accountData[val].startBalance : ''}></Input>
                   </Grid>
                 </Grid>
-
               </Grid>
               )
             })}
