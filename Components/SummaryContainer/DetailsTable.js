@@ -20,7 +20,6 @@ const getComparator = (order, orderBy) => {
 }
 
 const stableSort = (array, comparator) => {
-  console.log(array)
   const stabilizedThis = array.map((el, index) => [el, index]);
   stabilizedThis.sort((a, b) => {
     const order = comparator(a[0], b[0]);
@@ -116,7 +115,6 @@ const DetailsTable = ({details, currency}) => {
   };
 
   const handleChangeRowsPerPage = (event) => {
-    console.log('changing rows per page', event.target.value)
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
@@ -155,7 +153,6 @@ const DetailsTable = ({details, currency}) => {
               .map((detail, index) => {
                 const isItemSelected = isSelected(detail.name, selected);
                 const labelId = `enhanced-table-checkbox-${index}`;
-                // console.log('detail', detail)
                 return detail.address ?
                 (
                   <TableRow

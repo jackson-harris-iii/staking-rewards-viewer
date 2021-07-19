@@ -8,7 +8,7 @@ import DotChart from '../Components/DotChart.js'
 import data from './example.json'
 
 
-describe('Homepage and header component tests', () => {
+describe('Homepage and Header Component Tests', () => {
 
   beforeEach(() => {
     render(<HomePage />);
@@ -37,8 +37,7 @@ describe('Homepage and header component tests', () => {
 
 });
 
-
-describe('search component tests', () => {
+describe('Search Component Tests', () => {
 
   beforeEach(() => {
     render(<HomePage />);
@@ -131,6 +130,15 @@ describe('Summary Component Tests', () => {
       // the data array has one object for each address and the last item in the array alwasy contains the request details.
       expect(detailsCards.length).toBe(data.length - 1);
     })
+  });
+
+  test("renders download button for export", async () => {
+
+    await waitFor(() => {
+      const exportButton = screen.getByText(/EXPORT/i)
+      expect(exportButton).toBeTruthy();
+    })
+
   });
 
 });

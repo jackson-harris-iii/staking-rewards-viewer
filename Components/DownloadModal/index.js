@@ -23,7 +23,7 @@ const DownloadModal = ({urls, modalOpen, setModalOpen, theme}) => {
       top: '50%',
       left: '50%',
       transform: `translate(-50%, -50%)`
-      }}
+    }}
     >
       <Grid container justify="center">
         <Grid item container justify="center" xs={12}>
@@ -51,6 +51,7 @@ const DownloadModal = ({urls, modalOpen, setModalOpen, theme}) => {
       onClose={handleClose}
       aria-labelledby="simple-modal-title"
       aria-describedby="simple-modal-description"
+      aria-label="download-modal"
       >
         {ModalBody}
       </Modal>
