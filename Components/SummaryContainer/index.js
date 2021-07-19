@@ -68,7 +68,7 @@ const SummaryContainer = ({data, handleExport, toggleExport, setToggleExport, cu
 
             </>
             : <> {
-              isLoading ? <Grid container style={{marginTop: '3em'}} justify="center"><CircularProgress color="pink"/></Grid> : null
+              isLoading ? <Grid container style={{marginTop: '3em'}} justify="center"><CircularProgress  aria-label={'summary container loading spinner'} color="pink"/></Grid> : null
             } </>
         }
     </>
