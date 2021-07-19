@@ -199,7 +199,7 @@ import { Container, Input, Grid, Paper, Switch, CircularProgress, Modal } from '
 
     return hasGraphDataHourly ?
       <Grid container justify="center">
-        <Line data={DisplayData} />
+        <Line data={DisplayData}/>
         {/* Minute data for hours */}
         <Button color="primary" onClick={() => handleTimeClick("1H")}>
           1H

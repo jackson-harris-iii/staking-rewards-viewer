@@ -165,11 +165,16 @@ const DetailsTable = ({details, currency}) => {
                     tabIndex={-1}
                     key={detail.name}
                     selected={isItemSelected}
+                    aria-label="details-table-row"
                   >
                     <TableCell align="right">{detail.address}</TableCell>
                     <TableCell align="right">{detail.startBalance}</TableCell>
                     <TableCell align="right">{detail.endBalance}</TableCell>
-                    <TableCell align="right">{detail.annualizedReturn.toFixed(2)} %</TableCell>
+                    <TableCell align="right">{
+                    detail.annualizedReturn === 0 ||detail.annualizedReturn === Infinity ? 'n/a'
+                    :
+                    typeof detail.annualizedReturn === "number" ? `${detail.annualizedReturn.toFixed(2)}% `: 'n/a'
+                    }</TableCell>
                     <TableCell align="right">{detail.currentValueRewardsFiat}</TableCell>
                     <TableCell align="left">{detail.network}</TableCell>
                   </TableRow>

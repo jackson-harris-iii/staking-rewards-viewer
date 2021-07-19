@@ -4,6 +4,7 @@
 import { render, screen, fireEvent, waitFor, waitForElementToBeRemoved} from "@testing-library/react";
 import HomePage from "../pages/index.js";
 import SummaryContainer from "../Components/SummaryContainer";
+import DotChart from '../Components/DotChart.js'
 import data from './example.json'
 
 
@@ -89,8 +90,7 @@ describe('search component tests', () => {
 
 });
 
-describe('Summary Component Tests', () => {
-
+describe('Dot Chart Component Tests', () => {
 
   beforeEach(() => {
     let theme = {pink: '#E7007B'},
@@ -100,7 +100,45 @@ describe('Summary Component Tests', () => {
     currency = ['$', 'USD'],
     isLoading = false;
 
-    // {data, handleExport, toggleExport, setToggleExport, currency, isLoading, theme}
+    render(<DotChart/>);
+  })
+
+  test("renders SummaryContainer without crashing", () => {
+    expect(
+      screen.getByRole("heading", { name: "Summary" })
+    ).toBeInTheDocument();
+  });
+
+  test("renders Summary Details table results", async () => {
+
+    await waitFor(() => {
+      const detailsTableRows = screen.getAllByLabelText("details-table-row");
+      // the data array has one object for each address and the last item in the array alwasy contains the request details.
+      expect(detailsTableRows.length).toBe(data.length - 1);
+    })
+  });
+
+  test("renders day details cards for each address", async () => {
+
+    await waitFor(() => {
+      const detailsCards = screen.getAllByLabelText("day-details-card");
+      // the data array has one object for each address and the last item in the array alwasy contains the request details.
+      expect(detailsCards.length).toBe(data.length - 1);
+    })
+  });
+
+});
+
+describe('Summary Component Tests', () => {
+
+  beforeEach(() => {
+    let theme = {pink: '#E7007B'},
+    handleExport = HomePage.handleExport,
+    toggleExport = HomePage.toggleExport,
+    setToggleExport = HomePage.setToggleExport,
+    currency = ['$', 'USD'],
+    isLoading = false;
+
     render(<SummaryContainer setToggleExport={setToggleExport} toggleExport={toggleExport} data={data} handleExport={handleExport} currency={currency} isLoading={isLoading} theme={theme}/>);
   })
 
@@ -108,6 +146,24 @@ describe('Summary Component Tests', () => {
     expect(
       screen.getByRole("heading", { name: "Summary" })
     ).toBeInTheDocument();
+  });
+
+  test("renders Summary Details table results", async () => {
+
+    await waitFor(() => {
+      const detailsTableRows = screen.getAllByLabelText("details-table-row");
+      // the data array has one object for each address and the last item in the array alwasy contains the request details.
+      expect(detailsTableRows.length).toBe(data.length - 1);
+    })
+  });
+
+  test("renders day details cards for each address", async () => {
+
+    await waitFor(() => {
+      const detailsCards = screen.getAllByLabelText("day-details-card");
+      // the data array has one object for each address and the last item in the array alwasy contains the request details.
+      expect(detailsCards.length).toBe(data.length - 1);
+    })
   });
 
 });

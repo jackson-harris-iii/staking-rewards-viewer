@@ -131,7 +131,7 @@ const DayDetails = ({dayData}) => {
   // const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
   return (
-    <Paper elevation={3} style={{marginTop: "3em", paddingBottom: '1em', padding: '1em', overFlowY: 'auto'}}>
+    <Paper elevation={3} style={{marginTop: "3em", paddingBottom: '1em', padding: '1em', overFlowY: 'auto'}} aria-label="day-details-card">
       <span>
         <h4 style={{fontFamily: "Work Sans", display: "inline-block"}}>Address: </h4>
         <p style={{display: "inline-block"}}>{dayData.address}</p>
@@ -166,6 +166,7 @@ const DayDetails = ({dayData}) => {
                         tabIndex={-1}
                         key={day.extrinsicHash}
                         selected={isItemSelected}
+                        aria-label="day-details-table-row"
                       >
                         <TableCell align="right">{day.day}</TableCell>
                         <TableCell align="right">{day.amountHumanReadable.toFixed(2)}</TableCell>
