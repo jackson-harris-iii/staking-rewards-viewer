@@ -37,7 +37,7 @@ describe('Homepage and header component tests', () => {
 
 });
 
-//write test for search button
+
 describe('search component tests', () => {
 
   beforeEach(() => {
@@ -59,16 +59,10 @@ describe('search component tests', () => {
 
     const input = screen.getAllByPlaceholderText("search by wallet address(s)")[0];
 
-    await fireEvent.change(input, { target: { value: 'G1rrUNQSk7CjjEmLSGcpNu72tVtyzbWdUvgmSer9eBitXWf' } })
+    await fireEvent.change(input, { target: { value: 'G1rrUNQSk7CjjEmLSGcpNu72tVtyzbWdUvgmSer9eBitXWf' }});
 
     expect(input.value).toBe('G1rrUNQSk7CjjEmLSGcpNu72tVtyzbWdUvgmSer9eBitXWf')
-  //   fireEvent.click(screen.getByText('Search'))
 
-  //   await waitForElementToBeRemoved(() => screen.getByLabelText(/summary container loading spinner/i))
-
-  //   expect(
-  //     screen.getByRole("heading", { name: "Summary" })
-  //   ).toBeInTheDocument();
   });
 
   test("adds and removes additional input fields", () => {
@@ -77,13 +71,13 @@ describe('search component tests', () => {
 
     const inputs = screen.getAllByPlaceholderText("search by wallet address(s)");
 
-    expect(inputs.length).toBe(2)
+    expect(inputs.length).toBe(2);
 
     fireEvent.click(screen.getByLabelText("remove address field"));
 
     const updatedInputs = screen.getAllByPlaceholderText("search by wallet address(s)");
 
-    expect(updatedInputs.length).toBe(1)
+    expect(updatedInputs.length).toBe(1);
 
   });
 
@@ -92,38 +86,11 @@ describe('search component tests', () => {
 
 describe('Dot Chart Component Tests', () => {
 
-  beforeEach(() => {
-    let theme = {pink: '#E7007B'},
-    handleExport = HomePage.handleExport,
-    toggleExport = HomePage.toggleExport,
-    setToggleExport = HomePage.setToggleExport,
-    currency = ['$', 'USD'],
-    isLoading = false;
-
-    render(<DotChart/>);
-  })
-
-  test("renders SummaryContainer without crashing", () => {
-    expect(
-      screen.getByRole("heading", { name: "Summary" })
-    ).toBeInTheDocument();
-  });
-
-  test("renders Summary Details table results", async () => {
-
+  test("renders DotChart without crashing", async () => {
+    render(<DotChart input_data={['$','usd']}/>)
     await waitFor(() => {
-      const detailsTableRows = screen.getAllByLabelText("details-table-row");
-      // the data array has one object for each address and the last item in the array alwasy contains the request details.
-      expect(detailsTableRows.length).toBe(data.length - 1);
-    })
-  });
-
-  test("renders day details cards for each address", async () => {
-
-    await waitFor(() => {
-      const detailsCards = screen.getAllByLabelText("day-details-card");
-      // the data array has one object for each address and the last item in the array alwasy contains the request details.
-      expect(detailsCards.length).toBe(data.length - 1);
+      const chart = screen.getByLabelText("dot-chart-skeleton");
+      expect(chart).toBeDefined();
     })
   });
 
@@ -167,19 +134,3 @@ describe('Summary Component Tests', () => {
   });
 
 });
-
-
-
-//write test for new wallet adress entry
-
-//write test to mock search request/render summary
-
-//write test to render daily dot data
-
-//write test for chart interaction
-
-//write out test for modal interaction
-
-//write out test for json interaction
-
-//write out test for currency change

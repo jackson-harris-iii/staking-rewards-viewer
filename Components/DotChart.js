@@ -25,6 +25,15 @@ import { Container, Input, Grid, Paper, Switch, CircularProgress, Modal } from '
       ],
     });
 
+    const [options, setOptions] = useState({
+      scale: {
+        ticks: {
+            display: false,
+            maxTicksLimit: 10
+        },
+      }
+  })
+
     // Time stamp at click
     const [timeStamp, setTimeStamp] = useState(Date.now());
     const [currency, setCurrency] = useState('USD')
@@ -199,7 +208,7 @@ import { Container, Input, Grid, Paper, Switch, CircularProgress, Modal } from '
 
     return hasGraphDataHourly ?
       <Grid container justify="center">
-        <Line data={DisplayData}/>
+        <Line data={DisplayData} options={options} aria-label='dot-chart-canvas'/>
         {/* Minute data for hours */}
         <Button color="primary" onClick={() => handleTimeClick("1H")}>
           1H
@@ -224,7 +233,7 @@ import { Container, Input, Grid, Paper, Switch, CircularProgress, Modal } from '
         </Button>
       </Grid> : <>
       {/* Put skeleton here while loading data for graph. */}
-      <Skeleton animation="wave" variant="rect" width="100%" height="25vh"/>
+      <Skeleton aria-label='dot-chart-skeleton' animation="wave" variant="rect" width="100%" height="25vh"/>
       <br/>
       <Skeleton animation="wave" variant="rect" style={{marginBottom: '2em'}}/>
       </>
