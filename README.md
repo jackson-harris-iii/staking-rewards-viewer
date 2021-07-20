@@ -20,6 +20,15 @@ Accepted Grant Proposal: https://github.com/w3f/Open-Grants-Program/blob/master/
 
 Follow the [steps](https://nextjs.org/docs/deployment) to deploy a Next.js application to vercel.
 
+## Testing
+
+* After setup run Test Suite using the following Script
+```yarn test
+
+* Deployment
+
+Follow the [steps](https://nextjs.org/docs/deployment) to deploy a Next.js application to vercel.
+
 ## Mockup :camera:
 
 ![Screen Capture](screen-cap.png)
