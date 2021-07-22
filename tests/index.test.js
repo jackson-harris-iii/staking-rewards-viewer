@@ -7,6 +7,11 @@ import SummaryContainer from "../Components/SummaryContainer";
 import DotChart from '../Components/DotChart.js'
 import data from './example.json'
 
+/* ================================================================== */
+//  Testing
+//  After setup (See README.md for full details) run Test Suite using the following Script
+// yarn test
+/* ================================================================== */
 
 describe('Homepage and Header Component Tests', () => {
 
