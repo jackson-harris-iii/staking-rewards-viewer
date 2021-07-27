@@ -24,17 +24,22 @@ const Header = ({lang, currency, theme, setCurrency}) => (
     </Grid>
 
     {/* Nav Options */}
-    <Grid xs={6} item container spacing={1} style={{marginTop: "1em"}} justify="flex-end">
+    <Grid item container xs={8} sm={6} spacing={1} style={{marginTop: "1em"}} justify="flex-end">
       {/* Currency Select & language select*/}
-      <Grid item container xs={3}>
-        <div>
-          <Button style={{fontFamily: "Work Sans"}}>EN</Button>
-        </div>
-        <CurrencyPicker setCurrency={setCurrency}/>
+      <Grid item container xs={6} md={3} justify="space-around">
+        <Grid item container xs={6}>
+          <div>
+            <Button style={{fontFamily: "Work Sans"}}>EN</Button>
+          </div>
+        </Grid>
+        {/* Currency Picker  */}
+        <Grid item container xs={6}>
+          <CurrencyPicker setCurrency={setCurrency}/>
+        </Grid>
       </Grid>
 
       {/* Github & Twitter Links*/}
-      <Grid item alignments="center" style={{marginTop: ".25em"}} xs={3}>
+      <Grid item container alignments="center" style={{marginTop: ".25em"}} xs={3}>
         <Link href="https://github.com/jackson-harris-iii/staking-rewards-viewer">
           <a target="_blank">
             <GitHubIcon
@@ -47,6 +52,8 @@ const Header = ({lang, currency, theme, setCurrency}) => (
         />
       </Grid>
     </Grid>
+
+    {/* Header Title */}
     <Grid item xs={12}>
       <h1 style={{fontFamily:'work sans black', color: "black", textAlign: "center", fontSize: "3em"}}>Staking Rewards Viewer</h1>
     </Grid>
