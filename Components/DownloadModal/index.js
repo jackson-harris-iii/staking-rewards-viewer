@@ -33,8 +33,8 @@ const DownloadModal = ({urls, modalOpen, setModalOpen, theme}) => {
         {urls ? urls.map((url, index) => {
         return(
           <Grid item container justify="center" xs={6}>
-            <Link target="_blank" href={`${url}`} passHref>
-            <Button style={{backgroundColor:`${theme.pink}`, color: "white", marginTop: '1em'}}>Address{index + 1}.csv</Button>
+            <Link target="_blank" href={`${url}`} download={`address${index}.csv`} passHref>
+            <Button download={`Address${index + 1}-CSV-Export`} style={{backgroundColor:`${theme.pink}`, color: "white", marginTop: '1em'}}>Address{index + 1}.csv</Button>
             </Link>
           </Grid>
         )

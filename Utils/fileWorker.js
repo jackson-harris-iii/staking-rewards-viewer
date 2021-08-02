@@ -8,7 +8,7 @@ export function readJSON(filePath) {
 // genertate urls that contain downloadable csv blobs
 export async function downloadCSV(obj) {
 
-  return obj.map(async (item) => {
+  return obj.map(async (item, index) => {
     const data = await extractAsCSV(item);
     const blob = new Blob([data], {type: 'text/csv'});
     return window.URL.createObjectURL(blob);
