@@ -136,7 +136,7 @@ const DayDetails = ({dayData}) => {
         <h4 style={{fontFamily: "Work Sans", display: "inline-block"}}>Address: </h4>
         <p style={{display: "inline-block"}}>{dayData.address}</p>
         <div>
-          <h4 style={{fontFamily: "Work Sans", display: "inline-block"}}>Network: </h4> <p style={{display: "inline-block"}}>{dayData.network}</p>
+          <h4 style={{fontFamily: "Work Sans", display: "inline-block"}}>Network: </h4> <p style={{display: "inline-block"}}>{dayData.network.charAt(0).toUpperCase() + dayData.network.slice(1)}</p>
         </div>
       </span>
       <Grid container justify="center">

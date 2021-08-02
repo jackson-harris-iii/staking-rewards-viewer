@@ -166,18 +166,6 @@ const DetailsTable = ({details, currency}) => {
                   >
                     <TableCell align="right">{detail.address}</TableCell>
                     <TableCell align="right">{detail.startBalance || 0}</TableCell>
-
-                    {/*
-
-
-
-
-                    Make this a ternary based on the what the current row is showing
-
-
-
-
-                    */}
                     <TableCell align="right">{detail.network === 'polkadot' ? details[details.length - 1].details.numberPayouts.DOT + detail.startBalance || 0 : detail.startBalance || 0 + details[details.length - 1].details.numberPayouts.KSM }</TableCell>
                     <TableCell align="right">{
                     detail.annualizedReturn === 0 ||detail.annualizedReturn === Infinity ? 'Could not be calculated'
@@ -185,7 +173,7 @@ const DetailsTable = ({details, currency}) => {
                     typeof detail.annualizedReturn === typeof "number" ? `${detail.annualizedReturn.toFixed(2)}% `: 'Could not calculate'
                     }</TableCell>
                     <TableCell align="right">{detail.currentValueRewardsFiat}</TableCell>
-                    <TableCell align="left">{detail.network}</TableCell>
+                    <TableCell align="left">{detail.network.charAt(0).toUpperCase() + detail.network.slice(1)}</TableCell>
                   </TableRow>
                 ) : null;
               }): <TableRow> <TableCell /><TableCell /><TableCell /></TableRow>}

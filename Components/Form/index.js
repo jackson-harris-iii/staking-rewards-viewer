@@ -13,7 +13,7 @@ const FormContainer = ({submission, setSubmission, setSubmit, setIsLoading, curr
   const [exportOutput, setExportOutput ] = useState("true");
   const [address, setAddress ] = useState("");
   const [accountData, setAccountData] = useState({0:{}});
-  const [startDate, setStartDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(new Date(new Date().setDate(new Date().getDate()-1)));
   const [endDate, setEndDate] = useState(new Date());
   const [balance, setBalance ] = useState(0);
 
@@ -49,6 +49,12 @@ const FormContainer = ({submission, setSubmission, setSubmit, setIsLoading, curr
     e.preventDefault();
     let entries = 0;
     let lengths = 0;
+
+    if (!moment(endDate).isAfter(startDate)) {
+      alert("Please Enter an End date that is after the Start Date!")
+      return;
+    }
+
 
     setIsLoading(true);
     setSubmit(true);
@@ -94,8 +100,12 @@ const FormContainer = ({submission, setSubmission, setSubmit, setIsLoading, curr
           <label style={{marginRight: ".5em"}}>EndDate: </label>
           <DatePicker value={moment(endDate).format("YYYY-MM-DD")} onChange={date => setEndDate(date)} />
         </Grid>
+        { moment(endDate).isAfter(startDate) ?
+         null : <Grid item container justify="center">
+          <span style={{color: 'red'}}>End date must be after start date!</span>
         </Grid>
-        <br/>
+        }
+        </Grid>
         <br/>
 
         {/* Dynamic Form Fields */}
