@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import { Container, Input, Grid, Paper, Switch, CircularProgress, Modal } from '@material-ui/core';
+import { Container, Input, Grid, Paper, Switch, CircularProgress, Modal, Label } from '@material-ui/core';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import CancelIcon from '@material-ui/icons/Cancel';
 import DatePicker from 'react-datepicker';
@@ -86,11 +86,11 @@ const FormContainer = ({submission, setSubmission, setSubmit, setIsLoading, curr
       {/* Start / End Date */}
 
       <Grid container>
-        <Grid item md={6}>
+        <Grid item xs={6}>
           <label style={{marginRight: ".5em"}}>StartDate: </label>
           <DatePicker value={moment(startDate).format("YYYY-MM-DD")} onChange={date => setStartDate(date)} />
         </Grid>
-        <Grid item md={6}>
+        <Grid item xs={6}>
           <label style={{marginRight: ".5em"}}>EndDate: </label>
           <DatePicker value={moment(endDate).format("YYYY-MM-DD")} onChange={date => setEndDate(date)} />
         </Grid>
@@ -114,10 +114,12 @@ const FormContainer = ({submission, setSubmission, setSubmit, setIsLoading, curr
                 </Grid> : null}
                 <Grid item container xs={12} spacing={1}>
                   <Grid item xs={9}>
-                    <Input name={'address input'} inputProps={{data: val}} fullWidth={true} onChange={(e) => handleAddressChange(e)} placeholder="search by wallet address(s)" value={accountData[val] ? accountData[val].address : ''}></Input>
+                    <label name="start balance">Search by Wallet Address(s)</label>
+                    <Input name={'address input'} inputProps={{data: val}} fullWidth={true} onChange={(e) => handleAddressChange(e)} placeholder="required" value={accountData[val] ? accountData[val].address : ''}></Input>
                   </Grid>
                   <Grid item xs={3}>
-                    <Input name={'amount input'} inputProps={{data: val}} fullWidth={true} onChange={(e) => handleStartBalance(e)} placeholder="start balance" value={accountData[val] ? accountData[val].startBalance : ''}></Input>
+                    <label name="start balance">Start Balance</label>
+                    <Input name={'amount input'} inputProps={{data: val}} fullWidth={true} onChange={(e) => handleStartBalance(e)} placeholder="optional" value={accountData[val] ? accountData[val].startBalance : ''}></Input>
                   </Grid>
                 </Grid>
               </Grid>
