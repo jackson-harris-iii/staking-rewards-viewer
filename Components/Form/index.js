@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import { Container, Input, Grid, Paper, Switch, CircularProgress, Modal, Label } from '@material-ui/core';
+import { Container, Input, Grid, Paper, Switch, CircularProgress, Modal, Label, Tooltip, Fade} from '@material-ui/core';
+import InfoIcon from '@material-ui/icons/Info';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import CancelIcon from '@material-ui/icons/Cancel';
 import DatePicker from 'react-datepicker';
@@ -92,17 +93,42 @@ const FormContainer = ({submission, setSubmission, setSubmit, setIsLoading, curr
       {/* Start / End Date */}
 
       <Grid container>
-        <Grid item xs={6}>
+        <Grid item container xs={6}>
           <label style={{marginRight: ".5em"}}>StartDate: </label>
           <DatePicker value={moment(startDate).format("YYYY-MM-DD")} onChange={date => setStartDate(date)} />
+          <Tooltip style={{paddingLeft: '5px'}} TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title={
+            <Grid item container style={{margin: '1em'}}>
+              <span style={{fontSize: "1.5em", fontFamily: "Work Sans light", fontWeight: 'bolder'}}>
+                Select the first date for the period you would like to see Staking Rewards for.
+                <br/>
+                <br/>
+                *Must be before your selected end date
+              </span>
+            </Grid>
+          }>
+            <InfoIcon fontSize="small" />
+          </Tooltip>
         </Grid>
-        <Grid item xs={6}>
+
+        <Grid item container xs={6}>
           <label style={{marginRight: ".5em"}}>EndDate: </label>
           <DatePicker value={moment(endDate).format("YYYY-MM-DD")} onChange={date => setEndDate(date)} />
+          <Tooltip style={{paddingLeft: '5px'}} TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title={
+            <Grid item container style={{margin: '1em'}}>
+              <span style={{fontSize: "1.5em", fontFamily: "Work Sans light", fontWeight: 'bolder'}}>
+                Select the last date for the period you would like to see Staking Rewards for.
+                <br/>
+                <br/>
+                *Must be after your selected start date
+              </span>
+            </Grid>
+          }>
+            <InfoIcon fontSize="small" />
+          </Tooltip>
         </Grid>
         { moment(endDate).isAfter(startDate) ?
          null : <Grid item container justify="center">
-          <span style={{color: 'red'}}>End date must be after start date!</span>
+          <span style={{color: 'red'}}>End date must be after Start date!</span>
         </Grid>
         }
         </Grid>
@@ -127,8 +153,20 @@ const FormContainer = ({submission, setSubmission, setSubmit, setIsLoading, curr
                     <label name="start balance">Search by Wallet Address(s)</label>
                     <Input name={'address input'} inputProps={{data: val}} fullWidth={true} onChange={(e) => handleAddressChange(e)} placeholder="required" value={accountData[val] ? accountData[val].address : ''}></Input>
                   </Grid>
-                  <Grid item xs={3}>
+                  <Grid item container xs={3}>
                     <label name="start balance">Start Balance</label>
+                    <Tooltip style={{paddingLeft: '5px'}} TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title={
+                      <Grid item container style={{margin: '1em'}}>
+                        <span style={{fontSize: "1.5em", fontFamily: "Work Sans light", fontWeight: 'bolder'}}>
+                          This optional value should represent how much DOT or KSM this address had on the start date.
+                          <br/>
+                          <br/>
+                          It will be used to determine your APY given the period between the start and end date.
+                        </span>
+                      </Grid>
+                    }>
+                      <InfoIcon fontSize="small"/>
+                    </Tooltip>
                     <Input name={'amount input'} inputProps={{data: val}} fullWidth={true} onChange={(e) => handleStartBalance(e)} placeholder="optional" value={accountData[val] ? accountData[val].startBalance : ''}></Input>
                   </Grid>
                 </Grid>
