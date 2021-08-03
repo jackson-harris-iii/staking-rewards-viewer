@@ -98,11 +98,11 @@ const FormContainer = ({submission, setSubmission, setSubmit, setIsLoading, curr
           <DatePicker value={moment(startDate).format("YYYY-MM-DD")} onChange={date => setStartDate(date)} />
           <Tooltip style={{paddingLeft: '5px'}} TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title={
             <Grid item container style={{margin: '1em'}}>
-              <span style={{fontSize: "1.5em", fontFamily: "Work Sans light", fontWeight: 'bolder'}}>
+              <span style={{paddingRight: '5px', fontSize: "1.5em", fontFamily: "Work Sans light", fontWeight: 'bolder'}}>
                 Select the first date for the period you would like to see Staking Rewards for.
                 <br/>
                 <br/>
-                *Must be before your selected end date
+                *Must be before your selected end date!
               </span>
             </Grid>
           }>
@@ -115,11 +115,11 @@ const FormContainer = ({submission, setSubmission, setSubmit, setIsLoading, curr
           <DatePicker value={moment(endDate).format("YYYY-MM-DD")} onChange={date => setEndDate(date)} />
           <Tooltip style={{paddingLeft: '5px'}} TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title={
             <Grid item container style={{margin: '1em'}}>
-              <span style={{fontSize: "1.5em", fontFamily: "Work Sans light", fontWeight: 'bolder'}}>
+              <span style={{paddingRight: '5px', fontSize: "1.5em", fontFamily: "Work Sans light", fontWeight: 'bolder'}}>
                 Select the last date for the period you would like to see Staking Rewards for.
                 <br/>
                 <br/>
-                *Must be after your selected start date
+                *Must be after your selected start date!
               </span>
             </Grid>
           }>
@@ -157,7 +157,7 @@ const FormContainer = ({submission, setSubmission, setSubmit, setIsLoading, curr
                     <label name="start balance">Start Balance</label>
                     <Tooltip style={{paddingLeft: '5px'}} TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title={
                       <Grid item container style={{margin: '1em'}}>
-                        <span style={{fontSize: "1.5em", fontFamily: "Work Sans light", fontWeight: 'bolder'}}>
+                        <span style={{paddingRight: '5px', fontSize: "1.5em", fontFamily: "Work Sans light", fontWeight: 'bolder'}}>
                           This optional value should represent how much DOT or KSM this address had on the start date.
                           <br/>
                           <br/>
