@@ -47,9 +47,13 @@ const Header = ({lang, currency, theme, setCurrency}) => (
             />
           </a>
         </Link>
-        <TwitterIcon
-          style={{color: `${theme.pink}`}}
-        />
+        <Link href="https://twitter.com/web3foundation">
+          <a target="_blank">
+            <TwitterIcon
+              style={{color: `${theme.pink}`}}
+            />
+          </a>
+        </Link>
       </Grid>
     </Grid>
 
