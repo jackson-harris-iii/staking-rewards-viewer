@@ -101,17 +101,24 @@ const HomePage = ({props}) => {
                       <Grid container>
 
                         {/* Staking Form title */}
-                        <Grid container item xs={4}>
-                          <h3 style={{fontFamily: "Work Sans light", paddingTop: '1em', marginTop: 0}}>Get Staking Data</h3>
-                        </Grid>
-
-                        {/* Staking form Tooltip */}
                         <Grid container item xs={4} alignItems="center">
-                          <Tooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title="Cool info about what this form does!">
-                            <InfoIcon />
+                          <h3 style={{fontFamily: "Work Sans light", paddingTop: '1em', marginTop: 0}}>Get Staking Data</h3>
+
+                          {/* Staking form Tooltip */}
+
+                          <Tooltip style={{paddingLeft: '5px'}} TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title={
+                            <Grid item container style={{margin: '1em'}}>
+                              <span style={{paddingRight: '5px', fontSize: "1.5em", fontFamily: "Work Sans light", fontWeight: 'bolder'}}>
+                                Use this form to search for your DOT or KSM staking rewards over a given period of time by entering in a valid Wallet Address.
+                                <br/>
+                                <br/>
+                                You may search for up to two addresses at a time for the same period.
+                              </span>
+                            </Grid>
+                          }>
+                            <InfoIcon fontSize="small"/>
                           </Tooltip>
                         </Grid>
-
                       </Grid>
 
                       {/* Staking form component */}

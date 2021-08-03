@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import { Container, Input, Grid, Paper, Switch, CircularProgress, Modal } from '@material-ui/core';
+import { Container, Input, Grid, Paper, Switch, CircularProgress, Modal, Label, Tooltip, Fade} from '@material-ui/core';
+import InfoIcon from '@material-ui/icons/Info';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import CancelIcon from '@material-ui/icons/Cancel';
 import DatePicker from 'react-datepicker';
@@ -13,7 +14,7 @@ const FormContainer = ({submission, setSubmission, setSubmit, setIsLoading, curr
   const [exportOutput, setExportOutput ] = useState("true");
   const [address, setAddress ] = useState("");
   const [accountData, setAccountData] = useState({0:{}});
-  const [startDate, setStartDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(new Date(new Date().setDate(new Date().getDate()-1)));
   const [endDate, setEndDate] = useState(new Date());
   const [balance, setBalance ] = useState(0);
 
@@ -49,6 +50,12 @@ const FormContainer = ({submission, setSubmission, setSubmit, setIsLoading, curr
     e.preventDefault();
     let entries = 0;
     let lengths = 0;
+
+    if (!moment(endDate).isAfter(startDate)) {
+      alert("Please Enter an End date that is after the Start Date!")
+      return;
+    }
+
 
     setIsLoading(true);
     setSubmit(true);
@@ -86,16 +93,45 @@ const FormContainer = ({submission, setSubmission, setSubmit, setIsLoading, curr
       {/* Start / End Date */}
 
       <Grid container>
-        <Grid item md={6}>
+        <Grid item container xs={6}>
           <label style={{marginRight: ".5em"}}>StartDate: </label>
           <DatePicker value={moment(startDate).format("YYYY-MM-DD")} onChange={date => setStartDate(date)} />
+          <Tooltip style={{paddingLeft: '5px'}} TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title={
+            <Grid item container style={{margin: '1em'}}>
+              <span style={{paddingRight: '5px', fontSize: "1.5em", fontFamily: "Work Sans light", fontWeight: 'bolder'}}>
+                Select the first date for the period you would like to see Staking Rewards for.
+                <br/>
+                <br/>
+                *Must be before your selected end date!
+              </span>
+            </Grid>
+          }>
+            <InfoIcon fontSize="small" />
+          </Tooltip>
         </Grid>
-        <Grid item md={6}>
+
+        <Grid item container xs={6}>
           <label style={{marginRight: ".5em"}}>EndDate: </label>
           <DatePicker value={moment(endDate).format("YYYY-MM-DD")} onChange={date => setEndDate(date)} />
+          <Tooltip style={{paddingLeft: '5px'}} TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title={
+            <Grid item container style={{margin: '1em'}}>
+              <span style={{paddingRight: '5px', fontSize: "1.5em", fontFamily: "Work Sans light", fontWeight: 'bolder'}}>
+                Select the last date for the period you would like to see Staking Rewards for.
+                <br/>
+                <br/>
+                *Must be after your selected start date!
+              </span>
+            </Grid>
+          }>
+            <InfoIcon fontSize="small" />
+          </Tooltip>
         </Grid>
+        { moment(endDate).isAfter(startDate) ?
+         null : <Grid item container justify="center">
+          <span style={{color: 'red'}}>End date must be after Start date!</span>
         </Grid>
-        <br/>
+        }
+        </Grid>
         <br/>
 
         {/* Dynamic Form Fields */}
@@ -114,10 +150,24 @@ const FormContainer = ({submission, setSubmission, setSubmit, setIsLoading, curr
                 </Grid> : null}
                 <Grid item container xs={12} spacing={1}>
                   <Grid item xs={9}>
-                    <Input name={'address input'} inputProps={{data: val}} fullWidth={true} onChange={(e) => handleAddressChange(e)} placeholder="search by wallet address(s)" value={accountData[val] ? accountData[val].address : ''}></Input>
+                    <label name="start balance">Search by Wallet Address(s)</label>
+                    <Input name={'address input'} inputProps={{data: val}} fullWidth={true} onChange={(e) => handleAddressChange(e)} placeholder="required" value={accountData[val] ? accountData[val].address : ''}></Input>
                   </Grid>
-                  <Grid item xs={3}>
-                    <Input name={'amount input'} inputProps={{data: val}} fullWidth={true} onChange={(e) => handleStartBalance(e)} placeholder="start balance" value={accountData[val] ? accountData[val].startBalance : ''}></Input>
+                  <Grid item container xs={3}>
+                    <label name="start balance">Start Balance</label>
+                    <Tooltip style={{paddingLeft: '5px'}} TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title={
+                      <Grid item container style={{margin: '1em'}}>
+                        <span style={{paddingRight: '5px', fontSize: "1.5em", fontFamily: "Work Sans light", fontWeight: 'bolder'}}>
+                          This optional value should represent how much DOT or KSM this address had on the start date.
+                          <br/>
+                          <br/>
+                          It will be used to determine your APY given the period between the start and end date.
+                        </span>
+                      </Grid>
+                    }>
+                      <InfoIcon fontSize="small"/>
+                    </Tooltip>
+                    <Input name={'amount input'} inputProps={{data: val}} fullWidth={true} onChange={(e) => handleStartBalance(e)} placeholder="optional" value={accountData[val] ? accountData[val].startBalance : ''}></Input>
                   </Grid>
                 </Grid>
               </Grid>

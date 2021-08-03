@@ -165,15 +165,15 @@ const DetailsTable = ({details, currency}) => {
                     aria-label="details-table-row"
                   >
                     <TableCell align="right">{detail.address}</TableCell>
-                    <TableCell align="right">{detail.startBalance}</TableCell>
-                    <TableCell align="right">{detail.endBalance}</TableCell>
+                    <TableCell align="right">{detail.startBalance || 0}</TableCell>
+                    <TableCell align="right">{detail.network === 'polkadot' ? `${parseInt(details[details.length - 1].details.numberPayouts.DOT) + parseInt(detail.startBalance)} DOT` || 0 : ` ${parseInt(detail.startBalance) + parseInt(details[details.length - 1].details.numberPayouts.KSM)} KSM ` || 0 }</TableCell>
                     <TableCell align="right">{
-                    detail.annualizedReturn === 0 ||detail.annualizedReturn === Infinity ? 'n/a'
+                    detail.annualizedReturn === 0 || detail.annualizedReturn === Infinity ? 'Could not be calculated'
                     :
-                    typeof detail.annualizedReturn === "number" ? `${detail.annualizedReturn.toFixed(2)}% `: 'n/a'
+                    typeof detail.annualizedReturn === "number" ? `${detail.annualizedReturn.toFixed(2)}% `: 'Could not calculate'
                     }</TableCell>
                     <TableCell align="right">{detail.currentValueRewardsFiat}</TableCell>
-                    <TableCell align="left">{detail.network}</TableCell>
+                    <TableCell align="left">{detail.network.charAt(0).toUpperCase() + detail.network.slice(1)}</TableCell>
                   </TableRow>
                 ) : null;
               }): <TableRow> <TableCell /><TableCell /><TableCell /></TableRow>}

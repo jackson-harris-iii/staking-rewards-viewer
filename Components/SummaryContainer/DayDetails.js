@@ -76,7 +76,8 @@ const DayDetails = ({dayData}) => {
   const [dense, setDense] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  const rows = dayData.data.list;
+  const rows = dayData.data.list.filter(x => x.extrinsicHash !== "");
+  console.log('row count', rows)
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -136,7 +137,7 @@ const DayDetails = ({dayData}) => {
         <h4 style={{fontFamily: "Work Sans", display: "inline-block"}}>Address: </h4>
         <p style={{display: "inline-block"}}>{dayData.address}</p>
         <div>
-          <h4 style={{fontFamily: "Work Sans", display: "inline-block"}}>Network: </h4> <p style={{display: "inline-block"}}>{dayData.network}</p>
+          <h4 style={{fontFamily: "Work Sans", display: "inline-block"}}>Network: </h4> <p style={{display: "inline-block"}}>{dayData.network.charAt(0).toUpperCase() + dayData.network.slice(1)}</p>
         </div>
       </span>
       <Grid container justify="center">
@@ -191,8 +192,14 @@ const DayDetails = ({dayData}) => {
                   />
                 </Grid>
                 <Grid container item xs={1} alignItems="center">
-                <Tooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title="Missing some data? The results only show days with information even if there are additional days in you results.">
-                    <InfoIcon />
+                <Tooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title={
+                  <Grid item container style={{margin: '1em'}}>
+                  <span style={{paddingRight: '5px', fontSize: "1.5em", fontFamily: "Work Sans light", fontWeight: 'bolder'}}>
+                  Missing some data? The results only show days with information even if there are additional days in you results.
+                  </span>
+                </Grid>
+                }>
+                    <InfoIcon fontSize="small"/>
                   </Tooltip>
                 </Grid>
               </Grid>

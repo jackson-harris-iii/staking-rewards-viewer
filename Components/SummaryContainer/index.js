@@ -24,8 +24,14 @@ const SummaryContainer = ({data, handleExport, toggleExport, setToggleExport, cu
                 {/* export button and toggles */}
                   <Grid container alignItems="center" style={{marginLeft: '1em'}} spacing={4} justify="flex-start">
                     <Grid container item xs={1} alignItems="center" justify="flex-end">
-                      <Tooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title="Export your raw data results as either a CSV or JSON">
-                        <InfoIcon />
+                      <Tooltip style={{marginLeft: '1em'}} TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title={
+                        <Grid item container style={{margin: '1em'}}>
+                          <p style={{paddingRight: '5px', fontSize: "1.5em", fontFamily: "Work Sans light", fontWeight: 'bolder'}}>
+                          Export your raw data results as either a CSV or JSON.
+                          </p>
+                        </Grid>
+                      }>
+                        <InfoIcon fontSize="small"/>
                       </Tooltip>
                     </Grid>
                     <Grid item container xs={1} justify="center">
