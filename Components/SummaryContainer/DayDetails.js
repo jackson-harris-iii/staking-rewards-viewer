@@ -157,7 +157,7 @@ const DayDetails = ({dayData}) => {
                   .map((day, index) => {
                     const isItemSelected = isSelected(day.extrinsicHash);
                     const labelId = `enhanced-table-checkbox-${index}`;
-                    return day.extrinsicHash ?
+                    return day ?
                     (
                       <TableRow
                         hover
