@@ -35,8 +35,7 @@ const headCells = [
   { id: 'amountHumanReadable', numeric: true, disablePadding: false, label: 'Tokens' },
   { id: 'price', numeric: true, disablePadding: false, label: 'Price' },
   { id: 'valueFiat', numeric: true, disablePadding: false, label: 'Fiat Value'},
-  { id: 'numberPayouts', numeric: false, disablePadding: false, label: 'Total Payouts'},
-  // { id: 'Fiat Value', numeric: true, disablePadding: false, label: `Fiat Value (${currency[1]})`},
+  { id: 'numberPayouts', numeric: false, disablePadding: false, label: 'Total Payouts'}
 
 ]
 
@@ -77,7 +76,6 @@ const DayDetails = ({dayData}) => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const rows = dayData.data.list.filter(x => x.extrinsicHash !== "");
-  console.log('row count', rows)
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -128,8 +126,6 @@ const DayDetails = ({dayData}) => {
   };
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
-
-  // const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
   return (
     <Paper elevation={3} style={{marginTop: "3em", paddingBottom: '1em', padding: '1em', overFlowY: 'auto'}} aria-label="day-details-card">
