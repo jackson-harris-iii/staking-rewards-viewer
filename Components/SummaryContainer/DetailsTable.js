@@ -153,6 +153,9 @@ const DetailsTable = ({details, currency}) => {
               .map((detail, index) => {
                 const isItemSelected = isSelected(detail.name, selected);
                 const labelId = `enhanced-table-checkbox-${index}`;
+                let startValue = detail.startBalance ? parseInt(detail.startBalance) : 0
+                let finalBalance = detail.network === 'polkadot' ? `${parseInt(details[details.length - 1].details.numberPayouts.DOT) + startValue} DOT` || 0 : ` ${parseInt(details[details.length - 1].details.numberPayouts.KSM) + startValue} KSM ` || 0
+
                 return detail.address ?
                 (
                   <TableRow
@@ -166,11 +169,19 @@ const DetailsTable = ({details, currency}) => {
                   >
                     <TableCell align="right">{detail.address}</TableCell>
                     <TableCell align="right">{detail.startBalance || 0}</TableCell>
-                    <TableCell align="right">{detail.network === 'polkadot' ? `${parseInt(details[details.length - 1].details.numberPayouts.DOT) + parseInt(detail.startBalance)} DOT` || 0 : ` ${parseInt(detail.startBalance) + parseInt(details[details.length - 1].details.numberPayouts.KSM)} KSM ` || 0 }</TableCell>
+
+                    {/* This handles the various end balance outputs that can occur. ex. different networks, no startBalance, etc. */}
+
+                    <TableCell align="right">{finalBalance}</TableCell>
+
+                    {/* This handles the various annualizedReturn outputs. ex. no startBalance, 0, etc. */
+                    console.log('this is the return', !!55)
+                    }
+
                     <TableCell align="right">{
                     detail.annualizedReturn === 0 || detail.annualizedReturn === Infinity ? 'Could not be calculated'
                     :
-                    typeof detail.annualizedReturn === "number" ? `${detail.annualizedReturn.toFixed(2)}% `: 'Could not calculate'
+                    !!detail.annualizedReturn && typeof detail.annualizedReturn === "number" ? `${detail.annualizedReturn.toFixed(2)}% `: 'Could not calculate'
                     }</TableCell>
                     <TableCell align="right">{detail.currentValueRewardsFiat}</TableCell>
                     <TableCell align="left">{detail.network.charAt(0).toUpperCase() + detail.network.slice(1)}</TableCell>
