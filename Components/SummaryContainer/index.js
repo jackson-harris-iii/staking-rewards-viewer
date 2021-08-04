@@ -62,7 +62,7 @@ const SummaryContainer = ({data, handleExport, toggleExport, setToggleExport, cu
                   return (
                     item.data && item.data.list ?
                     <Fade in={true} timeout={600}>
-                      <Grid container item md={4} justify="center">
+                      <Grid container item lg={5} justify="center">
                         <DayDetails dayData={item}/>
                       </Grid>
                     </Fade>

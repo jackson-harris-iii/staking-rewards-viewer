@@ -19,7 +19,7 @@ const FormContainer = ({submission, setSubmission, setSubmit, setIsLoading, curr
   const [balance, setBalance ] = useState(0);
 
   //this set the maximum number of wallet addresses that can be looked up at once
-  const maxFields = 3;
+  const maxFields = 15;
 
   const handleAddressChange = (e) => {
     e.preventDefault();

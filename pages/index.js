@@ -78,7 +78,7 @@ const HomePage = ({props}) => {
                   container
                   justify="center"
                 >
-                  <Paper style={{width:'100%'}} elevation={3} >
+                  <Paper style={{width:'100%'}} elevation={3} style={{height: '405px'}}>
                     <Container>
                       <h3 style={{fontFamily: "Work Sans light"}}>Dot Daily Price Data</h3>
 
