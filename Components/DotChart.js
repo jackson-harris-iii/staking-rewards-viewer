@@ -36,7 +36,6 @@ import { Container, Input, Grid, Paper, Switch, CircularProgress, Modal } from '
 
     // Time stamp at click
     const [timeStamp, setTimeStamp] = useState(Date.now());
-    const [currency, setCurrency] = useState('USD')
 
     // boolean of if data is retrieved from api
     const [hasGraphDataMinute, setHasGraphDataMinute] = useState(false);
@@ -62,6 +61,7 @@ import { Container, Input, Grid, Paper, Switch, CircularProgress, Modal } from '
 
     // String containing which time range to display on graph. set my click.
     const [timeString, setTimeString] = useState(null);
+    const [currency, setCurrency] = useState('USD')
 
 
     if (input_data[1] != currency)
@@ -115,6 +115,7 @@ import { Container, Input, Grid, Paper, Switch, CircularProgress, Modal } from '
       let temp = {...DisplayData}
       temp.labels = times
       temp.datasets[0].data = prices
+      temp.datasets[0].label = `Dot Price (${currency})`;
       setDisplayData(temp)
       setDoModifyInitialData(false);
     }

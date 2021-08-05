@@ -30,7 +30,6 @@ const HomePage = ({props}) => {
   const fetcher = (url, info) => Collector(info).then((data) => {responder(data); return data})
 
   const responder = (data) => {
-    console.log('this is the data', data)
     setIsLoading(false)
     setData(data);
     setSubmit(false)
