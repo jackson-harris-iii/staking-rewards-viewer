@@ -78,14 +78,16 @@ const HomePage = ({props}) => {
                   container
                   justify="center"
                 >
-                  <Paper style={{width:'100%'}} elevation={3} style={{maxHeight: '350px'}}>
-                    <Container>
-                      <h3 style={{fontFamily: "Work Sans light"}}>Dot Daily Price Data</h3>
+                  <Container>
+                    <Paper style={{width:'100%', paddingTop: '.2em'}} elevation={3}>
+                      <Container>
+                        <h3 style={{fontFamily: "Work Sans light"}}>Dot Daily Price Data</h3>
 
-                      <DotChart input_data={currency}/>
+                        <DotChart input_data={currency}/>
 
-                    </Container>
-                  </Paper>
+                      </Container>
+                    </Paper>
+                  </Container>
                 </Grid>
 
                 {/* Staking info entry form*/}
