@@ -136,22 +136,22 @@ import { Container, Input, Grid, Paper, Switch, CircularProgress, Modal } from '
     /* ================================================================== */
     /* Minute data of 24 hours */
     const graphFetcher2 = (url) => fetch(url).then(response => response.json() ).then( graphData => {setGeckoReturnedMinuteData(graphData);setHasGraphDataMinute(true)})
-    const { graphData2, graphDataError2 } = useSWR( doModifyMinuteData && !hasGraphDataMinute ? 'https://api.coingecko.com/api/v3/coins/polkadot/market_chart?vs_currency=usd&days=1': null, graphFetcher2);
+    const { graphData2, graphDataError2 } = useSWR( doModifyMinuteData && !hasGraphDataMinute ? `https://api.coingecko.com/api/v3/coins/polkadot/market_chart?vs_currency=${currency}&days=1`: null, graphFetcher2);
     if (graphDataError2) return "An error has occurred"
 
     /* hourly data of 1 month */
     const graphFetcher3 = (url) => fetch(url).then(response => response.json() ).then( graphData => {setGeckoReturnedHourData(graphData);setHasGraphDataHourly(true)})
-    const { graphData3, graphDataError3 } = useSWR( doModifyHourData && !hasGraphDataHourly ? 'https://api.coingecko.com/api/v3/coins/polkadot/market_chart?vs_currency=usd&days=30': null, graphFetcher3);
+    const { graphData3, graphDataError3 } = useSWR( doModifyHourData && !hasGraphDataHourly ? `https://api.coingecko.com/api/v3/coins/polkadot/market_chart?vs_currency=${currency}&days=30`: null, graphFetcher3);
     if (graphDataError3) return "An error has occurred"
 
     // /* Daily data of 1 year */
     const graphFetcher4 = (url) => fetch(url).then(response => response.json() ).then( graphData => { setGeckoReturnedDayData(graphData); setHasGraphDataDaily(true)})
-    const { graphData4, graphDataError4 } = useSWR( doModifyDayData && !hasGraphDataDaily ? 'https://api.coingecko.com/api/v3/coins/polkadot/market_chart?vs_currency=usd&days=365': null, graphFetcher4);
+    const { graphData4, graphDataError4 } = useSWR( doModifyDayData && !hasGraphDataDaily ? `https://api.coingecko.com/api/v3/coins/polkadot/market_chart?vs_currency=${currency}&days=365`: null, graphFetcher4);
     if (graphDataError4) return "An error has occurred"
 
     // /* Daily data of 1 year */
     const graphFetcher5 = (url) => fetch(url).then(response => response.json() ).then( graphData => {setGeckoReturnedMaxData(graphData);setHasGraphDataMax(true)})
-    const { graphData5, graphDataError5 } = useSWR( doModifyMaxData && !hasGraphDataMax ? 'https://api.coingecko.com/api/v3/coins/polkadot/market_chart?vs_currency=usd&days=max': null, graphFetcher5);
+    const { graphData5, graphDataError5 } = useSWR( doModifyMaxData && !hasGraphDataMax ? `https://api.coingecko.com/api/v3/coins/polkadot/market_chart?vs_currency=${currency}&days=max`: null, graphFetcher5);
     if (graphDataError5) return "An error has occurred"
 
 

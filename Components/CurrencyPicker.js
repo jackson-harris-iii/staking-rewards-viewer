@@ -88,7 +88,6 @@ const CurrencyPicker = ({setCurrency}) => {
 
   const handleMenuItemClick = (event, index) => {
     setSelectedIndex(index);
-    console.log([options[index][0],options[index][1].toUpperCase()])
     setCurrency([options[index][0],options[index][1].toUpperCase()])
     setAnchorEl(null);
   };
