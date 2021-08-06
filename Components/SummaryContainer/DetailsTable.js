@@ -176,8 +176,8 @@ const DetailsTable = ({details, currency}) => {
 
                     {/* This handles the various annualizedReturn outputs. ex. no startBalance, 0, etc. */}
 
-                    <TableCell align="right">{
-                    detail.annualizedReturn === 0 || detail.annualizedReturn === Infinity ? 'Could not calculate'
+                    <TableCell style={{whiteSpace: "nowrap"}} align="right">{
+                    detail.annualizedReturn === 0 || detail.annualizedReturn === Infinity ? 'Could not be calculated'
                     :
                     !!detail.annualizedReturn && typeof detail.annualizedReturn === "number" ? `${detail.annualizedReturn.toFixed(2)}% `: 'Could not calculate'
                     }</TableCell>
