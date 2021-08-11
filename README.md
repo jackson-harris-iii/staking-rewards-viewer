@@ -8,6 +8,9 @@ Program/blob/master/rfps/staking-rewards-collector-front-end.md).
 
 Accepted Grant Proposal: https://github.com/w3f/Open-Grants-Program/blob/master/applications/staking-rewards-collector-front-end.md
 
+##[Screenshot](public/screenshot.png) :camera:
+
+
 ## Setup
 
 * Install npm packages using yarn (npm should work, but all development has been done using yarn)
