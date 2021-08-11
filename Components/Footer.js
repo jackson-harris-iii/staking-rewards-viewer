@@ -1,14 +1,24 @@
 import React, { Fragment } from 'react'
 import {AppBar, Toolbar, IconButton, MenuIcon, Grid} from '@material-ui/core';
+import Image from 'next/image'
 import Link from 'next/link'
 import { useTheme } from '@material-ui/core/styles';
 
 const Footer = () => {
   const theme = useTheme();
   return(
-    <Grid container style={{backgroundColor:"black", width: '100vw', padding: '2em', position: 'relative', bottom: 0}} justify="center">
+    <Grid container style={{backgroundColor:"black", width: '100vw', paddingTop: '.25em', position: 'relative', bottom: 0}} justify="center">
         <Grid item>
-          <h4 style={{color: 'white'}}>a <Link href='https://web3.foundation/grants/' target="_blank"><a target="_blank" style={{color: `${theme.pink}`, textDecoration: 'none'}}>web3 foundation</a></Link> open source contribution</h4>
+          <Link href='https://web3.foundation/grants/'>
+            <a target="_blank">
+              <Image
+                src="/web3_foundation_grants_badge_white.png"
+                alt="web 3 foundation badge"
+                width={187.5}
+                height={75}
+              />
+            </a>
+          </Link>
         </Grid>
     </Grid>
   )
