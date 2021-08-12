@@ -9,7 +9,7 @@ This implementation will take the work started in the [staking-rewards-collector
 
 
 Accepted Grant Proposal: https://github.com/w3f/Open-Grants-Program/blob/master/applications/staking-rewards-collector-front-end.md
-![web 3 foundation badge](public/web3_foundation_grants_badge_black.png | width=100)
+![web 3 foundation badge](public/web3_foundation_grants_badge_black.png)
 
 ## Screenshot :camera: ![Screenshot](public/screenshot.png)
 
