@@ -1,16 +1,15 @@
 # staking-rewards-viewer
-!(website)[https://staking-rewards-viewer.vercel.app/]
+[website](https://staking-rewards-viewer.vercel.app/)
 
 ## Project Description :page_facing_up:
 
 This is a Staking Rewards Viewer for Polkadot and Kusama allowing users to view their staking rewards and easily download their search results.
-This implementation will take the work started in the [staking-rewards-collector](https://github.com/w3f/staking-rewards-collector) by [jonasW3F](https://github.com/jonasW3F) and refactor it into an easy to use modern front end using Next.js and deployed on Vercel with the goal of deploying to IPFS. This project is fufilling the needs of the Web 3 Foundation grant seen here: [Front-End for Staking Rewards Collector](https://github.com/w3f/General-Grants-
-Program/blob/master/rfps/staking-rewards-collector-front-end.md).
+This implementation will take the work started in the [staking-rewards-collector](https://github.com/w3f/staking-rewards-collector) by [jonasW3F](https://github.com/jonasW3F) and refactor it into an easy to use modern front end using Next.js and deployed on Vercel with the goal of deploying to IPFS. This project is fufilling the needs of the Web 3 Foundation grant proposal Front-End for Staking Rewards Collector.
 
 
 
 Accepted Grant Proposal: https://github.com/w3f/Open-Grants-Program/blob/master/applications/staking-rewards-collector-front-end.md
-![web 3 foundation badge](public/web3_foundation_grants_badge_black.png)
+![web 3 foundation badge](public/web3_foundation_grants_badge_black.png | width=100)
 
 ## Screenshot :camera: ![Screenshot](public/screenshot.png)
 
