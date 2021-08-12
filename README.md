@@ -1,5 +1,5 @@
 # staking-rewards-viewer
-(website)[https://staking-rewards-viewer.vercel.app/]
+!(website)[https://staking-rewards-viewer.vercel.app/]
 
 ## Project Description :page_facing_up:
 
