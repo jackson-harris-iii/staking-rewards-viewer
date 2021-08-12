@@ -11,16 +11,12 @@ const Header = ({lang, currency, theme, setCurrency}) => (
     <Grid container justify="space-between">
     {/* Polkadot logo */}
     <Grid xs={3} item>
-      <Link href="https://polkadot.network/">
-        <a target="_blank">
-          <Image
-            src="/Polkadot-logo-light.png"
-            alt="Polkadot Logo"
-            width={150}
-            height={75}
-          />
-        </a>
-      </Link>
+      <Image
+        src="/Polkadot-logo-light.png"
+        alt="Polkadot Logo"
+        width={150}
+        height={75}
+      />
     </Grid>
 
     {/* Nav Options */}
