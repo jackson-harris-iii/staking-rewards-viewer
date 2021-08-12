@@ -11,7 +11,7 @@ Program/blob/master/rfps/staking-rewards-collector-front-end.md).
 Accepted Grant Proposal: https://github.com/w3f/Open-Grants-Program/blob/master/applications/staking-rewards-collector-front-end.md
 ![web 3 foundation badge](public/web3_foundation_grants_badge_black.png)
 
- :camera: ![Screenshot](public/screenshot.png)
+##Screenshot :camera: ![Screenshot](public/screenshot.png)
 
 
 ## Setup
