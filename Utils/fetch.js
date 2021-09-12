@@ -107,6 +107,7 @@ async function getStakingObject(address, page, network){
         headers: {
             'Content-Type': 'application/json',
             'Access-Control-Allow-Origin' : '*',
+            'X-API-Key': `${process.env.SUBSCAN_API_KEY}`,
         },
         body: JSON.stringify({
         'row':100,
@@ -131,6 +132,7 @@ async function getStakingObject(address, page, network){
 async function fetchRequest(url, options){
     try {
         let response = await fetch(url, options);
+        console.log(`${process.env.SUBSCAN_API_KEY}`)
         return response.json();
     } catch (err) {
         return err;
