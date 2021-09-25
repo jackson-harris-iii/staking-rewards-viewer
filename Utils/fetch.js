@@ -132,7 +132,7 @@ async function getStakingObject(address, page, network){
 async function fetchRequest(url, options){
     try {
         let response = await fetch(url, options);
-        console.log(`${process.env.SUBSCAN_API_KEY}`)
+        console.log(`should be api key: ${process.env.SUBSCAN_API_KEY}`)
         return response.json();
     } catch (err) {
         return err;
