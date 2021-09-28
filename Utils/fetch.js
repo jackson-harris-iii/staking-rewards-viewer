@@ -96,9 +96,9 @@ async function getStakingObject(address, page, network){
     var url;
 
     if(network == 'polkadot'){
-        url = 'https://polkadot.subscan.io/api/scan/account/reward_slash'
+        url = 'https://polkadot.api.subscan.io/api/scan/account/reward_slash'
     } else {
-        url = 'https://kusama.subscan.io/api/scan/account/reward_slash'
+        url = 'https://kusama.api.subscan.io/api/scan/account/reward_slash'
     }
 
     var options = {
@@ -132,7 +132,7 @@ async function getStakingObject(address, page, network){
 async function fetchRequest(url, options){
     try {
         let response = await fetch(url, options);
-        console.log(`should be api key: ${process.env.SUBSCAN_API_KEY}`)
+        // console.log(`should be api key: ${process.env.SUBSCAN_API_KEY}`)
         return response.json();
     } catch (err) {
         return err;
